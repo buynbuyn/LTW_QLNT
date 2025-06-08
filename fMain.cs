@@ -6,5 +6,11 @@ namespace QLNT
         {
             InitializeComponent();
         }
+
+        private void doanhThuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new DoanhThuForm();
+            form.ShowDialog();
+        }
     }
 }

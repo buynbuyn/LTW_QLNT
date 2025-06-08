@@ -12,7 +12,7 @@ using QLNT.Data;
 namespace QLNT.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20250603092553_Migrations")]
+    [Migration("20250608144110_Migrations")]
     partial class Migrations
     {
         /// <inheritdoc />

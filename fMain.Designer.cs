@@ -79,6 +79,7 @@
             doanhThuToolStripMenuItem.Name = "doanhThuToolStripMenuItem";
             doanhThuToolStripMenuItem.Size = new Size(95, 24);
             doanhThuToolStripMenuItem.Text = "Doanh Thu";
+            doanhThuToolStripMenuItem.Click += doanhThuToolStripMenuItem_Click;
             // 
             // kháchHàngToolStripMenuItem
             // 
