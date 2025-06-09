@@ -31,9 +31,7 @@
             dgvKhachHang = new DataGridView();
             txtSearch = new TextBox();
             btnSearch = new Button();
-            btnXoa = new Button();
             btnThem = new Button();
-            btnSua = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvKhachHang).BeginInit();
             SuspendLayout();
             // 
@@ -43,8 +41,10 @@
             dgvKhachHang.Location = new Point(12, 82);
             dgvKhachHang.Name = "dgvKhachHang";
             dgvKhachHang.RowHeadersWidth = 51;
-            dgvKhachHang.Size = new Size(607, 431);
+            dgvKhachHang.Size = new Size(1153, 431);
             dgvKhachHang.TabIndex = 0;
+            dgvKhachHang.CellClick += dgvKhachHang_CellClick;
+            dgvKhachHang.CellContentClick += dgvKhachHang_CellContentClick;
             // 
             // txtSearch
             // 
@@ -64,19 +64,9 @@
             btnSearch.UseVisualStyleBackColor = true;
             btnSearch.Click += btnSearch_Click;
             // 
-            // btnXoa
-            // 
-            btnXoa.Location = new Point(617, 45);
-            btnXoa.Name = "btnXoa";
-            btnXoa.Size = new Size(143, 29);
-            btnXoa.TabIndex = 5;
-            btnXoa.Text = "Xóa thông tin";
-            btnXoa.UseVisualStyleBackColor = true;
-            btnXoa.Click += btnXoa_Click;
-            // 
             // btnThem
             // 
-            btnThem.Location = new Point(766, 44);
+            btnThem.Location = new Point(1022, 47);
             btnThem.Name = "btnThem";
             btnThem.Size = new Size(143, 29);
             btnThem.TabIndex = 13;
@@ -84,24 +74,12 @@
             btnThem.UseVisualStyleBackColor = true;
             btnThem.Click += btnThem_Click;
             // 
-            // btnSua
-            // 
-            btnSua.Location = new Point(915, 44);
-            btnSua.Name = "btnSua";
-            btnSua.Size = new Size(143, 29);
-            btnSua.TabIndex = 14;
-            btnSua.Text = "Sửa khách hàng";
-            btnSua.UseVisualStyleBackColor = true;
-            btnSua.Click += btnSua_Click;
-            // 
             // KhachHangForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1070, 525);
-            Controls.Add(btnSua);
+            ClientSize = new Size(1180, 525);
             Controls.Add(btnThem);
-            Controls.Add(btnXoa);
             Controls.Add(btnSearch);
             Controls.Add(txtSearch);
             Controls.Add(dgvKhachHang);
@@ -117,8 +95,6 @@
         private DataGridView dgvKhachHang;
         private TextBox txtSearch;
         private Button btnSearch;
-        private Button btnXoa;
         private Button btnThem;
-        private Button btnSua;
     }
 }

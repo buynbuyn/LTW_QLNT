@@ -33,8 +33,70 @@ namespace QLNT
 
                 dgvKhachHang.DataSource = ds;
                 dgvKhachHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+                AddActionButtons(); // Thêm nút Sửa và Xóa
             }
         }
+
+        private void AddActionButtons()
+        {
+            if (dgvKhachHang.Columns["btnEdit"] == null)
+            {
+                var btnEdit = new DataGridViewButtonColumn
+                {
+                    HeaderText = "",
+                    Text = "Sửa",
+                    Name = "btnEdit",
+                    UseColumnTextForButtonValue = true
+                };
+                dgvKhachHang.Columns.Add(btnEdit);
+            }
+
+            if (dgvKhachHang.Columns["btnDelete"] == null)
+            {
+                var btnDelete = new DataGridViewButtonColumn
+                {
+                    HeaderText = "",
+                    Text = "Xóa",
+                    Name = "btnDelete",
+                    UseColumnTextForButtonValue = true
+                };
+                dgvKhachHang.Columns.Add(btnDelete);
+            }
+        }
+
+        private void dgvKhachHang_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return; // 🛡️ bảo vệ khỏi lỗi click tiêu đề hoặc row header
+
+            var columnName = dgvKhachHang.Columns[e.ColumnIndex].Name;
+            int id = Convert.ToInt32(dgvKhachHang.Rows[e.RowIndex].Cells["CustomerID"].Value);
+
+            if (columnName == "btnEdit")
+            {
+                var form = new SuaKhachHangForm(id);
+                form.ShowDialog();
+                LoadKhachHang();
+            }
+            else if (columnName == "btnDelete")
+            {
+                if (MessageBox.Show("Bạn có chắc muốn xóa khách hàng này?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    using (var context = new EFDbContext())
+                    {
+                        var kh = context.Customers.Find(id);
+                        if (kh != null)
+                        {
+                            context.Customers.Remove(kh);
+                            context.SaveChanges();
+                            MessageBox.Show("Đã xóa khách hàng.");
+                            LoadKhachHang();
+                        }
+                    }
+                }
+            }
+        }
+
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
@@ -60,56 +122,21 @@ namespace QLNT
 
                 dgvKhachHang.DataSource = result;
                 dgvKhachHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+                AddActionButtons();
             }
         }
 
         private void btnThem_Click(object sender, EventArgs e)
         {
-            var popup = new KhachHangPopupForm();
-            popup.ShowDialog();
-            LoadKhachHang(); // reload danh sách sau khi thêm
+            var form = new ThemKhachHangForm();
+            form.ShowDialog();
+            LoadKhachHang();
         }
 
-        private void btnSua_Click(object sender, EventArgs e)
+        private void dgvKhachHang_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgvKhachHang.CurrentRow != null)
-            {
-                int id = (int)dgvKhachHang.CurrentRow.Cells["CustomerID"].Value;
-                var popup = new KhachHangPopupForm(id); // mở tab sửa
-                popup.ShowDialog();
-                LoadKhachHang(); // reload danh sách sau khi cập nhật
-            }
-            else
-            {
-                MessageBox.Show("Vui lòng chọn một khách hàng để sửa.", "Thông báo");
-            }
-        }
-
-        private void btnXoa_Click(object sender, EventArgs e)
-        {
-            if (dgvKhachHang.CurrentRow != null)
-            {
-                int id = (int)dgvKhachHang.CurrentRow.Cells["CustomerID"].Value;
-
-                if (MessageBox.Show("Bạn có chắc muốn xóa khách hàng này?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    using (var context = new EFDbContext())
-                    {
-                        var kh = context.Customers.Find(id);
-                        if (kh != null)
-                        {
-                            context.Customers.Remove(kh);
-                            context.SaveChanges();
-                            LoadKhachHang();
-                            MessageBox.Show("Đã xóa khách hàng.");
-                        }
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Vui lòng chọn một khách hàng để xóa.", "Thông báo");
-            }
+            // Không dùng, bạn có thể bỏ qua hoặc để trống
         }
     }
 }
