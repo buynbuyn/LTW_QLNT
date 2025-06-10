@@ -55,6 +55,7 @@
             cửaHàngToolStripMenuItem.Name = "cửaHàngToolStripMenuItem";
             cửaHàngToolStripMenuItem.Size = new Size(89, 24);
             cửaHàngToolStripMenuItem.Text = "Cửa Hàng";
+            cửaHàngToolStripMenuItem.Click += cửaHàngToolStripMenuItem_Click;
             // 
             // hóaĐơnToolStripMenuItem
             // 

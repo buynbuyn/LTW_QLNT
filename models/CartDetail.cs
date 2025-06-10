@@ -24,7 +24,7 @@ namespace QLNT.models
 
         [NotMapped] // Không lưu vào DB, chỉ tính khi cần
 
-        public virtual Cart Cart { get; set; } = null!;
-        public virtual Product Product { get; set; } = null!;
+        public virtual Cart? Cart { get; set; } = null!;
+        public virtual Product? Product { get; set; } = null!;
     }
  }
