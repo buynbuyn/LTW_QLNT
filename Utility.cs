@@ -11,6 +11,8 @@ namespace QLNT
         public static string LoggedInUser { get; private set; }
         public static int UserRole { get; private set; }
 
+        public static int UserID { get; private set; }
+
         // Hàm kiểm tra đăng nhập & lưu thông tin người dùng
         public static bool CheckLogin(string username, string password)
         {
@@ -22,7 +24,7 @@ namespace QLNT
 
                     if (user != null)
                     {
-                        SetSession(user.UserName, user.Role); // Lưu thông tin đăng nhập vào `Utility`
+                        SetSession(user.UserName, user.Role, user.UserID); // Lưu thông tin đăng nhập vào `Utility`
                         return true;
                     }
                 }
@@ -36,10 +38,11 @@ namespace QLNT
         }
 
         // Hàm lưu thông tin đăng nhập vào Session
-        public static void SetSession(string username, int role)
+        public static void SetSession(string username, int role, int userId)
         {
             LoggedInUser = username;
             UserRole = role;
+            UserID = userId;
         }
 
         // Hàm xóa Session khi đăng xuất

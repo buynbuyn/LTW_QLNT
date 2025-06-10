@@ -17,7 +17,7 @@ namespace QLNT.models
 
         [Required]
         [StringLength(100)]
-        public required string Name { get; set; } = null!; // Tên loại bắt buộc
+        public string Name { get; set; } = null!; // Tên loại bắt buộc
 
         [Required]
         public int Order { get; set; } = 0; // Thứ tự mặc định là 0

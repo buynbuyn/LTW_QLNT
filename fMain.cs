@@ -1,12 +1,15 @@
+
 ﻿using System.Drawing.Drawing2D;
 
 namespace QLNT
+
 {
     public partial class fMain : Form
     {
         public fMain()
         {
             InitializeComponent();
+
 
         }
 
@@ -23,6 +26,8 @@ namespace QLNT
             fAccount accountForm = new fAccount();
             accountForm.MdiParent = this; // Thiết lập fMain làm form cha
             accountForm.Show();
+
+            this.IsMdiContainer = true;
         }
 
         private void doanhThuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -34,6 +39,12 @@ namespace QLNT
         private void kháchHàngToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = new KhachHangForm();
+            form.ShowDialog();
+        }
+
+        private void cửaHàngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new CuaHangForm();
             form.ShowDialog();
         }
     }
