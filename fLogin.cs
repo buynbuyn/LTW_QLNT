@@ -19,8 +19,8 @@ namespace QLNT
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string user = txtName.Text;  
-            string pass = txtPassword.Text; 
+            string user = txtName.Text;
+            string pass = txtPassword.Text;
 
             try
             {
@@ -39,5 +39,12 @@ namespace QLNT
                 MessageBox.Show($"Lỗi hệ thống: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void fLogin_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

@@ -42,6 +42,7 @@
             // 
             // menuStrip1
             // 
+            menuStrip1.BackColor = Color.LightBlue;
             menuStrip1.ImageScalingSize = new Size(20, 20);
             menuStrip1.Items.AddRange(new ToolStripItem[] { cửaHàngToolStripMenuItem, hóaĐơnToolStripMenuItem, khoToolStripMenuItem, lịchSửHóaĐơnToolStripMenuItem, doanhThuToolStripMenuItem, kháchHàngToolStripMenuItem, nhânViênToolStripMenuItem, tàiKhoảnToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
@@ -91,17 +92,20 @@
             nhânViênToolStripMenuItem.Name = "nhânViênToolStripMenuItem";
             nhânViênToolStripMenuItem.Size = new Size(89, 24);
             nhânViênToolStripMenuItem.Text = "Nhân viên";
+            nhânViênToolStripMenuItem.Click += nhânViênToolStripMenuItem_Click;
             // 
             // tàiKhoảnToolStripMenuItem
             // 
             tàiKhoảnToolStripMenuItem.Name = "tàiKhoảnToolStripMenuItem";
             tàiKhoảnToolStripMenuItem.Size = new Size(85, 24);
             tàiKhoảnToolStripMenuItem.Text = "Tài khoản";
+            tàiKhoảnToolStripMenuItem.Click += tàiKhoảnToolStripMenuItem_Click;
             // 
             // fMain
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(800, 450);
             Controls.Add(menuStrip1);
             IsMdiContainer = true;

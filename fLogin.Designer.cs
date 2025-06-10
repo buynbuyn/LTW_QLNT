@@ -28,94 +28,169 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fLogin));
             label1 = new Label();
-            label2 = new Label();
             txtName = new TextBox();
-            label3 = new Label();
             txtPassword = new TextBox();
             btnLogin = new Button();
+            pictureBox1 = new PictureBox();
+            pictureBox2 = new PictureBox();
+            pictureBox3 = new PictureBox();
+            panel1 = new Panel();
+            label2 = new Label();
+            panel2 = new Panel();
+            label3 = new Label();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            panel1.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(258, 44);
+            label1.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.ForeColor = Color.SlateBlue;
+            label1.Location = new Point(860, 97);
             label1.Name = "label1";
-            label1.Size = new Size(291, 28);
+            label1.Size = new Size(195, 48);
             label1.TabIndex = 0;
-            label1.Text = "ĐĂNG NHẬP VÀO HỆ THỐNG";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(218, 99);
-            label2.Name = "label2";
-            label2.Size = new Size(83, 20);
-            label2.TabIndex = 1;
-            label2.Text = "UserName";
+            label1.Text = "ĐĂNG NHẬP ";
             // 
             // txtName
             // 
-            txtName.Location = new Point(218, 122);
+            txtName.BorderStyle = BorderStyle.None;
+            txtName.Location = new Point(58, 16);
             txtName.Name = "txtName";
-            txtName.Size = new Size(391, 27);
+            txtName.Size = new Size(327, 20);
             txtName.TabIndex = 2;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(218, 169);
-            label3.Name = "label3";
-            label3.Size = new Size(76, 20);
-            label3.TabIndex = 3;
-            label3.Text = "Password";
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(218, 192);
+            txtPassword.BorderStyle = BorderStyle.None;
+            txtPassword.Location = new Point(56, 20);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(391, 27);
+            txtPassword.Size = new Size(292, 20);
             txtPassword.TabIndex = 4;
             // 
             // btnLogin
             // 
-            btnLogin.BackColor = SystemColors.ActiveCaption;
+            btnLogin.BackColor = Color.SlateBlue;
             btnLogin.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnLogin.Location = new Point(348, 244);
+            btnLogin.ForeColor = Color.Transparent;
+            btnLogin.Location = new Point(890, 380);
             btnLogin.Name = "btnLogin";
-            btnLogin.Size = new Size(127, 42);
+            btnLogin.Size = new Size(137, 46);
             btnLogin.TabIndex = 5;
             btnLogin.Text = "ĐĂNG NHẬP";
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.pharmacy;
+            pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(700, 654);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 6;
+            pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = Properties.Resources.user;
+            pictureBox2.Location = new Point(6, 4);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(40, 40);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 7;
+            pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            pictureBox3.Image = (Image)resources.GetObject("pictureBox3.Image");
+            pictureBox3.Location = new Point(7, 14);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(35, 30);
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox3.TabIndex = 8;
+            pictureBox3.TabStop = false;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(pictureBox2);
+            panel1.Controls.Add(txtName);
+            panel1.Location = new Point(731, 178);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(440, 56);
+            panel1.TabIndex = 9;
+            // 
+            // label2
+            // 
+            label2.BackColor = Color.DarkGray;
+            label2.Location = new Point(15, 52);
+            label2.Name = "label2";
+            label2.Size = new Size(400, 1);
+            label2.TabIndex = 8;
+            label2.Text = "                                                                                                                 ";
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(label3);
+            panel2.Controls.Add(pictureBox3);
+            panel2.Controls.Add(txtPassword);
+            panel2.Location = new Point(731, 278);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(440, 56);
+            panel2.TabIndex = 10;
+            // 
+            // label3
+            // 
+            label3.BackColor = Color.DarkGray;
+            label3.Location = new Point(11, 52);
+            label3.Name = "label3";
+            label3.Size = new Size(400, 1);
+            label3.TabIndex = 9;
+            label3.Text = "                                                                                                                 ";
+            // 
             // fLogin
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.White;
+            ClientSize = new Size(1341, 654);
+            Controls.Add(panel2);
+            Controls.Add(panel1);
+            Controls.Add(pictureBox1);
             Controls.Add(btnLogin);
-            Controls.Add(txtPassword);
-            Controls.Add(label3);
-            Controls.Add(txtName);
-            Controls.Add(label2);
             Controls.Add(label1);
+            ForeColor = Color.Black;
             Name = "fLogin";
             Text = "ĐĂNG NHẬP";
+            Load += fLogin_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private Label label1;
-        private Label label2;
         private TextBox txtName;
-        private Label label3;
         private TextBox txtPassword;
         private Button btnLogin;
+        private PictureBox pictureBox1;
+        private PictureBox pictureBox2;
+        private PictureBox pictureBox3;
+        private Panel panel1;
+        private Label label2;
+        private Panel panel2;
+        private Label label3;
     }
 }
