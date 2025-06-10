@@ -80,12 +80,14 @@
             doanhThuToolStripMenuItem.Name = "doanhThuToolStripMenuItem";
             doanhThuToolStripMenuItem.Size = new Size(95, 24);
             doanhThuToolStripMenuItem.Text = "Doanh Thu";
+            doanhThuToolStripMenuItem.Click += doanhThuToolStripMenuItem_Click;
             // 
             // kháchHàngToolStripMenuItem
             // 
             kháchHàngToolStripMenuItem.Name = "kháchHàngToolStripMenuItem";
             kháchHàngToolStripMenuItem.Size = new Size(100, 24);
             kháchHàngToolStripMenuItem.Text = "Khách hàng";
+            kháchHàngToolStripMenuItem.Click += kháchHàngToolStripMenuItem_Click;
             // 
             // nhânViênToolStripMenuItem
             // 
