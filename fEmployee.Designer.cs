@@ -1,4 +1,6 @@
-﻿namespace QLNT
+﻿using System.Diagnostics;
+
+namespace QLNT
 {
     partial class fEmployee
     {
@@ -38,8 +40,6 @@
             HireDate = new DataGridViewTextBoxColumn();
             PhoneNumber = new DataGridViewTextBoxColumn();
             EmailEmployee = new DataGridViewTextBoxColumn();
-            Fix = new DataGridViewTextBoxColumn();
-            Delete = new DataGridViewTextBoxColumn();
             panel1 = new Panel();
             btnFindEmployee = new Button();
             btnAddEmployee = new Button();
@@ -61,12 +61,11 @@
             // 
             // dtgvEmployee
             // 
-            dtgvEmployee.AllowUserToAddRows = false;
             dtgvEmployee.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dtgvEmployee.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dtgvEmployee.BackgroundColor = Color.White;
             dtgvEmployee.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dtgvEmployee.Columns.AddRange(new DataGridViewColumn[] { EmployeeID, EmployeeName, Gender, Position, Salary, HireDate, PhoneNumber, EmailEmployee, Fix, Delete });
+            dtgvEmployee.Columns.AddRange(new DataGridViewColumn[] { EmployeeID, EmployeeName, Gender, Position, Salary, HireDate, PhoneNumber, EmailEmployee });
             dtgvEmployee.EnableHeadersVisualStyles = false;
             dtgvEmployee.GridColor = Color.LightSteelBlue;
             dtgvEmployee.Location = new Point(12, 83);
@@ -75,9 +74,11 @@
             dtgvEmployee.RowHeadersWidth = 51;
             dtgvEmployee.Size = new Size(802, 497);
             dtgvEmployee.TabIndex = 1;
+            dtgvEmployee.CellContentClick += dtgvEmployee_CellContentClick;
             // 
             // EmployeeID
             // 
+            EmployeeID.DataPropertyName = "EmployeeID";
             EmployeeID.HeaderText = "ID";
             EmployeeID.MinimumWidth = 6;
             EmployeeID.Name = "EmployeeID";
@@ -85,6 +86,7 @@
             // 
             // EmployeeName
             // 
+            EmployeeName.DataPropertyName = "EmployeeName";
             EmployeeName.HeaderText = "Họ và tên";
             EmployeeName.MinimumWidth = 6;
             EmployeeName.Name = "EmployeeName";
@@ -92,6 +94,7 @@
             // 
             // Gender
             // 
+            Gender.DataPropertyName = "Gender";
             Gender.HeaderText = "Giới tính";
             Gender.MinimumWidth = 6;
             Gender.Name = "Gender";
@@ -99,6 +102,7 @@
             // 
             // Position
             // 
+            Position.DataPropertyName = "Position";
             Position.HeaderText = "Vị trí";
             Position.MinimumWidth = 6;
             Position.Name = "Position";
@@ -106,6 +110,7 @@
             // 
             // Salary
             // 
+            Salary.DataPropertyName = "Salary";
             Salary.HeaderText = "Lương";
             Salary.MinimumWidth = 6;
             Salary.Name = "Salary";
@@ -113,6 +118,7 @@
             // 
             // HireDate
             // 
+            HireDate.DataPropertyName = "HireDate";
             HireDate.HeaderText = "Ngày làm việc";
             HireDate.MinimumWidth = 6;
             HireDate.Name = "HireDate";
@@ -120,6 +126,7 @@
             // 
             // PhoneNumber
             // 
+            PhoneNumber.DataPropertyName = "PhoneNumber";
             PhoneNumber.HeaderText = "SĐT";
             PhoneNumber.MinimumWidth = 6;
             PhoneNumber.Name = "PhoneNumber";
@@ -127,24 +134,11 @@
             // 
             // EmailEmployee
             // 
+            EmailEmployee.DataPropertyName = "EmailEmployee";
             EmailEmployee.HeaderText = "Email";
             EmailEmployee.MinimumWidth = 6;
             EmailEmployee.Name = "EmailEmployee";
             EmailEmployee.Width = 75;
-            // 
-            // Fix
-            // 
-            Fix.HeaderText = "Sửa";
-            Fix.MinimumWidth = 6;
-            Fix.Name = "Fix";
-            Fix.Width = 63;
-            // 
-            // Delete
-            // 
-            Delete.HeaderText = "Xóa";
-            Delete.MinimumWidth = 6;
-            Delete.Name = "Delete";
-            Delete.Width = 64;
             // 
             // panel1
             // 
@@ -200,6 +194,7 @@
             Name = "fEmployee";
             Text = "QUẢN LÝ NHÂN VIÊN";
             WindowState = FormWindowState.Maximized;
+            Load += fEmployee_Load;
             ((System.ComponentModel.ISupportInitialize)dtgvEmployee).EndInit();
             panel1.ResumeLayout(false);
             ResumeLayout(false);
@@ -210,6 +205,10 @@
 
         private Label label1;
         private DataGridView dtgvEmployee;
+        private Panel panel1;
+        private Button btnFindEmployee;
+        private Button btnAddEmployee;
+        private Panel panelEmployee;
         private DataGridViewTextBoxColumn EmployeeID;
         private DataGridViewTextBoxColumn EmployeeName;
         private DataGridViewTextBoxColumn Gender;
@@ -218,11 +217,5 @@
         private DataGridViewTextBoxColumn HireDate;
         private DataGridViewTextBoxColumn PhoneNumber;
         private DataGridViewTextBoxColumn EmailEmployee;
-        private DataGridViewTextBoxColumn Fix;
-        private DataGridViewTextBoxColumn Delete;
-        private Panel panel1;
-        private Button btnFindEmployee;
-        private Button btnAddEmployee;
-        private Panel panelEmployee;
     }
 }

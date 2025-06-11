@@ -9,7 +9,7 @@ namespace QLNT
     {
         // Biến lưu trạng thái đăng nhập
         public static string LoggedInUser { get; private set; }
-        public static int UserRole { get; private set; }
+        public static int UserRole { get; set; } = 0;
 
         public static int UserID { get; private set; }
 

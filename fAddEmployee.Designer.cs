@@ -192,6 +192,7 @@
             btnSaveAddEmployee.TabIndex = 15;
             btnSaveAddEmployee.Text = "LƯU THÔNG TIN";
             btnSaveAddEmployee.UseVisualStyleBackColor = false;
+            btnSaveAddEmployee.Click += btnSaveAddEmployee_Click;
             // 
             // btnClose
             // 
@@ -230,6 +231,7 @@
             Controls.Add(label1);
             Name = "fAddEmployee";
             Text = "THÊM NHÂN VIÊN";
+            Load += fAddEmployee_Load;
             ResumeLayout(false);
             PerformLayout();
         }
