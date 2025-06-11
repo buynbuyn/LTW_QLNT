@@ -52,7 +52,6 @@
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(293, 27);
             txtSearch.TabIndex = 1;
-            txtSearch.Text = "Nhập...";
             // 
             // btnSearch
             // 
