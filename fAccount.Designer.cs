@@ -30,16 +30,14 @@
         {
             label1 = new Label();
             dataGridView1 = new DataGridView();
+            btnAddAccount = new Button();
+            panelAccount = new Panel();
             UserID = new DataGridViewTextBoxColumn();
             UserName = new DataGridViewTextBoxColumn();
             FullName = new DataGridViewTextBoxColumn();
             Email = new DataGridViewTextBoxColumn();
             Role = new DataGridViewTextBoxColumn();
             Status = new DataGridViewCheckBoxColumn();
-            Fix = new DataGridViewButtonColumn();
-            Delete = new DataGridViewButtonColumn();
-            btnAddAccount = new Button();
-            panelAccount = new Panel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -58,71 +56,13 @@
             // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { UserID, UserName, FullName, Email, Role, Status, Fix, Delete });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { UserID, UserName, FullName, Email, Role, Status });
             dataGridView1.Location = new Point(12, 63);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(683, 359);
             dataGridView1.TabIndex = 2;
-            // 
-            // UserID
-            // 
-            UserID.HeaderText = "ID";
-            UserID.MinimumWidth = 6;
-            UserID.Name = "UserID";
-            UserID.Width = 125;
-            // 
-            // UserName
-            // 
-            UserName.HeaderText = "Vai trò";
-            UserName.MinimumWidth = 6;
-            UserName.Name = "UserName";
-            UserName.Width = 125;
-            // 
-            // FullName
-            // 
-            FullName.HeaderText = "Họ và tên";
-            FullName.MinimumWidth = 6;
-            FullName.Name = "FullName";
-            FullName.Width = 125;
-            // 
-            // Email
-            // 
-            Email.HeaderText = "Email";
-            Email.MinimumWidth = 6;
-            Email.Name = "Email";
-            Email.Width = 125;
-            // 
-            // Role
-            // 
-            Role.HeaderText = "Quyền";
-            Role.MinimumWidth = 6;
-            Role.Name = "Role";
-            Role.Width = 125;
-            // 
-            // Status
-            // 
-            Status.HeaderText = "Trạng thái";
-            Status.MinimumWidth = 6;
-            Status.Name = "Status";
-            Status.Width = 125;
-            // 
-            // Fix
-            // 
-            Fix.HeaderText = "Sửa";
-            Fix.MinimumWidth = 6;
-            Fix.Name = "Fix";
-            Fix.Resizable = DataGridViewTriState.True;
-            Fix.SortMode = DataGridViewColumnSortMode.Automatic;
-            Fix.Width = 125;
-            // 
-            // Delete
-            // 
-            Delete.HeaderText = "Xóa";
-            Delete.MinimumWidth = 6;
-            Delete.Name = "Delete";
-            Delete.Width = 125;
             // 
             // btnAddAccount
             // 
@@ -144,6 +84,54 @@
             panelAccount.Size = new Size(326, 296);
             panelAccount.TabIndex = 4;
             // 
+            // UserID
+            // 
+            UserID.DataPropertyName = "UserID";
+            UserID.HeaderText = "ID";
+            UserID.MinimumWidth = 6;
+            UserID.Name = "UserID";
+            UserID.Width = 125;
+            // 
+            // UserName
+            // 
+            UserName.DataPropertyName = "UserName";
+            UserName.HeaderText = "Vai trò";
+            UserName.MinimumWidth = 6;
+            UserName.Name = "UserName";
+            UserName.Width = 125;
+            // 
+            // FullName
+            // 
+            FullName.DataPropertyName = "FullName";
+            FullName.HeaderText = "Họ và tên";
+            FullName.MinimumWidth = 6;
+            FullName.Name = "FullName";
+            FullName.Width = 125;
+            // 
+            // Email
+            // 
+            Email.DataPropertyName = "Email";
+            Email.HeaderText = "Email";
+            Email.MinimumWidth = 6;
+            Email.Name = "Email";
+            Email.Width = 125;
+            // 
+            // Role
+            // 
+            Role.DataPropertyName = "Role";
+            Role.HeaderText = "Quyền";
+            Role.MinimumWidth = 6;
+            Role.Name = "Role";
+            Role.Width = 125;
+            // 
+            // Status
+            // 
+            Status.DataPropertyName = "Status";
+            Status.HeaderText = "Trạng thái";
+            Status.MinimumWidth = 6;
+            Status.Name = "Status";
+            Status.Width = 125;
+            // 
             // fAccount
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -156,6 +144,7 @@
             Name = "fAccount";
             Text = "QUẢN LÝ TÀI KHOẢN";
             WindowState = FormWindowState.Maximized;
+            Load += fAccount_Load_1;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -165,15 +154,13 @@
 
         private Label label1;
         private DataGridView dataGridView1;
+        private Button btnAddAccount;
+        private Panel panelAccount;
         private DataGridViewTextBoxColumn UserID;
         private DataGridViewTextBoxColumn UserName;
         private DataGridViewTextBoxColumn FullName;
         private DataGridViewTextBoxColumn Email;
         private DataGridViewTextBoxColumn Role;
         private DataGridViewCheckBoxColumn Status;
-        private DataGridViewButtonColumn Fix;
-        private DataGridViewButtonColumn Delete;
-        private Button btnAddAccount;
-        private Panel panelAccount;
     }
 }

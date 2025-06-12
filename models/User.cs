@@ -17,27 +17,27 @@ namespace QLNT.models
 
             [Required]
             [StringLength(50)]
-            [Column(TypeName = "varchar(50)")]
+            [Column(TypeName = "nvarchar(50)")]
             public string UserName { get; set; } = null!; // Tên đăng nhập
 
             [Required]
             [StringLength(100)]
-            [Column(TypeName = "varchar(100)")]
+            [Column(TypeName = "nvarchar(100)")]
             public string FullName { get; set; } = null!; // Họ tên đầy đủ
 
             [Required]
             [StringLength(100)]
-            [Column(TypeName = "varchar(100)")]
+            [Column(TypeName = "nvarchar(100)")]
             public string Email { get; set; } = null!; // Địa chỉ email
 
             [Required]
             [StringLength(255)]
-            [Column(TypeName = "varchar(255)")]
+            [Column(TypeName = "nvarchar(255)")]
             public string Password { get; set; } = null!; // Mật khẩu mã hóa
 
             [Required]
             [StringLength(20)]
-            [Column(TypeName = "varchar(20)")]
+            [Column(TypeName = "nvarchar(20)")]
             public int Role { get; set; }// Vai trò (Admin, User, Manager, ...)
 
             [Required]

@@ -39,6 +39,30 @@ namespace QLNT
                 }).OrderBy(e => e.EmployeeID).ToList();
             }
         }
+        public void LoadEmployeeData(string keyword)
+        {
+            using (var db = new EFDbContext())
+            {
+                var filtered = db.Employees
+                    .Where(e => e.EmployeeName.ToLower().Contains(keyword.ToLower()))
+                    .Select(e => new
+                    {
+                        e.EmployeeID,
+                        e.EmployeeName,
+                        e.Gender,
+                        e.Position,
+                        e.Salary,
+                        e.HireDate,
+                        e.PhoneNumber,
+                        e.EmailEmployee
+                    })
+                    .OrderBy(e => e.EmployeeID)
+                    .ToList();
+
+                dtgvEmployee.AutoGenerateColumns = true;
+                dtgvEmployee.DataSource = filtered;
+            }
+        }
 
         private void AddActionButtons()
         {
@@ -123,7 +147,7 @@ namespace QLNT
         private void btnFindEmployee_Click(object sender, EventArgs e)
         {
             panelEmployee.Controls.Clear();
-            fFindEmployee formFind = new fFindEmployee();
+            fFindEmployee formFind = new fFindEmployee(this);
             formFind.TopLevel = false;
             formFind.FormBorderStyle = FormBorderStyle.None;
             formFind.Dock = DockStyle.Fill;
