@@ -37,7 +37,7 @@ namespace QLNT
                 accountForm.MdiParent = this; // Thiết lập fMain làm form cha
                 accountForm.Show();
             }
-            else 
+            else
             {
                 MessageBox.Show("Bạn không có quyền truy cập vào chức năng này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -63,6 +63,13 @@ namespace QLNT
             var form = new CuaHangForm();
             form.MdiParent = this;
             form.Show();
+        }
+
+        private void hóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Hoadon giohang = new Hoadon();
+            giohang.MdiParent = this; 
+            giohang.Show();
         }
     }
 }
