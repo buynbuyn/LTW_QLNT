@@ -20,6 +20,7 @@ namespace QLNT.Data
         internal DbSet<ProductDetail> ProductDetails { get; set; }
         internal DbSet<Manufacturer> Manufacturers { get; set; }
 
+
         // Cấu hình chuỗi nối kết với SQL Server
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["db"].ConnectionString);

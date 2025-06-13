@@ -1,4 +1,4 @@
-﻿using QLNT.Data;
+﻿    using QLNT.Data;
 using System;
 using System.Linq;
 using System.Windows.Forms;
