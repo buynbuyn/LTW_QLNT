@@ -37,9 +37,9 @@
             pictureBox2 = new PictureBox();
             pictureBox3 = new PictureBox();
             panel1 = new Panel();
-            label2 = new Label();
             panel2 = new Panel();
             label3 = new Label();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -126,15 +126,6 @@
             panel1.Size = new Size(440, 56);
             panel1.TabIndex = 9;
             // 
-            // label2
-            // 
-            label2.BackColor = Color.DarkGray;
-            label2.Location = new Point(15, 52);
-            label2.Name = "label2";
-            label2.Size = new Size(400, 1);
-            label2.TabIndex = 8;
-            label2.Text = "                                                                                                                 ";
-            // 
             // panel2
             // 
             panel2.Controls.Add(label3);
@@ -153,6 +144,15 @@
             label3.Size = new Size(400, 1);
             label3.TabIndex = 9;
             label3.Text = "                                                                                                                 ";
+            // 
+            // label2
+            // 
+            label2.BackColor = Color.DarkGray;
+            label2.Location = new Point(16, 49);
+            label2.Name = "label2";
+            label2.Size = new Size(400, 1);
+            label2.TabIndex = 10;
+            label2.Text = "";
             // 
             // fLogin
             // 
@@ -189,8 +189,8 @@
         private PictureBox pictureBox2;
         private PictureBox pictureBox3;
         private Panel panel1;
-        private Label label2;
         private Panel panel2;
         private Label label3;
+        private Label label2;
     }
 }

@@ -88,6 +88,7 @@
             btnFind.TabIndex = 18;
             btnFind.Text = "TÌM KIẾM";
             btnFind.UseVisualStyleBackColor = false;
+            btnFind.Click += btnFind_Click;
             // 
             // fFindEmployee
             // 
