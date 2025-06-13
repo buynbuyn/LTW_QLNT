@@ -19,15 +19,15 @@ namespace QLNT.models
         [ForeignKey("Product")]
         public int ProductID { get; set; } // Khóa ngoại từ bảng Product
 
-        [Required]
+        [Required] 
         public int StockQuantity { get; set; } = 0; // Số lượng tồn kho
 
         [Required]
-        [Column(TypeName = "datetime")]
+        [Column(TypeName = "datetime")] 
         public DateTime ExpirationDate { get; set; } // Ngày hết hạn
 
         [Required]
-        [Column(TypeName = "text")]
+        [Column(TypeName = "text")] 
         public string Description { get; set; } = null!; // Mô tả sản phẩm
 
         // Liên kết với bảng Product
