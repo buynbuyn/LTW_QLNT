@@ -32,7 +32,6 @@
             label2 = new Label();
             label3 = new Label();
             txtFullName = new TextBox();
-            txtUserName = new TextBox();
             label4 = new Label();
             txtEmail = new TextBox();
             label5 = new Label();
@@ -42,6 +41,7 @@
             ckStatus = new CheckBox();
             btnSaveAddAccount = new Button();
             btnClose = new Button();
+            cbUserName = new ComboBox();
             SuspendLayout();
             // 
             // label1
@@ -81,13 +81,6 @@
             txtFullName.Name = "txtFullName";
             txtFullName.Size = new Size(176, 27);
             txtFullName.TabIndex = 4;
-            // 
-            // txtUserName
-            // 
-            txtUserName.Location = new Point(229, 110);
-            txtUserName.Name = "txtUserName";
-            txtUserName.Size = new Size(125, 27);
-            txtUserName.TabIndex = 5;
             // 
             // label4
             // 
@@ -180,11 +173,20 @@
             btnClose.Text = "HỦY";
             btnClose.UseVisualStyleBackColor = false;
             // 
+            // cbUserName
+            // 
+            cbUserName.FormattingEnabled = true;
+            cbUserName.Location = new Point(229, 109);
+            cbUserName.Name = "cbUserName";
+            cbUserName.Size = new Size(125, 28);
+            cbUserName.TabIndex = 18;
+            // 
             // fAddAccount
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(cbUserName);
             Controls.Add(btnClose);
             Controls.Add(btnSaveAddAccount);
             Controls.Add(ckStatus);
@@ -194,7 +196,6 @@
             Controls.Add(label5);
             Controls.Add(txtEmail);
             Controls.Add(label4);
-            Controls.Add(txtUserName);
             Controls.Add(txtFullName);
             Controls.Add(label3);
             Controls.Add(label2);
@@ -211,7 +212,6 @@
         private Label label2;
         private Label label3;
         private TextBox txtFullName;
-        private TextBox txtUserName;
         private Label label4;
         private TextBox txtEmail;
         private Label label5;
@@ -221,5 +221,6 @@
         private CheckBox ckStatus;
         private Button btnSaveAddAccount;
         private Button btnClose;
+        private ComboBox cbUserName;
     }
 }

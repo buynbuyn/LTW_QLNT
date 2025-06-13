@@ -26,7 +26,7 @@ namespace QLNT
             {
                 if (Utility.CheckLogin(user, pass))
                 {
-                    
+
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
