@@ -25,7 +25,10 @@ namespace QLNT.Migrations
             modelBuilder.Entity("QLNT.models.Cart", b =>
                 {
                     b.Property<int>("CartID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartID"));
 
                     b.Property<int?>("CustomerID")
                         .IsRequired()

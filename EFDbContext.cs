@@ -67,14 +67,6 @@ namespace QLNT.Data
                 .HasForeignKey(od => od.OrderID)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Cart>(entity =>
-            {
-                entity.HasKey(e => e.CartID);
-                entity.Property(e => e.CartID)
-                      .ValueGeneratedNever(); 
-                entity.HasIndex(e => e.UserID).IsUnique(); 
-            });
-
             modelBuilder.Entity<User>().HasData(
                 new User { UserID = 1, UserName = "admin1", FullName = "Lê Phạm Bảo Uyên", Email = "uyenle@gmail.com", Password = "admin1", Role = 2, Status = true },
                 new User { UserID = 2, UserName = "admin2", FullName = "Phạm Hữu Kiên", Email = "kienpham@gmail.com", Password = "admin2", Role = 2, Status = true },
