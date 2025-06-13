@@ -30,14 +30,14 @@
         {
             label1 = new Label();
             dataGridView1 = new DataGridView();
-            btnAddAccount = new Button();
-            panelAccount = new Panel();
             UserID = new DataGridViewTextBoxColumn();
             UserName = new DataGridViewTextBoxColumn();
             FullName = new DataGridViewTextBoxColumn();
             Email = new DataGridViewTextBoxColumn();
             Role = new DataGridViewTextBoxColumn();
             Status = new DataGridViewCheckBoxColumn();
+            btnAddAccount = new Button();
+            panelAccount = new Panel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -61,28 +61,9 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(683, 359);
+            dataGridView1.Size = new Size(856, 425);
             dataGridView1.TabIndex = 2;
-            // 
-            // btnAddAccount
-            // 
-            btnAddAccount.BackColor = SystemColors.ActiveBorder;
-            btnAddAccount.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddAccount.Location = new Point(814, 63);
-            btnAddAccount.Name = "btnAddAccount";
-            btnAddAccount.Size = new Size(146, 40);
-            btnAddAccount.TabIndex = 3;
-            btnAddAccount.Text = "Thêm tài khoản";
-            btnAddAccount.UseVisualStyleBackColor = false;
-            btnAddAccount.Click += btnAddAccount_Click;
-            // 
-            // panelAccount
-            // 
-            panelAccount.BackColor = SystemColors.ActiveBorder;
-            panelAccount.Location = new Point(732, 126);
-            panelAccount.Name = "panelAccount";
-            panelAccount.Size = new Size(326, 296);
-            panelAccount.TabIndex = 4;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // UserID
             // 
@@ -132,11 +113,31 @@
             Status.Name = "Status";
             Status.Width = 125;
             // 
+            // btnAddAccount
+            // 
+            btnAddAccount.BackColor = SystemColors.ActiveBorder;
+            btnAddAccount.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAddAccount.Location = new Point(1071, 63);
+            btnAddAccount.Name = "btnAddAccount";
+            btnAddAccount.Size = new Size(146, 40);
+            btnAddAccount.TabIndex = 3;
+            btnAddAccount.Text = "Thêm tài khoản";
+            btnAddAccount.UseVisualStyleBackColor = false;
+            btnAddAccount.Click += btnAddAccount_Click;
+            // 
+            // panelAccount
+            // 
+            panelAccount.BackColor = SystemColors.ActiveBorder;
+            panelAccount.Location = new Point(919, 126);
+            panelAccount.Name = "panelAccount";
+            panelAccount.Size = new Size(422, 362);
+            panelAccount.TabIndex = 4;
+            // 
             // fAccount
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1138, 503);
+            ClientSize = new Size(1393, 612);
             Controls.Add(panelAccount);
             Controls.Add(btnAddAccount);
             Controls.Add(dataGridView1);
