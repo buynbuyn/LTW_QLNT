@@ -12,7 +12,7 @@ using QLNT.Data;
 namespace QLNT.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20250613141349_Migrations")]
+    [Migration("20250614114237_Migrations")]
     partial class Migrations
     {
         /// <inheritdoc />
@@ -28,10 +28,7 @@ namespace QLNT.Migrations
             modelBuilder.Entity("QLNT.models.Cart", b =>
                 {
                     b.Property<int>("CartID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartID"));
 
                     b.Property<int?>("CustomerID")
                         .IsRequired()
@@ -168,6 +165,9 @@ namespace QLNT.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.HasKey("CustomerID");
 
                     b.ToTable("Customers");
@@ -180,7 +180,8 @@ namespace QLNT.Migrations
                             CustomerName = "Nguyễn Văn Trỗi",
                             Email = "troinguyen@gmail.com",
                             Gender = "Nam",
-                            PhoneNumber = "0901234567"
+                            PhoneNumber = "0901234567",
+                            Status = true
                         },
                         new
                         {
@@ -189,7 +190,8 @@ namespace QLNT.Migrations
                             CustomerName = "Trần Thị Tuyết Mai",
                             Email = "maitran@gmail.com",
                             Gender = "Nữ",
-                            PhoneNumber = "0937654321"
+                            PhoneNumber = "0937654321",
+                            Status = true
                         },
                         new
                         {
@@ -198,7 +200,8 @@ namespace QLNT.Migrations
                             CustomerName = "Lê Tấn Lộc",
                             Email = "locle@gmail.com",
                             Gender = "Nam",
-                            PhoneNumber = "0912345678"
+                            PhoneNumber = "0912345678",
+                            Status = true
                         },
                         new
                         {
@@ -207,7 +210,8 @@ namespace QLNT.Migrations
                             CustomerName = "Phạm Thanh Bình",
                             Email = "binhpham@gmail.com",
                             Gender = "Nữ",
-                            PhoneNumber = "0978123456"
+                            PhoneNumber = "0978123456",
+                            Status = true
                         },
                         new
                         {
@@ -216,7 +220,8 @@ namespace QLNT.Migrations
                             CustomerName = "Đặng Quang Huy",
                             Email = "huydang@gmail.com",
                             Gender = "Nam",
-                            PhoneNumber = "0945678912"
+                            PhoneNumber = "0945678912",
+                            Status = true
                         },
                         new
                         {
@@ -225,7 +230,8 @@ namespace QLNT.Migrations
                             CustomerName = "Bùi Phương Linh",
                             Email = "linhbui@gmail.com",
                             Gender = "Nữ",
-                            PhoneNumber = "0998765432"
+                            PhoneNumber = "0998765432",
+                            Status = true
                         },
                         new
                         {
@@ -234,7 +240,8 @@ namespace QLNT.Migrations
                             CustomerName = "Hoàng Gia Bảo",
                             Email = "hoangbao@gmail.com",
                             Gender = "Nam",
-                            PhoneNumber = "0954321789"
+                            PhoneNumber = "0954321789",
+                            Status = true
                         },
                         new
                         {
@@ -243,7 +250,8 @@ namespace QLNT.Migrations
                             CustomerName = "Vũ Minh Anh",
                             Email = "vuanh@gmail.com",
                             Gender = "Nữ",
-                            PhoneNumber = "0912348765"
+                            PhoneNumber = "0912348765",
+                            Status = true
                         },
                         new
                         {
@@ -252,7 +260,8 @@ namespace QLNT.Migrations
                             CustomerName = "Trịnh Minh Khoa",
                             Email = "trinhkhoa@gmail.com",
                             Gender = "Nam",
-                            PhoneNumber = "0987651234"
+                            PhoneNumber = "0987651234",
+                            Status = true
                         },
                         new
                         {
@@ -261,7 +270,8 @@ namespace QLNT.Migrations
                             CustomerName = "Mai Tuyết Nhi",
                             Email = "mainhi@gmail.com",
                             Gender = "Nữ",
-                            PhoneNumber = "0965432871"
+                            PhoneNumber = "0965432871",
+                            Status = true
                         });
                 });
 

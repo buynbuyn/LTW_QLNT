@@ -33,6 +33,9 @@ namespace QLNT.models
         [Required]
         [StringLength(100)]
         public required string Email { get; set; }
+        [Required]
+        public bool Status { get; set; } = true; // Trạng thái khách hàng, mặc định là true
+
 
         // Liên kết với bảng Orders (1-N)
         public virtual ICollection<Order>? Orders { get; set; }

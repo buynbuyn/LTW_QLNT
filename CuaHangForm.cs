@@ -189,6 +189,11 @@ namespace QLNT
                                 TotalCartPrice = product.Price * soLuong
                             };
                             db.Carts.Add(cart);
+                            db.SaveChanges();
+                            int cartID = cart.CartID;  // ✅ Đảm bảo lấy ID sau khi lưu
+
+
+
                         }
                         else
                         {
@@ -214,8 +219,7 @@ namespace QLNT
                         transaction.Commit();
                         MessageBox.Show("Thêm vào giỏ hàng thành công.");
 
-                        GioHangForm giohang = new GioHangForm();
-                        giohang.Show();
+               
                     }
                 }
             }

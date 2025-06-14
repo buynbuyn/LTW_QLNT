@@ -70,5 +70,12 @@ namespace QLNT
             
             
         }
+
+        private void hóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Hoadon giohang = new Hoadon();
+            giohang.MdiParent = this;
+            giohang.Show();
+        }
     }
 }

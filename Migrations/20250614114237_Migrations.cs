@@ -38,7 +38,8 @@ namespace QLNT.Migrations
                     Gender = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -133,8 +134,7 @@ namespace QLNT.Migrations
                 name: "Carts",
                 columns: table => new
                 {
-                    CartID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CartID = table.Column<int>(type: "int", nullable: false),
                     CustomerID = table.Column<int>(type: "int", nullable: false),
                     UserID = table.Column<int>(type: "int", nullable: false),
                     TotalCartPrice = table.Column<decimal>(type: "decimal(10,2)", nullable: false)
@@ -274,19 +274,19 @@ namespace QLNT.Migrations
 
             migrationBuilder.InsertData(
                 table: "Customers",
-                columns: new[] { "CustomerID", "Address", "CustomerName", "Email", "Gender", "PhoneNumber" },
+                columns: new[] { "CustomerID", "Address", "CustomerName", "Email", "Gender", "PhoneNumber", "Status" },
                 values: new object[,]
                 {
-                    { 1, "267 Đường Nguyễn Huệ, Quận 1, TP.HCM", "Nguyễn Văn Trỗi", "troinguyen@gmail.com", "Nam", "0901234567" },
-                    { 2, "41 Phạm Văn Hai, Tân Bình, TP.HCM", "Trần Thị Tuyết Mai", "maitran@gmail.com", "Nữ", "0937654321" },
-                    { 3, "68 Nơ Trang Long, Quận Bình Thạnh, TP.HCM", "Lê Tấn Lộc", "locle@gmail.com", "Nam", "0912345678" },
-                    { 4, "620 Huỳnh Tấn Phát, Quận 7, TP.HCM", "Phạm Thanh Bình", "binhpham@gmail.com", "Nữ", "0978123456" },
-                    { 5, "186 Lê Văn Sỹ, Quận Tân Bình, TP.HCM", "Đặng Quang Huy", "huydang@gmail.com", "Nam", "0945678912" },
-                    { 6, "40 Đường Tân Vĩnh, Quận 4, TP.HCM", "Bùi Phương Linh", "linhbui@gmail.com", "Nữ", "0998765432" },
-                    { 7, "147 Đường Nguyễn Kiệm, Quận Phú Nhuận, TP.HCM", "Hoàng Gia Bảo", "hoangbao@gmail.com", "Nam", "0954321789" },
-                    { 8, "258 Lê Đình Cẩn, Quận Bình Tân, TP.HCM", "Vũ Minh Anh", "vuanh@gmail.com", "Nữ", "0912348765" },
-                    { 9, "369 Đường Trần Não, Quận 2, TP.HCM", "Trịnh Minh Khoa", "trinhkhoa@gmail.com", "Nam", "0987651234" },
-                    { 10, "741 Đường Mạc Thiên Tích, Quận 5, TP.HCM", "Mai Tuyết Nhi", "mainhi@gmail.com", "Nữ", "0965432871" }
+                    { 1, "267 Đường Nguyễn Huệ, Quận 1, TP.HCM", "Nguyễn Văn Trỗi", "troinguyen@gmail.com", "Nam", "0901234567", true },
+                    { 2, "41 Phạm Văn Hai, Tân Bình, TP.HCM", "Trần Thị Tuyết Mai", "maitran@gmail.com", "Nữ", "0937654321", true },
+                    { 3, "68 Nơ Trang Long, Quận Bình Thạnh, TP.HCM", "Lê Tấn Lộc", "locle@gmail.com", "Nam", "0912345678", true },
+                    { 4, "620 Huỳnh Tấn Phát, Quận 7, TP.HCM", "Phạm Thanh Bình", "binhpham@gmail.com", "Nữ", "0978123456", true },
+                    { 5, "186 Lê Văn Sỹ, Quận Tân Bình, TP.HCM", "Đặng Quang Huy", "huydang@gmail.com", "Nam", "0945678912", true },
+                    { 6, "40 Đường Tân Vĩnh, Quận 4, TP.HCM", "Bùi Phương Linh", "linhbui@gmail.com", "Nữ", "0998765432", true },
+                    { 7, "147 Đường Nguyễn Kiệm, Quận Phú Nhuận, TP.HCM", "Hoàng Gia Bảo", "hoangbao@gmail.com", "Nam", "0954321789", true },
+                    { 8, "258 Lê Đình Cẩn, Quận Bình Tân, TP.HCM", "Vũ Minh Anh", "vuanh@gmail.com", "Nữ", "0912348765", true },
+                    { 9, "369 Đường Trần Não, Quận 2, TP.HCM", "Trịnh Minh Khoa", "trinhkhoa@gmail.com", "Nam", "0987651234", true },
+                    { 10, "741 Đường Mạc Thiên Tích, Quận 5, TP.HCM", "Mai Tuyết Nhi", "mainhi@gmail.com", "Nữ", "0965432871", true }
                 });
 
             migrationBuilder.InsertData(

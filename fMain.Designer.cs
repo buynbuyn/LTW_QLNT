@@ -65,6 +65,7 @@
             hóaĐơnToolStripMenuItem.Name = "hóaĐơnToolStripMenuItem";
             hóaĐơnToolStripMenuItem.Size = new Size(66, 20);
             hóaĐơnToolStripMenuItem.Text = "Hóa Đơn";
+            hóaĐơnToolStripMenuItem.Click += hóaĐơnToolStripMenuItem_Click;
             // 
             // khoToolStripMenuItem
             // 

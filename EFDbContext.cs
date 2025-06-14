@@ -20,7 +20,6 @@ namespace QLNT.Data
         internal DbSet<ProductDetail> ProductDetails { get; set; }
         internal DbSet<Manufacturer> Manufacturers { get; set; }
 
-
         // Cấu hình chuỗi nối kết với SQL Server
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["db"].ConnectionString);
@@ -68,6 +67,14 @@ namespace QLNT.Data
                 .HasForeignKey(od => od.OrderID)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Cart>(entity =>
+            {
+                entity.HasKey(e => e.CartID);
+                entity.Property(e => e.CartID)
+                      .ValueGeneratedNever();
+                entity.HasIndex(e => e.UserID).IsUnique();
+            });
+
             modelBuilder.Entity<User>().HasData(
                 new User { UserID = 1, UserName = "admin1", FullName = "Lê Phạm Bảo Uyên", Email = "uyenle@gmail.com", Password = "admin1", Role = 2, Status = true },
                 new User { UserID = 2, UserName = "admin2", FullName = "Phạm Hữu Kiên", Email = "kienpham@gmail.com", Password = "admin2", Role = 2, Status = true },
@@ -76,17 +83,18 @@ namespace QLNT.Data
                 new User { UserID = 5, UserName = "employee2", FullName = "Phùng Minh Vũ", Email = "vuphung@gmail.com", Password = "employee2", Role = 1, Status = true }
             );
             modelBuilder.Entity<Customer>().HasData(
-                new Customer { CustomerID = 1, CustomerName = "Nguyễn Văn Trỗi", Gender = "Nam", Address = "267 Đường Nguyễn Huệ, Quận 1, TP.HCM", PhoneNumber = "0901234567", Email = "troinguyen@gmail.com" },
-                new Customer { CustomerID = 2, CustomerName = "Trần Thị Tuyết Mai", Gender = "Nữ", Address = "41 Phạm Văn Hai, Tân Bình, TP.HCM", PhoneNumber = "0937654321", Email = "maitran@gmail.com" },
-                new Customer { CustomerID = 3, CustomerName = "Lê Tấn Lộc", Gender = "Nam", Address = "68 Nơ Trang Long, Quận Bình Thạnh, TP.HCM", PhoneNumber = "0912345678", Email = "locle@gmail.com" },
-                new Customer { CustomerID = 4, CustomerName = "Phạm Thanh Bình", Gender = "Nữ", Address = "620 Huỳnh Tấn Phát, Quận 7, TP.HCM", PhoneNumber = "0978123456", Email = "binhpham@gmail.com" },
-                new Customer { CustomerID = 5, CustomerName = "Đặng Quang Huy", Gender = "Nam", Address = "186 Lê Văn Sỹ, Quận Tân Bình, TP.HCM", PhoneNumber = "0945678912", Email = "huydang@gmail.com" },
-                new Customer { CustomerID = 6, CustomerName = "Bùi Phương Linh", Gender = "Nữ", Address = "40 Đường Tân Vĩnh, Quận 4, TP.HCM", PhoneNumber = "0998765432", Email = "linhbui@gmail.com" },
-                new Customer { CustomerID = 7, CustomerName = "Hoàng Gia Bảo", Gender = "Nam", Address = "147 Đường Nguyễn Kiệm, Quận Phú Nhuận, TP.HCM", PhoneNumber = "0954321789", Email = "hoangbao@gmail.com" },
-                new Customer { CustomerID = 8, CustomerName = "Vũ Minh Anh", Gender = "Nữ", Address = "258 Lê Đình Cẩn, Quận Bình Tân, TP.HCM", PhoneNumber = "0912348765", Email = "vuanh@gmail.com" },
-                new Customer { CustomerID = 9, CustomerName = "Trịnh Minh Khoa", Gender = "Nam", Address = "369 Đường Trần Não, Quận 2, TP.HCM", PhoneNumber = "0987651234", Email = "trinhkhoa@gmail.com" },
-                new Customer { CustomerID = 10, CustomerName = "Mai Tuyết Nhi", Gender = "Nữ", Address = "741 Đường Mạc Thiên Tích, Quận 5, TP.HCM", PhoneNumber = "0965432871", Email = "mainhi@gmail.com" }
+                new Customer { CustomerID = 1, CustomerName = "Nguyễn Văn Trỗi", Gender = "Nam", Address = "267 Đường Nguyễn Huệ, Quận 1, TP.HCM", PhoneNumber = "0901234567", Email = "troinguyen@gmail.com", Status = true },
+                new Customer { CustomerID = 2, CustomerName = "Trần Thị Tuyết Mai", Gender = "Nữ", Address = "41 Phạm Văn Hai, Tân Bình, TP.HCM", PhoneNumber = "0937654321", Email = "maitran@gmail.com", Status = true },
+                new Customer { CustomerID = 3, CustomerName = "Lê Tấn Lộc", Gender = "Nam", Address = "68 Nơ Trang Long, Quận Bình Thạnh, TP.HCM", PhoneNumber = "0912345678", Email = "locle@gmail.com", Status = true },
+                new Customer { CustomerID = 4, CustomerName = "Phạm Thanh Bình", Gender = "Nữ", Address = "620 Huỳnh Tấn Phát, Quận 7, TP.HCM", PhoneNumber = "0978123456", Email = "binhpham@gmail.com", Status = true },
+                new Customer { CustomerID = 5, CustomerName = "Đặng Quang Huy", Gender = "Nam", Address = "186 Lê Văn Sỹ, Quận Tân Bình, TP.HCM", PhoneNumber = "0945678912", Email = "huydang@gmail.com", Status = true },
+                new Customer { CustomerID = 6, CustomerName = "Bùi Phương Linh", Gender = "Nữ", Address = "40 Đường Tân Vĩnh, Quận 4, TP.HCM", PhoneNumber = "0998765432", Email = "linhbui@gmail.com", Status = true },
+                new Customer { CustomerID = 7, CustomerName = "Hoàng Gia Bảo", Gender = "Nam", Address = "147 Đường Nguyễn Kiệm, Quận Phú Nhuận, TP.HCM", PhoneNumber = "0954321789", Email = "hoangbao@gmail.com", Status = true },
+                new Customer { CustomerID = 8, CustomerName = "Vũ Minh Anh", Gender = "Nữ", Address = "258 Lê Đình Cẩn, Quận Bình Tân, TP.HCM", PhoneNumber = "0912348765", Email = "vuanh@gmail.com", Status = true },
+                new Customer { CustomerID = 9, CustomerName = "Trịnh Minh Khoa", Gender = "Nam", Address = "369 Đường Trần Não, Quận 2, TP.HCM", PhoneNumber = "0987651234", Email = "trinhkhoa@gmail.com", Status = true },
+                new Customer { CustomerID = 10, CustomerName = "Mai Tuyết Nhi", Gender = "Nữ", Address = "741 Đường Mạc Thiên Tích, Quận 5, TP.HCM", PhoneNumber = "0965432871", Email = "mainhi@gmail.com", Status = true }
             );
+    
             modelBuilder.Entity<Employee>().HasData(
                 new Employee { EmployeeID = 1, EmployeeName = "Trần Diệp Anh Kiệt", Position = "Quản lý", Gender = "Nam", Salary = 20000000, HireDate = new DateTime(2024, 05, 12), PhoneNumber = "0901234567", EmailEmployee = "kiettran@gmail.com" },
                 new Employee { EmployeeID = 2, EmployeeName = "Phùng Minh Vũ", Position = "Giám sát ca", Gender = "Nam", Salary = 18000000, HireDate = new DateTime(2024, 07, 20), PhoneNumber = "0937654321", EmailEmployee = "vuphung@gmail.com" },
@@ -195,24 +203,24 @@ namespace QLNT.Data
             );
             modelBuilder.Entity<OrderDetail>().HasData(
                 // OrderID 1 - Đã thanh toán
-                new OrderDetail { OrderID = 1, ProductID = 1, QuantityOrder = 2, PaymentMethod = "Cash", UnitPrice = 150000},
-                new OrderDetail { OrderID = 1, ProductID = 5, QuantityOrder = 1, PaymentMethod = "Cash", UnitPrice = 200000},
+                new OrderDetail { OrderID = 1, ProductID = 1, QuantityOrder = 2, PaymentMethod = "Cash", UnitPrice = 150000 },
+                new OrderDetail { OrderID = 1, ProductID = 5, QuantityOrder = 1, PaymentMethod = "Cash", UnitPrice = 200000 },
 
                 // OrderID 2 - Chờ xử lý
-                new OrderDetail { OrderID = 2, ProductID = 3, QuantityOrder = 3, PaymentMethod = "Credit Card", UnitPrice = 130000},
-                new OrderDetail { OrderID = 2, ProductID = 7, QuantityOrder = 2, PaymentMethod = "Credit Card", UnitPrice = 200000},
+                new OrderDetail { OrderID = 2, ProductID = 3, QuantityOrder = 3, PaymentMethod = "Credit Card", UnitPrice = 130000 },
+                new OrderDetail { OrderID = 2, ProductID = 7, QuantityOrder = 2, PaymentMethod = "Credit Card", UnitPrice = 200000 },
 
                 // OrderID 3 - Đang giao
-                new OrderDetail { OrderID = 3, ProductID = 2, QuantityOrder = 1, PaymentMethod = "Bank Transfer", UnitPrice = 120000},
-                new OrderDetail { OrderID = 3, ProductID = 9, QuantityOrder = 5, PaymentMethod = "Bank Transfer", UnitPrice = 90000},
+                new OrderDetail { OrderID = 3, ProductID = 2, QuantityOrder = 1, PaymentMethod = "Bank Transfer", UnitPrice = 120000 },
+                new OrderDetail { OrderID = 3, ProductID = 9, QuantityOrder = 5, PaymentMethod = "Bank Transfer", UnitPrice = 90000 },
 
                 // OrderID 4 - Đã hủy
-                new OrderDetail { OrderID = 4, ProductID = 4, QuantityOrder = 2, PaymentMethod = "Cash", UnitPrice = 180000},
-                new OrderDetail { OrderID = 4, ProductID = 8, QuantityOrder = 1, PaymentMethod = "Cash", UnitPrice = 250000},
+                new OrderDetail { OrderID = 4, ProductID = 4, QuantityOrder = 2, PaymentMethod = "Cash", UnitPrice = 180000 },
+                new OrderDetail { OrderID = 4, ProductID = 8, QuantityOrder = 1, PaymentMethod = "Cash", UnitPrice = 250000 },
 
                 // OrderID 5 - Hoàn tất
-                new OrderDetail { OrderID = 5, ProductID = 6, QuantityOrder = 4, PaymentMethod = "Credit Card", UnitPrice = 75000},
-                new OrderDetail { OrderID = 5, ProductID = 10, QuantityOrder = 3, PaymentMethod = "Credit Card", UnitPrice = 110000}
+                new OrderDetail { OrderID = 5, ProductID = 6, QuantityOrder = 4, PaymentMethod = "Credit Card", UnitPrice = 75000 },
+                new OrderDetail { OrderID = 5, ProductID = 10, QuantityOrder = 3, PaymentMethod = "Credit Card", UnitPrice = 110000 }
             );
 
 
@@ -221,7 +229,7 @@ namespace QLNT.Data
         public void UpdateCartTotal(int cartId)
         {
             var cart = Carts.Include(c => c.CartDetails).FirstOrDefault(c => c.CartID == cartId);
-            if (cart != null) 
+            if (cart != null)
             {
                 cart.TotalCartPrice = cart.CartDetails.Sum(cd => cd.Quantity * cd.UnitPrice);
                 SaveChanges(); // Cập nhật vào DB
