@@ -214,8 +214,7 @@ namespace QLNT
                         transaction.Commit();
                         MessageBox.Show("Thêm vào giỏ hàng thành công.");
 
-                        GioHangForm giohang = new GioHangForm();
-                        giohang.Show();
+               
                     }
                 }
             }

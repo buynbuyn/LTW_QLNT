@@ -20,7 +20,6 @@ namespace QLNT.Data
         internal DbSet<ProductDetail> ProductDetails { get; set; }
         internal DbSet<Manufacturer> Manufacturers { get; set; }
 
-
         // Cấu hình chuỗi nối kết với SQL Server
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["db"].ConnectionString);
@@ -67,6 +66,14 @@ namespace QLNT.Data
                 .WithOne(od => od.Order)
                 .HasForeignKey(od => od.OrderID)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Cart>(entity =>
+            {
+                entity.HasKey(e => e.CartID);
+                entity.Property(e => e.CartID)
+                      .ValueGeneratedNever();
+                entity.HasIndex(e => e.UserID).IsUnique();
+            });
 
             modelBuilder.Entity<User>().HasData(
                 new User { UserID = 1, UserName = "admin1", FullName = "Lê Phạm Bảo Uyên", Email = "uyenle@gmail.com", Password = "admin1", Role = 2, Status = true },
@@ -195,24 +202,24 @@ namespace QLNT.Data
             );
             modelBuilder.Entity<OrderDetail>().HasData(
                 // OrderID 1 - Đã thanh toán
-                new OrderDetail { OrderID = 1, ProductID = 1, QuantityOrder = 2, PaymentMethod = "Cash", UnitPrice = 150000},
-                new OrderDetail { OrderID = 1, ProductID = 5, QuantityOrder = 1, PaymentMethod = "Cash", UnitPrice = 200000},
+                new OrderDetail { OrderID = 1, ProductID = 1, QuantityOrder = 2, PaymentMethod = "Cash", UnitPrice = 150000 },
+                new OrderDetail { OrderID = 1, ProductID = 5, QuantityOrder = 1, PaymentMethod = "Cash", UnitPrice = 200000 },
 
                 // OrderID 2 - Chờ xử lý
-                new OrderDetail { OrderID = 2, ProductID = 3, QuantityOrder = 3, PaymentMethod = "Credit Card", UnitPrice = 130000},
-                new OrderDetail { OrderID = 2, ProductID = 7, QuantityOrder = 2, PaymentMethod = "Credit Card", UnitPrice = 200000},
+                new OrderDetail { OrderID = 2, ProductID = 3, QuantityOrder = 3, PaymentMethod = "Credit Card", UnitPrice = 130000 },
+                new OrderDetail { OrderID = 2, ProductID = 7, QuantityOrder = 2, PaymentMethod = "Credit Card", UnitPrice = 200000 },
 
                 // OrderID 3 - Đang giao
-                new OrderDetail { OrderID = 3, ProductID = 2, QuantityOrder = 1, PaymentMethod = "Bank Transfer", UnitPrice = 120000},
-                new OrderDetail { OrderID = 3, ProductID = 9, QuantityOrder = 5, PaymentMethod = "Bank Transfer", UnitPrice = 90000},
+                new OrderDetail { OrderID = 3, ProductID = 2, QuantityOrder = 1, PaymentMethod = "Bank Transfer", UnitPrice = 120000 },
+                new OrderDetail { OrderID = 3, ProductID = 9, QuantityOrder = 5, PaymentMethod = "Bank Transfer", UnitPrice = 90000 },
 
                 // OrderID 4 - Đã hủy
-                new OrderDetail { OrderID = 4, ProductID = 4, QuantityOrder = 2, PaymentMethod = "Cash", UnitPrice = 180000},
-                new OrderDetail { OrderID = 4, ProductID = 8, QuantityOrder = 1, PaymentMethod = "Cash", UnitPrice = 250000},
+                new OrderDetail { OrderID = 4, ProductID = 4, QuantityOrder = 2, PaymentMethod = "Cash", UnitPrice = 180000 },
+                new OrderDetail { OrderID = 4, ProductID = 8, QuantityOrder = 1, PaymentMethod = "Cash", UnitPrice = 250000 },
 
                 // OrderID 5 - Hoàn tất
-                new OrderDetail { OrderID = 5, ProductID = 6, QuantityOrder = 4, PaymentMethod = "Credit Card", UnitPrice = 75000},
-                new OrderDetail { OrderID = 5, ProductID = 10, QuantityOrder = 3, PaymentMethod = "Credit Card", UnitPrice = 110000}
+                new OrderDetail { OrderID = 5, ProductID = 6, QuantityOrder = 4, PaymentMethod = "Credit Card", UnitPrice = 75000 },
+                new OrderDetail { OrderID = 5, ProductID = 10, QuantityOrder = 3, PaymentMethod = "Credit Card", UnitPrice = 110000 }
             );
 
 
@@ -221,7 +228,7 @@ namespace QLNT.Data
         public void UpdateCartTotal(int cartId)
         {
             var cart = Carts.Include(c => c.CartDetails).FirstOrDefault(c => c.CartID == cartId);
-            if (cart != null) 
+            if (cart != null)
             {
                 cart.TotalCartPrice = cart.CartDetails.Sum(cd => cd.Quantity * cd.UnitPrice);
                 SaveChanges(); // Cập nhật vào DB

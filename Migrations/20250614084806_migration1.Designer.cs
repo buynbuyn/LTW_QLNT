@@ -12,8 +12,8 @@ using QLNT.Data;
 namespace QLNT.Migrations
 {
     [DbContext(typeof(EFDbContext))]
-    [Migration("20250613141349_Migrations")]
-    partial class Migrations
+    [Migration("20250614084806_migration1")]
+    partial class migration1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,10 +28,7 @@ namespace QLNT.Migrations
             modelBuilder.Entity("QLNT.models.Cart", b =>
                 {
                     b.Property<int>("CartID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartID"));
 
                     b.Property<int?>("CustomerID")
                         .IsRequired()
