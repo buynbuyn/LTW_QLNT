@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace QLNT.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrations : Migration
+    public partial class migration1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -86,11 +86,11 @@ namespace QLNT.Migrations
                 {
                     UserID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    FullName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    Password = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
-                    Role = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -105,12 +105,12 @@ namespace QLNT.Migrations
                     ProductID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CategoryID = table.Column<int>(type: "int", nullable: false),
-                    ProductName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    Dosage = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    Unit = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    ProductName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Dosage = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Unit = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     ManufactureID = table.Column<int>(type: "int", nullable: false),
-                    ProductImage = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
+                    ProductImage = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
