@@ -65,17 +65,27 @@ namespace QLNT
             form.Show();
         }
 
-        private void khoToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            
-            
-        }
+
 
         private void hóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Hoadon giohang = new Hoadon();
             giohang.MdiParent = this;
             giohang.Show();
+        }
+
+        private void khoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            KhoForm khohang = new KhoForm();
+            khohang.MdiParent = this;
+            khohang.Show();
+        }
+
+        private void lịchSửHóaĐơnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LSHDForm lshd = new LSHDForm();
+            lshd.MdiParent = this;
+            lshd.Show();
         }
     }
 }

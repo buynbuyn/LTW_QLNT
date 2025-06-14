@@ -190,7 +190,7 @@ namespace QLNT
                             };
                             db.Carts.Add(cart);
                             db.SaveChanges();
-                            int cartID = cart.CartID;  // ✅ Đảm bảo lấy ID sau khi lưu
+                           
 
 
 
