@@ -67,9 +67,8 @@ namespace QLNT
 
         private void khoToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            var form = new KhoForm();
-            form.MdiParent = this;
-            form.Show();
+            
+            
         }
     }
 }

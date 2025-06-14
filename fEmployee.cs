@@ -23,7 +23,7 @@ namespace QLNT
             using (var db = new EFDbContext()) // Kết nối database
             {
                 dtgvEmployee.DataSource = null;
-                dtgvEmployee.Columns.Clear(); // Xóa tất cả cột trước khi load dữ liệu
+              
                 dtgvEmployee.AutoGenerateColumns = true;
 
                 dtgvEmployee.DataSource = db.Employees.Select(e => new
