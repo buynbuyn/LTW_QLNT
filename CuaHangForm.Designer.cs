@@ -25,6 +25,11 @@
             findProduct = new TextBox();
             btn_findProduct = new Button();
             dataGridView1 = new DataGridView();
+            mathuoc = new DataGridViewTextBoxColumn();
+            tenthuoc = new DataGridViewTextBoxColumn();
+            hamluong = new DataGridViewTextBoxColumn();
+            donvitinh = new DataGridViewTextBoxColumn();
+            dongia = new DataGridViewTextBoxColumn();
             cboTenSanPham = new ComboBox();
             label4 = new Label();
             txtSoLuongMua = new TextBox();
@@ -34,11 +39,6 @@
             cboMaSanPham = new ComboBox();
             label3 = new Label();
             pnlTimKiem = new Panel();
-            mathuoc = new DataGridViewTextBoxColumn();
-            tenthuoc = new DataGridViewTextBoxColumn();
-            hamluong = new DataGridViewTextBoxColumn();
-            donvitinh = new DataGridViewTextBoxColumn();
-            dongia = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             pnlChiTietSanPham.SuspendLayout();
             pnlTimKiem.SuspendLayout();
@@ -94,6 +94,8 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToResizeColumns = false;
+            dataGridView1.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.ForeColor = Color.DimGray;
             dataGridViewCellStyle1.SelectionBackColor = Color.LightCyan;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -121,6 +123,44 @@
             dataGridView1.Size = new Size(1294, 617);
             dataGridView1.TabIndex = 4;
             dataGridView1.CellClick += dataGridView1_CellClick;
+            // 
+            // mathuoc
+            // 
+            mathuoc.HeaderText = "Mã thuốc";
+            mathuoc.MinimumWidth = 6;
+            mathuoc.Name = "mathuoc";
+            mathuoc.Width = 250;
+            // 
+            // tenthuoc
+            // 
+            tenthuoc.HeaderText = "Tên thuốc";
+            tenthuoc.MinimumWidth = 6;
+            tenthuoc.Name = "tenthuoc";
+            tenthuoc.Width = 250;
+            // 
+            // hamluong
+            // 
+            hamluong.HeaderText = "Hàm lượng";
+            hamluong.MinimumWidth = 6;
+            hamluong.Name = "hamluong";
+            hamluong.Width = 250;
+            // 
+            // donvitinh
+            // 
+            donvitinh.HeaderText = "Đơn vị tính";
+            donvitinh.MinimumWidth = 6;
+            donvitinh.Name = "donvitinh";
+            donvitinh.Width = 250;
+            // 
+            // dongia
+            // 
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N2";
+            dongia.DefaultCellStyle = dataGridViewCellStyle3;
+            dongia.HeaderText = "Đơn giá (VNĐ)";
+            dongia.MinimumWidth = 6;
+            dongia.Name = "dongia";
+            dongia.Width = 250;
             // 
             // cboTenSanPham
             // 
@@ -222,44 +262,6 @@
             pnlTimKiem.Name = "pnlTimKiem";
             pnlTimKiem.Size = new Size(1481, 60);
             pnlTimKiem.TabIndex = 1;
-            // 
-            // mathuoc
-            // 
-            mathuoc.HeaderText = "Mã thuốc";
-            mathuoc.MinimumWidth = 6;
-            mathuoc.Name = "mathuoc";
-            mathuoc.Width = 250;
-            // 
-            // tenthuoc
-            // 
-            tenthuoc.HeaderText = "Tên thuốc";
-            tenthuoc.MinimumWidth = 6;
-            tenthuoc.Name = "tenthuoc";
-            tenthuoc.Width = 250;
-            // 
-            // hamluong
-            // 
-            hamluong.HeaderText = "Hàm lượng";
-            hamluong.MinimumWidth = 6;
-            hamluong.Name = "hamluong";
-            hamluong.Width = 250;
-            // 
-            // donvitinh
-            // 
-            donvitinh.HeaderText = "Đơn vị tính";
-            donvitinh.MinimumWidth = 6;
-            donvitinh.Name = "donvitinh";
-            donvitinh.Width = 250;
-            // 
-            // dongia
-            // 
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N2";
-            dongia.DefaultCellStyle = dataGridViewCellStyle3;
-            dongia.HeaderText = "Đơn giá (VNĐ)";
-            dongia.MinimumWidth = 6;
-            dongia.Name = "dongia";
-            dongia.Width = 250;
             // 
             // CuaHangForm
             // 
