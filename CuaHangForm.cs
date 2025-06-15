@@ -46,11 +46,7 @@ namespace QLNT
             {
                 string searchText = findProduct.Text.Trim();
 
-                if (string.IsNullOrEmpty(searchText))
-                {
-                    MessageBox.Show("Vui lòng nhập tên sản phẩm để tìm kiếm!");
-                    return;
-                }
+                
 
                 dataGridView1.DataSource = null;
                 dataGridView1.AutoGenerateColumns = false;
@@ -61,7 +57,9 @@ namespace QLNT
                                 select new
                                 {
                                     mathuoc = p.ProductID,
-                                    hinhanh = !string.IsNullOrEmpty(p.ProductImage) && File.Exists(p.ProductImage) ? p.ProductImage : null,
+                                    hinhanh = !string.IsNullOrEmpty(p.ProductImage) && File.Exists(Path.Combine(Utility.ImagePath, p.ProductImage))
+          ? Path.Combine(Utility.ImagePath, p.ProductImage)
+          : null,
                                     tenthuoc = p.ProductName,
                                     hamluong = p.Dosage,
                                     donvitinh = p.Unit,

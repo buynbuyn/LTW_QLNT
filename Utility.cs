@@ -12,6 +12,22 @@ namespace QLNT
         public static int UserRole { get; set; } = 0;
 
         public static int UserID { get; private set; }
+        public static string ImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "image");
+
+        // Kiểm tra xem tập tin ảnh có tồn tại không
+        public static bool ImageExists(string imageName)
+        {
+            string fullPath = Path.Combine(ImagePath, imageName);
+            return File.Exists(fullPath);
+        }
+
+        // Lấy đường dẫn đầy đủ của ảnh nếu có, nếu không trả về null
+        public static string GetImagePath(string imageName)
+        {
+            string fullPath = Path.Combine(ImagePath, imageName);
+            return File.Exists(fullPath) ? fullPath : null;
+        }
+
 
         // Hàm kiểm tra đăng nhập & lưu thông tin người dùng
         public static bool CheckLogin(string username, string password)
