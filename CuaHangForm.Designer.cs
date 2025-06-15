@@ -35,7 +35,6 @@
             label3 = new Label();
             pnlTimKiem = new Panel();
             mathuoc = new DataGridViewTextBoxColumn();
-            hinhanh = new DataGridViewImageColumn();
             tenthuoc = new DataGridViewTextBoxColumn();
             hamluong = new DataGridViewTextBoxColumn();
             donvitinh = new DataGridViewTextBoxColumn();
@@ -111,7 +110,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { mathuoc, hinhanh, tenthuoc, hamluong, donvitinh, dongia });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { mathuoc, tenthuoc, hamluong, donvitinh, dongia });
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = SystemColors.ControlLight;
             dataGridView1.Location = new Point(24, 150);
@@ -229,37 +228,28 @@
             mathuoc.HeaderText = "Mã thuốc";
             mathuoc.MinimumWidth = 6;
             mathuoc.Name = "mathuoc";
-            mathuoc.Width = 200;
-            // 
-            // hinhanh
-            // 
-            hinhanh.HeaderText = "Hình ảnh";
-            hinhanh.MinimumWidth = 6;
-            hinhanh.Name = "hinhanh";
-            hinhanh.Resizable = DataGridViewTriState.True;
-            hinhanh.SortMode = DataGridViewColumnSortMode.Automatic;
-            hinhanh.Width = 200;
+            mathuoc.Width = 250;
             // 
             // tenthuoc
             // 
             tenthuoc.HeaderText = "Tên thuốc";
             tenthuoc.MinimumWidth = 6;
             tenthuoc.Name = "tenthuoc";
-            tenthuoc.Width = 200;
+            tenthuoc.Width = 250;
             // 
             // hamluong
             // 
             hamluong.HeaderText = "Hàm lượng";
             hamluong.MinimumWidth = 6;
             hamluong.Name = "hamluong";
-            hamluong.Width = 200;
+            hamluong.Width = 250;
             // 
             // donvitinh
             // 
             donvitinh.HeaderText = "Đơn vị tính";
             donvitinh.MinimumWidth = 6;
             donvitinh.Name = "donvitinh";
-            donvitinh.Width = 200;
+            donvitinh.Width = 250;
             // 
             // dongia
             // 
@@ -269,7 +259,7 @@
             dongia.HeaderText = "Đơn giá (VNĐ)";
             dongia.MinimumWidth = 6;
             dongia.Name = "dongia";
-            dongia.Width = 200;
+            dongia.Width = 250;
             // 
             // CuaHangForm
             // 
@@ -310,7 +300,6 @@
         private ComboBox cboMaSanPham;
         private Label label3;
         private DataGridViewTextBoxColumn mathuoc;
-        private DataGridViewImageColumn hinhanh;
         private DataGridViewTextBoxColumn tenthuoc;
         private DataGridViewTextBoxColumn hamluong;
         private DataGridViewTextBoxColumn donvitinh;

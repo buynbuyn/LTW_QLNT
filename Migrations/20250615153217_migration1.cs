@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace QLNT.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrations : Migration
+    public partial class migration1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,7 +58,8 @@ namespace QLNT.Migrations
                     Salary = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     HireDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
-                    EmailEmployee = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    EmailEmployee = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -291,15 +292,15 @@ namespace QLNT.Migrations
 
             migrationBuilder.InsertData(
                 table: "Employees",
-                columns: new[] { "EmployeeID", "EmailEmployee", "EmployeeName", "Gender", "HireDate", "PhoneNumber", "Position", "Salary" },
+                columns: new[] { "EmployeeID", "EmailEmployee", "EmployeeName", "Gender", "HireDate", "PhoneNumber", "Position", "Salary", "Status" },
                 values: new object[,]
                 {
-                    { 1, "kiettran@gmail.com", "Trần Diệp Anh Kiệt", "Nam", new DateTime(2024, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "0901234567", "Quản lý", 20000000m },
-                    { 2, "vuphung@gmail.com", "Phùng Minh Vũ", "Nam", new DateTime(2024, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "0937654321", "Giám sát ca", 18000000m },
-                    { 3, "leminh@gmail.com", "Lê Nhật Minh", "Nam", new DateTime(2024, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "0912345678", "Nhân viên", 15000000m },
-                    { 4, "phamchi@gmail.com", "Phạm Mai Chi", "Nữ", new DateTime(2024, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "0978123456", "Nhân viên", 15000000m },
-                    { 5, "dangnam@gmail.com", "Đặng Nhật Quang", "Nam", new DateTime(2025, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "0945678912", "Nhân viên", 15000000m },
-                    { 6, "buitrang@gmail.com", "Bùi Thị Thùy Trang", "Nữ", new DateTime(2025, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), "0998765432", "Nhân viên", 15000000m }
+                    { 1, "kiettran@gmail.com", "Trần Diệp Anh Kiệt", "Nam", new DateTime(2024, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "0901234567", "Quản lý", 20000000m, true },
+                    { 2, "vuphung@gmail.com", "Phùng Minh Vũ", "Nam", new DateTime(2024, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "0937654321", "Giám sát ca", 18000000m, true },
+                    { 3, "leminh@gmail.com", "Lê Nhật Minh", "Nam", new DateTime(2024, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "0912345678", "Nhân viên", 15000000m, true },
+                    { 4, "phamchi@gmail.com", "Phạm Mai Chi", "Nữ", new DateTime(2024, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "0978123456", "Nhân viên", 15000000m, true },
+                    { 5, "dangnam@gmail.com", "Đặng Nhật Quang", "Nam", new DateTime(2025, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "0945678912", "Nhân viên", 15000000m, true },
+                    { 6, "buitrang@gmail.com", "Bùi Thị Thùy Trang", "Nữ", new DateTime(2025, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), "0998765432", "Nhân viên", 15000000m, true }
                 });
 
             migrationBuilder.InsertData(

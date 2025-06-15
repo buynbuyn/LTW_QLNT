@@ -57,9 +57,6 @@ namespace QLNT
                                 select new
                                 {
                                     mathuoc = p.ProductID,
-                                    hinhanh = !string.IsNullOrEmpty(p.ProductImage) && File.Exists(Path.Combine(Utility.ImagePath, p.ProductImage))
-          ? Path.Combine(Utility.ImagePath, p.ProductImage)
-          : null,
                                     tenthuoc = p.ProductName,
                                     hamluong = p.Dosage,
                                     donvitinh = p.Unit,
@@ -88,7 +85,6 @@ namespace QLNT
                 dataGridView1.Refresh();
 
                 dataGridView1.Columns["mathuoc"].DataPropertyName = "mathuoc";
-                dataGridView1.Columns["hinhanh"].DataPropertyName = "hinhanh";
                 dataGridView1.Columns["tenthuoc"].DataPropertyName = "tenthuoc";
                 dataGridView1.Columns["hamluong"].DataPropertyName = "hamluong";
                 dataGridView1.Columns["donvitinh"].DataPropertyName = "donvitinh";
@@ -125,7 +121,6 @@ namespace QLNT
                 string dosage = selectedRow.Cells["hamluong"].Value?.ToString() ?? "Không có dữ liệu";
                 string unit = selectedRow.Cells["donvitinh"].Value?.ToString() ?? "Không có dữ liệu";
                 decimal price = selectedRow.Cells["dongia"].Value != null ? Convert.ToDecimal(selectedRow.Cells["dongia"].Value) : 0m;
-                string imagePath = selectedRow.Cells["hinhanh"].Value?.ToString() ?? "";
                 int stock = selectedRow.Cells["stock"].Value != null ? Convert.ToInt32(selectedRow.Cells["stock"].Value) : 0;
 
                 // Cập nhật các điều khiển
