@@ -42,6 +42,7 @@ namespace QLNT.models
         [Required]
         [StringLength(100)]
         public required string EmailEmployee { get; set; } = null!;
+        public bool Status { get; set; } = true;
 
         // Quan hệ với bảng Orders (Nhân viên có thể xử lý nhiều đơn hàng)
     }

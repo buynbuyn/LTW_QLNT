@@ -45,6 +45,7 @@
             dateTimePicker1 = new DateTimePicker();
             btnSaveAddEmployee = new Button();
             btnClose = new Button();
+            cbAddStatus = new CheckBox();
             SuspendLayout();
             // 
             // label1
@@ -177,7 +178,7 @@
             dateTimePicker1.Format = DateTimePickerFormat.Custom;
             dateTimePicker1.Location = new Point(158, 300);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(235, 27);
+            dateTimePicker1.Size = new Size(121, 27);
             dateTimePicker1.TabIndex = 14;
             // 
             // btnSaveAddEmployee
@@ -207,11 +208,24 @@
             btnClose.Text = "HỦY";
             btnClose.UseVisualStyleBackColor = false;
             // 
+            // cbAddStatus
+            // 
+            cbAddStatus.AutoSize = true;
+            cbAddStatus.CheckAlign = ContentAlignment.MiddleRight;
+            cbAddStatus.Location = new Point(306, 303);
+            cbAddStatus.Name = "cbAddStatus";
+            cbAddStatus.Size = new Size(97, 24);
+            cbAddStatus.TabIndex = 17;
+            cbAddStatus.Text = "Trạng thái";
+            cbAddStatus.TextAlign = ContentAlignment.MiddleCenter;
+            cbAddStatus.UseVisualStyleBackColor = true;
+            // 
             // fAddEmployee
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 498);
+            Controls.Add(cbAddStatus);
             Controls.Add(btnClose);
             Controls.Add(btnSaveAddEmployee);
             Controls.Add(dateTimePicker1);
@@ -255,5 +269,6 @@
         private DateTimePicker dateTimePicker1;
         private Button btnSaveAddEmployee;
         private Button btnClose;
+        private CheckBox cbAddStatus;
     }
 }

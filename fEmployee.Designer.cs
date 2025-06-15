@@ -40,6 +40,7 @@ namespace QLNT
             HireDate = new DataGridViewTextBoxColumn();
             PhoneNumber = new DataGridViewTextBoxColumn();
             EmailEmployee = new DataGridViewTextBoxColumn();
+            Status = new DataGridViewCheckBoxColumn();
             panel1 = new Panel();
             btnFindEmployee = new Button();
             btnAddEmployee = new Button();
@@ -65,14 +66,14 @@ namespace QLNT
             dtgvEmployee.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dtgvEmployee.BackgroundColor = Color.White;
             dtgvEmployee.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dtgvEmployee.Columns.AddRange(new DataGridViewColumn[] { EmployeeID, EmployeeName, Gender, Position, Salary, HireDate, PhoneNumber, EmailEmployee });
+            dtgvEmployee.Columns.AddRange(new DataGridViewColumn[] { EmployeeID, EmployeeName, Gender, Position, Salary, HireDate, PhoneNumber, EmailEmployee, Status });
             dtgvEmployee.EnableHeadersVisualStyles = false;
             dtgvEmployee.GridColor = Color.LightSteelBlue;
             dtgvEmployee.Location = new Point(12, 83);
             dtgvEmployee.Name = "dtgvEmployee";
             dtgvEmployee.RowHeadersVisible = false;
             dtgvEmployee.RowHeadersWidth = 51;
-            dtgvEmployee.Size = new Size(802, 497);
+            dtgvEmployee.Size = new Size(974, 497);
             dtgvEmployee.TabIndex = 1;
             dtgvEmployee.CellContentClick += dtgvEmployee_CellContentClick;
             // 
@@ -140,13 +141,21 @@ namespace QLNT
             EmailEmployee.Name = "EmailEmployee";
             EmailEmployee.Width = 75;
             // 
+            // Status
+            // 
+            Status.DataPropertyName = "Status";
+            Status.HeaderText = "Trạng thái";
+            Status.MinimumWidth = 6;
+            Status.Name = "Status";
+            Status.Width = 81;
+            // 
             // panel1
             // 
             panel1.Controls.Add(btnFindEmployee);
             panel1.Controls.Add(btnAddEmployee);
-            panel1.Location = new Point(916, 81);
+            panel1.Location = new Point(1093, 81);
             panel1.Name = "panel1";
-            panel1.Size = new Size(321, 43);
+            panel1.Size = new Size(373, 43);
             panel1.TabIndex = 2;
             // 
             // btnFindEmployee
@@ -176,9 +185,9 @@ namespace QLNT
             // panelEmployee
             // 
             panelEmployee.BackColor = SystemColors.ActiveBorder;
-            panelEmployee.Location = new Point(860, 132);
+            panelEmployee.Location = new Point(1020, 132);
             panelEmployee.Name = "panelEmployee";
-            panelEmployee.Size = new Size(458, 448);
+            panelEmployee.Size = new Size(491, 448);
             panelEmployee.TabIndex = 3;
             panelEmployee.Visible = false;
             // 
@@ -217,5 +226,6 @@ namespace QLNT
         private DataGridViewTextBoxColumn HireDate;
         private DataGridViewTextBoxColumn PhoneNumber;
         private DataGridViewTextBoxColumn EmailEmployee;
+        private DataGridViewCheckBoxColumn Status;
     }
 }

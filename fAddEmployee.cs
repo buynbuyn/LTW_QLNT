@@ -29,6 +29,7 @@ namespace QLNT
                     if (string.IsNullOrWhiteSpace(txtEmployeeName.Text) ||
                         cbGender.SelectedItem == null ||
                         cbPosition.SelectedItem == null ||
+                        cbAddStatus.Checked == null ||
                         string.IsNullOrWhiteSpace(txtSalary.Text) ||
                         string.IsNullOrWhiteSpace(txtPhoneNumber.Text) ||
                         string.IsNullOrWhiteSpace(txtEmailEmployee.Text))
