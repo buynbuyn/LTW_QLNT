@@ -20,6 +20,7 @@ namespace QLNT
         public CuaHangForm()
         {
             InitializeComponent();
+            findProduct.Focus();
         }
 
         private void findProduct_Enter(object sender, EventArgs e)
@@ -141,24 +142,35 @@ namespace QLNT
             {
                 using (var db = new EFDbContext())
                 {
+
+                    string searchText = findProduct.Text.Trim();
+                    if (searchText == null || searchText == "")
+                    {
+                        label6.Text = "Vui lòng tìm kiếm sản phẩm muốn thêm!";
+                        findProduct.Focus();
+                        return;
+                    }
+
                     string nameProduct = cboTenSanPham.Text.ToString().Trim();
                     if (!int.TryParse(txtSoLuongMua.Text, out int soLuong) || soLuong <= 0)
                     {
-                        MessageBox.Show("Vui lòng nhập số lượng hợp lệ!");
+                        label6.Text = "Vui lòng nhập số lượng mua!";
+                        txtSoLuongMua.Focus();
                         return;
                     }
+                    
 
                     var product = db.Products.FirstOrDefault(p => p.ProductName.ToLower() == nameProduct.ToLower());
                     if (product == null)
                     {
-                        MessageBox.Show("Không tìm thấy sản phẩm.");
+                        MessageBox.Show("Không tìm thấy sản phẩm!");
                         return;
                     }
 
                     var productDetail = db.ProductDetails.FirstOrDefault(pd => pd.ProductID == product.ProductID);
                     if (productDetail == null || productDetail.StockQuantity < soLuong)
                     {
-                        MessageBox.Show("Số lượng tồn không đủ!");
+                        label6.Text = "Số lượng tồn kho không đủ!";
                         return;
                     }
 
@@ -183,9 +195,6 @@ namespace QLNT
                             };
                             db.Carts.Add(cart);
                             db.SaveChanges();
-                           
-
-
 
                         }
                         else
@@ -211,8 +220,6 @@ namespace QLNT
 
                         transaction.Commit();
                         MessageBox.Show("Thêm vào giỏ hàng thành công.");
-
-               
                     }
                 }
             }

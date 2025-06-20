@@ -7,6 +7,9 @@
         private Label label1;
         private Button btnthemsp; // Nút "Thêm Sản Phẩm"
         private Panel panelDetails;
+        private TextBox txtSearch; // Thêm TextBox tìm kiếm
+        private Button btnSearch; // Thêm nút tìm kiếm
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,7 +23,8 @@
             label1 = new Label();
             btnthemsp = new Button();
             panelDetails = new Panel();
-
+            txtSearch = new TextBox(); // Khởi tạo TextBox
+            btnSearch = new Button(); // Khởi tạo Button
 
             ProductID = new DataGridViewTextBoxColumn();
             ProductName = new DataGridViewTextBoxColumn();
@@ -28,7 +32,7 @@
             Unit = new DataGridViewTextBoxColumn();
             Price = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dtgvKho).BeginInit();
-            panelDetails.SuspendLayout(); // Giữ lại dòng này cho cấu trúc, mặc dù panel trống
+            // panelDetails.SuspendLayout(); // This line is usually not needed unless panelDetails has complex layout logic
             SuspendLayout();
             //
             // dtgvKho
@@ -49,8 +53,26 @@
             label1.Location = new Point(12, 57);
             label1.Name = "label1";
             label1.Size = new Size(144, 37);
-            label1.TabIndex = 1;
             label1.Text = "Kho Hàng";
+            label1.TabIndex = 1;
+            //
+            // txtSearch
+            //
+            txtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            txtSearch.Location = new Point(170, 74); // Adjust location as needed
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(200, 23); // Adjust size as needed
+            txtSearch.TabIndex = 3;
+            //
+            // btnSearch
+            //
+            btnSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            btnSearch.Location = new Point(380, 74); // Adjust location as needed
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(75, 23); // Adjust size as needed
+            btnSearch.TabIndex = 4;
+            btnSearch.Text = "Tìm kiếm";
+            btnSearch.UseVisualStyleBackColor = true;
             //
             // btnthemsp
             //
@@ -61,7 +83,6 @@
             btnthemsp.TabIndex = 2;
             btnthemsp.Text = "Thêm sản phẩm";
             btnthemsp.UseVisualStyleBackColor = true;
-            btnthemsp.Click += Btnthemsp_Click;
             //
             // panelDetails
             //
@@ -105,13 +126,15 @@
             ClientSize = new Size(1087, 726);
             Controls.Add(panelDetails);
             Controls.Add(btnthemsp);
+            Controls.Add(btnSearch); // Add the search button
+            Controls.Add(txtSearch); // Add the search textbox
             Controls.Add(label1);
             Controls.Add(dtgvKho);
             Name = "KhoForm";
             Text = "Kho Hàng";
             ((System.ComponentModel.ISupportInitialize)dtgvKho).EndInit();
-            panelDetails.ResumeLayout(false);
-            panelDetails.PerformLayout(); // Giữ lại dòng này để đảm bảo layout đúng
+            // panelDetails.ResumeLayout(false); // This line is usually not needed
+            // panelDetails.PerformLayout(); // This line is usually not needed
             ResumeLayout(false);
             PerformLayout();
         }
