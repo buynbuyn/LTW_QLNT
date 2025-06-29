@@ -145,5 +145,10 @@ namespace QLNT
                 return match;
             });
         }
+
+        private void pnlRightActions_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
