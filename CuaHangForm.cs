@@ -62,7 +62,8 @@ namespace QLNT
                                     hamluong = p.Dosage,
                                     donvitinh = p.Unit,
                                     dongia = p.Price,
-                                    stock = pd.StockQuantity
+                                    stock = pd.StockQuantity,
+                                    expiration = pd.ExpirationDate
                                 }).ToList();
 
                 if (products == null || !products.Any())
@@ -99,6 +100,16 @@ namespace QLNT
                     dataGridView1.Columns.Add(stockColumn);
                 }
                 dataGridView1.Columns["stock"].DataPropertyName = "stock";
+
+                if (dataGridView1.Columns["expiration"] == null)
+                {
+                    DataGridViewTextBoxColumn expirationColumn = new DataGridViewTextBoxColumn();
+                    expirationColumn.HeaderText = "Hạn sử dụng";
+                    expirationColumn.Name = "expiration";
+                    expirationColumn.Width = 200;
+                    dataGridView1.Columns.Add(expirationColumn);
+                }
+                dataGridView1.Columns["expiration"].DataPropertyName = "expiration";
             }
         }
 

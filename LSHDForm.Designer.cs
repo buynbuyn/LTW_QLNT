@@ -129,7 +129,6 @@
             this.dgvOrders.AllowUserToAddRows = false;
             this.dgvOrders.AllowUserToDeleteRows = false;
             this.dgvOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvOrders.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrders_CellDoubleClick);
             //
             // btnFindInvoice
             //
@@ -141,7 +140,6 @@
             this.btnFindInvoice.TabIndex = 9; // Changed TabIndex
             this.btnFindInvoice.Text = "Tìm hóa đơn";
             this.btnFindInvoice.UseVisualStyleBackColor = false;
-            this.btnFindInvoice.Click += new System.EventHandler(this.BtnFindInvoice_Click);
             //
             // pnlRightActions
             //
@@ -164,7 +162,6 @@
             this.btnCancelDelete.TabIndex = 4;
             this.btnCancelDelete.Text = "Hủy";
             this.btnCancelDelete.UseVisualStyleBackColor = true;
-            this.btnCancelDelete.Click += new System.EventHandler(this.BtnCancelDelete_Click);
             //
             // btnDeleteInvoice
             //
@@ -177,7 +174,6 @@
             this.btnDeleteInvoice.TabIndex = 3;
             this.btnDeleteInvoice.Text = "Xóa hóa đơn";
             this.btnDeleteInvoice.UseVisualStyleBackColor = false;
-            this.btnDeleteInvoice.Click += new System.EventHandler(this.BtnDeleteInvoice_Click);
             //
             // txtInvoiceIDToDelete
             //

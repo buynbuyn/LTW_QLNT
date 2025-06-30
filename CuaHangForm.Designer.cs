@@ -247,28 +247,28 @@
             mathuoc.HeaderText = "Mã thuốc";
             mathuoc.MinimumWidth = 6;
             mathuoc.Name = "mathuoc";
-            mathuoc.Width = 250;
+            mathuoc.Width = 200;
             // 
             // tenthuoc
             // 
             tenthuoc.HeaderText = "Tên thuốc";
             tenthuoc.MinimumWidth = 6;
             tenthuoc.Name = "tenthuoc";
-            tenthuoc.Width = 250;
+            tenthuoc.Width = 200;
             // 
             // hamluong
             // 
             hamluong.HeaderText = "Hàm lượng";
             hamluong.MinimumWidth = 6;
             hamluong.Name = "hamluong";
-            hamluong.Width = 250;
+            hamluong.Width = 200;
             // 
             // donvitinh
             // 
             donvitinh.HeaderText = "Đơn vị tính";
             donvitinh.MinimumWidth = 6;
             donvitinh.Name = "donvitinh";
-            donvitinh.Width = 250;
+            donvitinh.Width = 200;
             // 
             // dongia
             // 
@@ -278,7 +278,7 @@
             dongia.HeaderText = "Đơn giá (VNĐ)";
             dongia.MinimumWidth = 6;
             dongia.Name = "dongia";
-            dongia.Width = 250;
+            dongia.Width = 200;
             // 
             // CuaHangForm
             // 
