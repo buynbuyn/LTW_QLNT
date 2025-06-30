@@ -87,5 +87,58 @@ namespace QLNT
             lshd.MdiParent = this;
             lshd.Show();
         }
+
+        private void fMain_Load(object sender, EventArgs e)
+        {
+            menuStrip1.Renderer = new BorderMenuRenderer();
+            labelUserInfo.Text = $"{Utility.FullName}!";
+            labelUserInfo.Location = new Point(
+            labelUserInfo.Location.X,
+            (panelUserInfo.Height - labelUserInfo.Height) / 2
+        );
+            int verticalPadding = 5;
+
+            // Đặt chiều cao panel đủ để chứa nút + padding trên và dưới
+            panelUserInfo.Height = btnLogout.Height + verticalPadding * 2;
+
+            // Đặt vị trí nút
+            btnLogout.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnLogout.Location = new Point(
+                panelUserInfo.Width - btnLogout.Width - 10, // Cách mép phải 10px
+                verticalPadding                            // Cách mép trên 5px
+            );
+
+            // Đảm bảo luôn giữ đúng vị trí khi resize form hoặc panel
+            panelUserInfo.Resize += (s, e) =>
+            {
+                btnLogout.Location = new Point(
+                    panelUserInfo.Width - btnLogout.Width - 10,
+                    verticalPadding
+                );
+            };
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            var confirm = MessageBox.Show(
+        "Bạn có chắc chắn muốn đăng xuất không?",
+        "Xác nhận",
+        MessageBoxButtons.YesNo,
+        MessageBoxIcon.Question
+    );
+
+            if (confirm == DialogResult.Yes)
+            {
+                // 🧹 Xoá toàn bộ thông tin phiên từ Utility
+                Utility.UserRole = 0;
+                Utility.LoggedInUser = string.Empty;
+                Utility.FullName = string.Empty;
+
+                // 📤 Quay lại form đăng nhập
+
+                Application.Restart();
+                Environment.Exit(0);
+            }
+        }
     }
 }

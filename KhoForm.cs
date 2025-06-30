@@ -2,6 +2,8 @@
 using QLNT.models;
 using System;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -15,24 +17,22 @@ namespace QLNT
             this.Load += KhoForm_Load;
             dtgvKho.CellContentClick += DtgvKho_CellContentClick;
             btnthemsp.Click += Btnthemsp_Click;
+            btnSearch.Click += BtnSearch_Click;
         }
 
         private void KhoForm_Load(object sender, EventArgs e)
         {
             LoadKhoData();
-            AddActionButtons();
         }
 
         private void LoadKhoData()
         {
             using (var db = new EFDbContext())
             {
-                // Xóa và tái tạo cột
                 dtgvKho.DataSource = null;
                 dtgvKho.Columns.Clear();
                 dtgvKho.AutoGenerateColumns = true;
 
-                // Lấy dữ liệu kết hợp giữa Product và ProductDetail
                 var list = db.Products
                              .Select(pd => new
                              {
@@ -40,17 +40,73 @@ namespace QLNT
                                  pd.ProductName,
                                  pd.Dosage,
                                  pd.Unit,
-                                 pd.Price
+                                 pd.Price,
+                                 pd.ProductImage // Đường dẫn ảnh
                              })
                              .ToList();
 
                 dtgvKho.DataSource = list;
+                AddImageColumn();
+                AddActionButtons();
+            }
+        }
+
+        private void BtnSearch_Click(object sender, EventArgs e)
+        {
+            string keyword = txtSearch.Text.Trim().ToLower();
+
+            using (var db = new EFDbContext())
+            {
+                var list = db.Products
+                             .Where(p => p.ProductName.ToLower().Contains(keyword))
+                             .Select(p => new
+                             {
+                                 p.ProductID,
+                                 p.ProductName,
+                                 p.Dosage,
+                                 p.Unit,
+                                 p.Price,
+                                 p.ProductImage
+                             })
+                             .ToList();
+
+                dtgvKho.DataSource = null;
+                dtgvKho.Columns.Clear();
+                dtgvKho.DataSource = list;
+                AddImageColumn();
+                AddActionButtons();
+            }
+        }
+
+        private void AddImageColumn()
+        {
+            if (!dtgvKho.Columns.Contains("ImageColumn"))
+            {
+                var imgCol = new DataGridViewImageColumn
+                {
+                    Name = "ImageColumn",
+                    HeaderText = "Hình ảnh",
+                    ImageLayout = DataGridViewImageCellLayout.Zoom
+                };
+                dtgvKho.Columns.Insert(1, imgCol); // sau cột ProductID
+            }
+
+            foreach (DataGridViewRow row in dtgvKho.Rows)
+            {
+                var data = row.DataBoundItem;
+                if (data == null) continue;
+
+                string imagePath = data.GetType().GetProperty("ProductImage")?.GetValue(data) as string;
+                if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
+                {
+                    row.Cells["ImageColumn"].Value = Image.FromFile(imagePath);
+                }
+             
             }
         }
 
         private void AddActionButtons()
         {
-            // Nút Sửa
             if (!dtgvKho.Columns.Contains("Edit"))
             {
                 var btnEdit = new DataGridViewButtonColumn()
@@ -62,7 +118,7 @@ namespace QLNT
                 };
                 dtgvKho.Columns.Add(btnEdit);
             }
-            // Nút Xóa
+
             if (!dtgvKho.Columns.Contains("Delete"))
             {
                 var btnDel = new DataGridViewButtonColumn()
@@ -81,7 +137,6 @@ namespace QLNT
             if (e.RowIndex < 0) return;
 
             var colName = dtgvKho.Columns[e.ColumnIndex].Name;
-            // Lấy ID của ProductDetail
             var idCell = dtgvKho.Rows[e.RowIndex].Cells["ProductID"].Value;
             if (idCell == null || !int.TryParse(idCell.ToString(), out int ProductID))
             {
@@ -150,7 +205,6 @@ namespace QLNT
 
         private void panelDetails_Paint(object sender, PaintEventArgs e)
         {
-
         }
     }
 }
