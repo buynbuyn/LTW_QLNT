@@ -18,10 +18,12 @@ namespace QLNT.models
 
         [Required]
         [StringLength(100)]
+        [Column(TypeName = "nvarchar(100)")]
         public required string ManufacturerName { get; set; } = null!;
 
         [Required]
         [StringLength(255)]
+        [Column(TypeName = "nvarchar(255)")]
         public required string Address { get; set; } = null!;
 
         [Required]

@@ -17,6 +17,7 @@ namespace QLNT.models
 
         [Required]
         [StringLength(100)]
+        [Column(TypeName = "nvarchar(100)")]
         public string Name { get; set; } = null!; // Tên loại bắt buộc
 
         [Required]
