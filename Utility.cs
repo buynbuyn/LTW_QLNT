@@ -8,10 +8,29 @@ namespace QLNT
     internal static class Utility
     {
         // Biến lưu trạng thái đăng nhập
-        public static string LoggedInUser { get; private set; }
+        public static string LoggedInUser { get; set; }
         public static int UserRole { get; set; } = 0;
 
+        public static string FullName { get; set; }
+
+
         public static int UserID { get; private set; }
+        public static string ImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "image");
+
+        // Kiểm tra xem tập tin ảnh có tồn tại không
+        public static bool ImageExists(string imageName)
+        {
+            string fullPath = Path.Combine(ImagePath, imageName);
+            return File.Exists(fullPath);
+        }
+
+        // Lấy đường dẫn đầy đủ của ảnh nếu có, nếu không trả về null
+        public static string GetImagePath(string imageName)
+        {
+            string fullPath = Path.Combine(ImagePath, imageName);
+            return File.Exists(fullPath) ? fullPath : null;
+        }
+
 
         // Hàm kiểm tra đăng nhập & lưu thông tin người dùng
         public static bool CheckLogin(string username, string password)
@@ -24,7 +43,7 @@ namespace QLNT
 
                     if (user != null)
                     {
-                        SetSession(user.UserName, user.Role, user.UserID); // Lưu thông tin đăng nhập vào `Utility`
+                        SetSession(user.UserName, user.Role, user.UserID, user.FullName); // Lưu thông tin đăng nhập vào `Utility`
                         return true;
                     }
                 }
@@ -38,18 +57,20 @@ namespace QLNT
         }
 
         // Hàm lưu thông tin đăng nhập vào Session
-        public static void SetSession(string username, int role, int userId)
+        public static void SetSession(string username, int role, int userId, string fullname)
         {
             LoggedInUser = username;
             UserRole = role;
             UserID = userId;
+            FullName = fullname; // Lưu tên đầy đủ
         }
 
         // Hàm xóa Session khi đăng xuất
         public static void ClearSession()
         {
             LoggedInUser = string.Empty;  // Xóa tên đăng nhập
-            UserRole = 0;      // Xóa quyền đăng nhập
+            UserRole = 0;
+            FullName = string.Empty;// Xóa quyền đăng nhập
                       
         }
 

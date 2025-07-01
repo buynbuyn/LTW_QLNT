@@ -20,6 +20,7 @@ namespace QLNT
         public CuaHangForm()
         {
             InitializeComponent();
+            findProduct.Focus();
         }
 
         private void findProduct_Enter(object sender, EventArgs e)
@@ -46,11 +47,7 @@ namespace QLNT
             {
                 string searchText = findProduct.Text.Trim();
 
-                if (string.IsNullOrEmpty(searchText))
-                {
-                    MessageBox.Show("Vui lòng nhập tên sản phẩm để tìm kiếm!");
-                    return;
-                }
+                
 
                 dataGridView1.DataSource = null;
                 dataGridView1.AutoGenerateColumns = false;
@@ -61,12 +58,12 @@ namespace QLNT
                                 select new
                                 {
                                     mathuoc = p.ProductID,
-                                    hinhanh = !string.IsNullOrEmpty(p.ProductImage) && File.Exists(p.ProductImage) ? p.ProductImage : null,
                                     tenthuoc = p.ProductName,
                                     hamluong = p.Dosage,
                                     donvitinh = p.Unit,
                                     dongia = p.Price,
-                                    stock = pd.StockQuantity
+                                    stock = pd.StockQuantity,
+                                    expiration = pd.ExpirationDate
                                 }).ToList();
 
                 if (products == null || !products.Any())
@@ -90,7 +87,6 @@ namespace QLNT
                 dataGridView1.Refresh();
 
                 dataGridView1.Columns["mathuoc"].DataPropertyName = "mathuoc";
-                dataGridView1.Columns["hinhanh"].DataPropertyName = "hinhanh";
                 dataGridView1.Columns["tenthuoc"].DataPropertyName = "tenthuoc";
                 dataGridView1.Columns["hamluong"].DataPropertyName = "hamluong";
                 dataGridView1.Columns["donvitinh"].DataPropertyName = "donvitinh";
@@ -104,6 +100,16 @@ namespace QLNT
                     dataGridView1.Columns.Add(stockColumn);
                 }
                 dataGridView1.Columns["stock"].DataPropertyName = "stock";
+
+                if (dataGridView1.Columns["expiration"] == null)
+                {
+                    DataGridViewTextBoxColumn expirationColumn = new DataGridViewTextBoxColumn();
+                    expirationColumn.HeaderText = "Hạn sử dụng";
+                    expirationColumn.Name = "expiration";
+                    expirationColumn.Width = 200;
+                    dataGridView1.Columns.Add(expirationColumn);
+                }
+                dataGridView1.Columns["expiration"].DataPropertyName = "expiration";
             }
         }
 
@@ -127,7 +133,6 @@ namespace QLNT
                 string dosage = selectedRow.Cells["hamluong"].Value?.ToString() ?? "Không có dữ liệu";
                 string unit = selectedRow.Cells["donvitinh"].Value?.ToString() ?? "Không có dữ liệu";
                 decimal price = selectedRow.Cells["dongia"].Value != null ? Convert.ToDecimal(selectedRow.Cells["dongia"].Value) : 0m;
-                string imagePath = selectedRow.Cells["hinhanh"].Value?.ToString() ?? "";
                 int stock = selectedRow.Cells["stock"].Value != null ? Convert.ToInt32(selectedRow.Cells["stock"].Value) : 0;
 
                 // Cập nhật các điều khiển
@@ -148,24 +153,35 @@ namespace QLNT
             {
                 using (var db = new EFDbContext())
                 {
+
+                    string searchText = findProduct.Text.Trim();
+                    if (searchText == null || searchText == "")
+                    {
+                        label6.Text = "Vui lòng tìm kiếm sản phẩm muốn thêm!";
+                        findProduct.Focus();
+                        return;
+                    }
+
                     string nameProduct = cboTenSanPham.Text.ToString().Trim();
                     if (!int.TryParse(txtSoLuongMua.Text, out int soLuong) || soLuong <= 0)
                     {
-                        MessageBox.Show("Vui lòng nhập số lượng hợp lệ!");
+                        label6.Text = "Vui lòng nhập số lượng mua!";
+                        txtSoLuongMua.Focus();
                         return;
                     }
+                    
 
                     var product = db.Products.FirstOrDefault(p => p.ProductName.ToLower() == nameProduct.ToLower());
                     if (product == null)
                     {
-                        MessageBox.Show("Không tìm thấy sản phẩm.");
+                        MessageBox.Show("Không tìm thấy sản phẩm!");
                         return;
                     }
 
                     var productDetail = db.ProductDetails.FirstOrDefault(pd => pd.ProductID == product.ProductID);
                     if (productDetail == null || productDetail.StockQuantity < soLuong)
                     {
-                        MessageBox.Show("Số lượng tồn không đủ!");
+                        label6.Text = "Số lượng tồn kho không đủ!";
                         return;
                     }
 
@@ -190,9 +206,6 @@ namespace QLNT
                             };
                             db.Carts.Add(cart);
                             db.SaveChanges();
-                           
-
-
 
                         }
                         else
@@ -218,8 +231,6 @@ namespace QLNT
 
                         transaction.Commit();
                         MessageBox.Show("Thêm vào giỏ hàng thành công.");
-
-               
                     }
                 }
             }

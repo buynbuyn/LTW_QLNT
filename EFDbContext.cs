@@ -96,12 +96,12 @@ namespace QLNT.Data
             );
     
             modelBuilder.Entity<Employee>().HasData(
-                new Employee { EmployeeID = 1, EmployeeName = "Trần Diệp Anh Kiệt", Position = "Quản lý", Gender = "Nam", Salary = 20000000, HireDate = new DateTime(2024, 05, 12), PhoneNumber = "0901234567", EmailEmployee = "kiettran@gmail.com" },
-                new Employee { EmployeeID = 2, EmployeeName = "Phùng Minh Vũ", Position = "Giám sát ca", Gender = "Nam", Salary = 18000000, HireDate = new DateTime(2024, 07, 20), PhoneNumber = "0937654321", EmailEmployee = "vuphung@gmail.com" },
-                new Employee { EmployeeID = 3, EmployeeName = "Lê Nhật Minh", Position = "Nhân viên", Gender = "Nam", Salary = 15000000, HireDate = new DateTime(2024, 08, 15), PhoneNumber = "0912345678", EmailEmployee = "leminh@gmail.com" },
-                new Employee { EmployeeID = 4, EmployeeName = "Phạm Mai Chi", Position = "Nhân viên", Gender = "Nữ", Salary = 15000000, HireDate = new DateTime(2024, 11, 10), PhoneNumber = "0978123456", EmailEmployee = "phamchi@gmail.com" },
-                new Employee { EmployeeID = 5, EmployeeName = "Đặng Nhật Quang", Position = "Nhân viên", Gender = "Nam", Salary = 15000000, HireDate = new DateTime(2025, 01, 25), PhoneNumber = "0945678912", EmailEmployee = "dangnam@gmail.com" },
-                new Employee { EmployeeID = 6, EmployeeName = "Bùi Thị Thùy Trang", Position = "Nhân viên", Gender = "Nữ", Salary = 15000000, HireDate = new DateTime(2025, 03, 18), PhoneNumber = "0998765432", EmailEmployee = "buitrang@gmail.com" }
+                new Employee { EmployeeID = 1, EmployeeName = "Trần Diệp Anh Kiệt", Position = "Quản lý", Gender = "Nam", Salary = 20000000, HireDate = new DateTime(2024, 05, 12), PhoneNumber = "0901234567", EmailEmployee = "kiettran@gmail.com", Status = true },
+                new Employee { EmployeeID = 2, EmployeeName = "Phùng Minh Vũ", Position = "Giám sát ca", Gender = "Nam", Salary = 18000000, HireDate = new DateTime(2024, 07, 20), PhoneNumber = "0937654321", EmailEmployee = "vuphung@gmail.com", Status = true },
+                new Employee { EmployeeID = 3, EmployeeName = "Lê Nhật Minh", Position = "Nhân viên", Gender = "Nam", Salary = 15000000, HireDate = new DateTime(2024, 08, 15), PhoneNumber = "0912345678", EmailEmployee = "leminh@gmail.com", Status = true },
+                new Employee { EmployeeID = 4, EmployeeName = "Phạm Mai Chi", Position = "Nhân viên", Gender = "Nữ", Salary = 15000000, HireDate = new DateTime(2024, 11, 10), PhoneNumber = "0978123456", EmailEmployee = "phamchi@gmail.com", Status = true },
+                new Employee { EmployeeID = 5, EmployeeName = "Đặng Nhật Quang", Position = "Nhân viên", Gender = "Nam", Salary = 15000000, HireDate = new DateTime(2025, 01, 25), PhoneNumber = "0945678912", EmailEmployee = "dangnam@gmail.com", Status = true },
+                new Employee { EmployeeID = 6, EmployeeName = "Bùi Thị Thùy Trang", Position = "Nhân viên", Gender = "Nữ", Salary = 15000000, HireDate = new DateTime(2025, 03, 18), PhoneNumber = "0998765432", EmailEmployee = "buitrang@gmail.com", Status = true }
             );
             modelBuilder.Entity<Category>().HasData(
                 new Category { CategoryID = 1, Name = "Thuốc điều trị", Order = 1, Status = true },

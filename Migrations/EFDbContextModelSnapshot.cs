@@ -311,6 +311,9 @@ namespace QLNT.Migrations
                     b.Property<decimal>("Salary")
                         .HasColumnType("decimal(10,2)");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.HasKey("EmployeeID");
 
                     b.ToTable("Employees");
@@ -325,7 +328,8 @@ namespace QLNT.Migrations
                             HireDate = new DateTime(2024, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "0901234567",
                             Position = "Quản lý",
-                            Salary = 20000000m
+                            Salary = 20000000m,
+                            Status = true
                         },
                         new
                         {
@@ -336,7 +340,8 @@ namespace QLNT.Migrations
                             HireDate = new DateTime(2024, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "0937654321",
                             Position = "Giám sát ca",
-                            Salary = 18000000m
+                            Salary = 18000000m,
+                            Status = true
                         },
                         new
                         {
@@ -347,7 +352,8 @@ namespace QLNT.Migrations
                             HireDate = new DateTime(2024, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "0912345678",
                             Position = "Nhân viên",
-                            Salary = 15000000m
+                            Salary = 15000000m,
+                            Status = true
                         },
                         new
                         {
@@ -358,7 +364,8 @@ namespace QLNT.Migrations
                             HireDate = new DateTime(2024, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "0978123456",
                             Position = "Nhân viên",
-                            Salary = 15000000m
+                            Salary = 15000000m,
+                            Status = true
                         },
                         new
                         {
@@ -369,7 +376,8 @@ namespace QLNT.Migrations
                             HireDate = new DateTime(2025, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "0945678912",
                             Position = "Nhân viên",
-                            Salary = 15000000m
+                            Salary = 15000000m,
+                            Status = true
                         },
                         new
                         {
@@ -380,7 +388,8 @@ namespace QLNT.Migrations
                             HireDate = new DateTime(2025, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "0998765432",
                             Position = "Nhân viên",
-                            Salary = 15000000m
+                            Salary = 15000000m,
+                            Status = true
                         });
                 });
 

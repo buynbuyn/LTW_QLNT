@@ -25,21 +25,21 @@
             findProduct = new TextBox();
             btn_findProduct = new Button();
             dataGridView1 = new DataGridView();
-            mathuoc = new DataGridViewTextBoxColumn();
-            hinhanh = new DataGridViewTextBoxColumn();
-            tenthuoc = new DataGridViewTextBoxColumn();
-            hamluong = new DataGridViewTextBoxColumn();
-            donvitinh = new DataGridViewTextBoxColumn();
-            dongia = new DataGridViewTextBoxColumn();
             cboTenSanPham = new ComboBox();
             label4 = new Label();
             txtSoLuongMua = new TextBox();
             btnThemVaoGioHang = new Button();
             label5 = new Label();
             pnlChiTietSanPham = new Panel();
+            label6 = new Label();
             cboMaSanPham = new ComboBox();
             label3 = new Label();
             pnlTimKiem = new Panel();
+            mathuoc = new DataGridViewTextBoxColumn();
+            tenthuoc = new DataGridViewTextBoxColumn();
+            hamluong = new DataGridViewTextBoxColumn();
+            donvitinh = new DataGridViewTextBoxColumn();
+            dongia = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             pnlChiTietSanPham.SuspendLayout();
             pnlTimKiem.SuspendLayout();
@@ -95,6 +95,8 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.AllowUserToResizeColumns = false;
+            dataGridView1.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.ForeColor = Color.DimGray;
             dataGridViewCellStyle1.SelectionBackColor = Color.LightCyan;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -111,7 +113,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { mathuoc, hinhanh, tenthuoc, hamluong, donvitinh, dongia });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { mathuoc, tenthuoc, hamluong, donvitinh, dongia });
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = SystemColors.ControlLight;
             dataGridView1.Location = new Point(24, 150);
@@ -123,53 +125,10 @@
             dataGridView1.TabIndex = 4;
             dataGridView1.CellClick += dataGridView1_CellClick;
             // 
-            // mathuoc
-            // 
-            mathuoc.HeaderText = "Mã thuốc";
-            mathuoc.MinimumWidth = 6;
-            mathuoc.Name = "mathuoc";
-            mathuoc.Width = 200;
-            // 
-            // hinhanh
-            // 
-            hinhanh.HeaderText = "Hình ảnh";
-            hinhanh.MinimumWidth = 6;
-            hinhanh.Name = "hinhanh";
-            hinhanh.Width = 200;
-            // 
-            // tenthuoc
-            // 
-            tenthuoc.HeaderText = "Tên thuốc";
-            tenthuoc.MinimumWidth = 6;
-            tenthuoc.Name = "tenthuoc";
-            tenthuoc.Width = 200;
-            // 
-            // hamluong
-            // 
-            hamluong.HeaderText = "Hàm lượng";
-            hamluong.MinimumWidth = 6;
-            hamluong.Name = "hamluong";
-            hamluong.Width = 200;
-            // 
-            // donvitinh
-            // 
-            donvitinh.HeaderText = "Đơn vị tính";
-            donvitinh.MinimumWidth = 6;
-            donvitinh.Name = "donvitinh";
-            donvitinh.Width = 200;
-            // 
-            // dongia
-            // 
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N2";
-            dongia.DefaultCellStyle = dataGridViewCellStyle3;
-            dongia.HeaderText = "Đơn giá (VNĐ)";
-            dongia.MinimumWidth = 6;
-            dongia.Name = "dongia";
-            dongia.Width = 200;
-            // 
             // cboTenSanPham
             // 
+            cboTenSanPham.Cursor = Cursors.No;
+            cboTenSanPham.Enabled = false;
             cboTenSanPham.Font = new Font("Segoe UI", 14F);
             cboTenSanPham.FormattingEnabled = true;
             cboTenSanPham.Location = new Point(30, 118);
@@ -203,7 +162,7 @@
             btnThemVaoGioHang.FlatStyle = FlatStyle.Flat;
             btnThemVaoGioHang.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             btnThemVaoGioHang.ForeColor = Color.White;
-            btnThemVaoGioHang.Location = new Point(30, 391);
+            btnThemVaoGioHang.Location = new Point(30, 422);
             btnThemVaoGioHang.Name = "btnThemVaoGioHang";
             btnThemVaoGioHang.Size = new Size(339, 60);
             btnThemVaoGioHang.TabIndex = 9;
@@ -226,6 +185,7 @@
             pnlChiTietSanPham.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
             pnlChiTietSanPham.BackColor = Color.Azure;
             pnlChiTietSanPham.BorderStyle = BorderStyle.FixedSingle;
+            pnlChiTietSanPham.Controls.Add(label6);
             pnlChiTietSanPham.Controls.Add(cboMaSanPham);
             pnlChiTietSanPham.Controls.Add(label3);
             pnlChiTietSanPham.Controls.Add(label5);
@@ -239,8 +199,21 @@
             pnlChiTietSanPham.Size = new Size(400, 621);
             pnlChiTietSanPham.TabIndex = 0;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            label6.ForeColor = Color.Red;
+            label6.Location = new Point(30, 375);
+            label6.Name = "label6";
+            label6.Size = new Size(0, 25);
+            label6.TabIndex = 13;
+            // 
             // cboMaSanPham
             // 
+            cboMaSanPham.CausesValidation = false;
+            cboMaSanPham.Cursor = Cursors.No;
+            cboMaSanPham.Enabled = false;
             cboMaSanPham.Font = new Font("Segoe UI", 14F);
             cboMaSanPham.FormattingEnabled = true;
             cboMaSanPham.Location = new Point(30, 212);
@@ -268,6 +241,44 @@
             pnlTimKiem.Name = "pnlTimKiem";
             pnlTimKiem.Size = new Size(1481, 60);
             pnlTimKiem.TabIndex = 1;
+            // 
+            // mathuoc
+            // 
+            mathuoc.HeaderText = "Mã thuốc";
+            mathuoc.MinimumWidth = 6;
+            mathuoc.Name = "mathuoc";
+            mathuoc.Width = 200;
+            // 
+            // tenthuoc
+            // 
+            tenthuoc.HeaderText = "Tên thuốc";
+            tenthuoc.MinimumWidth = 6;
+            tenthuoc.Name = "tenthuoc";
+            tenthuoc.Width = 200;
+            // 
+            // hamluong
+            // 
+            hamluong.HeaderText = "Hàm lượng";
+            hamluong.MinimumWidth = 6;
+            hamluong.Name = "hamluong";
+            hamluong.Width = 200;
+            // 
+            // donvitinh
+            // 
+            donvitinh.HeaderText = "Đơn vị tính";
+            donvitinh.MinimumWidth = 6;
+            donvitinh.Name = "donvitinh";
+            donvitinh.Width = 200;
+            // 
+            // dongia
+            // 
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N2";
+            dongia.DefaultCellStyle = dataGridViewCellStyle3;
+            dongia.HeaderText = "Đơn giá (VNĐ)";
+            dongia.MinimumWidth = 6;
+            dongia.Name = "dongia";
+            dongia.Width = 200;
             // 
             // CuaHangForm
             // 
@@ -307,8 +318,8 @@
         private Panel pnlTimKiem; // Khai báo Panel mới
         private ComboBox cboMaSanPham;
         private Label label3;
+        private Label label6;
         private DataGridViewTextBoxColumn mathuoc;
-        private DataGridViewTextBoxColumn hinhanh;
         private DataGridViewTextBoxColumn tenthuoc;
         private DataGridViewTextBoxColumn hamluong;
         private DataGridViewTextBoxColumn donvitinh;

@@ -35,7 +35,8 @@ namespace QLNT
                     e.Salary,
                     e.HireDate,
                     e.PhoneNumber,
-                    e.EmailEmployee
+                    e.EmailEmployee,
+                    e.Status
                 }).OrderBy(e => e.EmployeeID).ToList();
             }
         }
@@ -54,7 +55,8 @@ namespace QLNT
                         e.Salary,
                         e.HireDate,
                         e.PhoneNumber,
-                        e.EmailEmployee
+                        e.EmailEmployee,
+                        e.Status
                     })
                     .OrderBy(e => e.EmployeeID)
                     .ToList();
@@ -76,15 +78,7 @@ namespace QLNT
                 dtgvEmployee.Columns.Add(btnEdit);
             }
 
-            if (!dtgvEmployee.Columns.Contains("Delete"))
-            {
-                DataGridViewButtonColumn btnDelete = new DataGridViewButtonColumn();
-                btnDelete.Name = "Delete";
-                btnDelete.HeaderText = "Xóa";
-                btnDelete.Text = "Xóa";
-                btnDelete.UseColumnTextForButtonValue = true;
-                dtgvEmployee.Columns.Add(btnDelete);
-            }
+            
         }
 
         private void ShowEditEmployeeForm(int EmployeeID)
@@ -99,38 +93,7 @@ namespace QLNT
             editEmployee.Show();
         }
 
-        private void DeleteEmployee(int rowIndex)
-        {
-            try
-            {
-                using (var db = new EFDbContext())
-                {
-                    var EmployeeIdCell = dtgvEmployee.Rows[rowIndex].Cells["EmployeeID"].Value;
-                    if (EmployeeIdCell != null && int.TryParse(EmployeeIdCell.ToString(), out int EmployeeID))
-                    {
-                        var EmployeeToDelete = db.Employees.Find(EmployeeID);
-                        if (EmployeeToDelete != null)
-                        {
-                            db.Employees.Remove(EmployeeToDelete);
-                            db.SaveChanges();
-                            LoadEmployeeData(); // Cập nhật danh sách sau khi xóa
-                        }
-                        else
-                        {
-                            MessageBox.Show("Không tìm thấy nhân viên để xóa!");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không thể lấy ID nhân viên!");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi xóa nhân viên: {ex.Message}");
-            }
-        }
+        
 
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
@@ -182,13 +145,7 @@ namespace QLNT
                         MessageBox.Show($"Lỗi khi mở form sửa nhân viên: {ex.Message}");
                     }
                 }
-                else if (columnName == "Delete")
-                {
-                    if (MessageBox.Show("Bạn có chắc chắn muốn xóa nhân viên này?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                    {
-                        DeleteEmployee(e.RowIndex);
-                    }
-                }
+                
             }
         }
     }
