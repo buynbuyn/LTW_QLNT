@@ -30,6 +30,11 @@
         {
             label1 = new Label();
             dataGridView1 = new DataGridView();
+            ThongTinThuocColumn = new DataGridViewTextBoxColumn();
+            SoLuongColumn = new DataGridViewTextBoxColumn();
+            DonViTinhColumn = new DataGridViewTextBoxColumn();
+            expirationdate = new DataGridViewTextBoxColumn();
+            ThanhTienColumn = new DataGridViewTextBoxColumn();
             label2 = new Label();
             label3 = new Label();
             cboThongTinThuoc = new ComboBox();
@@ -50,11 +55,6 @@
             label8 = new Label();
             tBoSL = new TextBox();
             label7 = new Label();
-            ThongTinThuocColumn = new DataGridViewTextBoxColumn();
-            SoLuongColumn = new DataGridViewTextBoxColumn();
-            DonViTinhColumn = new DataGridViewTextBoxColumn();
-            expirationdate = new DataGridViewTextBoxColumn();
-            ThanhTienColumn = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -78,9 +78,44 @@
             dataGridView1.Location = new Point(12, 83);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(702, 253);
+            dataGridView1.Size = new Size(702, 446);
             dataGridView1.TabIndex = 1;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // ThongTinThuocColumn
+            // 
+            ThongTinThuocColumn.HeaderText = "Tên sản phẩm";
+            ThongTinThuocColumn.MinimumWidth = 6;
+            ThongTinThuocColumn.Name = "ThongTinThuocColumn";
+            ThongTinThuocColumn.Width = 200;
+            // 
+            // SoLuongColumn
+            // 
+            SoLuongColumn.HeaderText = "Số lượng";
+            SoLuongColumn.MinimumWidth = 6;
+            SoLuongColumn.Name = "SoLuongColumn";
+            SoLuongColumn.Width = 80;
+            // 
+            // DonViTinhColumn
+            // 
+            DonViTinhColumn.HeaderText = "Đơn vị tính";
+            DonViTinhColumn.MinimumWidth = 6;
+            DonViTinhColumn.Name = "DonViTinhColumn";
+            DonViTinhColumn.Width = 125;
+            // 
+            // expirationdate
+            // 
+            expirationdate.HeaderText = "Ngày hết hạn";
+            expirationdate.MinimumWidth = 6;
+            expirationdate.Name = "expirationdate";
+            expirationdate.Width = 120;
+            // 
+            // ThanhTienColumn
+            // 
+            ThanhTienColumn.HeaderText = "Thành tiền";
+            ThanhTienColumn.MinimumWidth = 6;
+            ThanhTienColumn.Name = "ThanhTienColumn";
+            ThanhTienColumn.Width = 120;
             // 
             // label2
             // 
@@ -139,6 +174,7 @@
             tbSDTKH.Name = "tbSDTKH";
             tbSDTKH.Size = new Size(293, 27);
             tbSDTKH.TabIndex = 7;
+            tbSDTKH.KeyDown += tbSDTKH_KeyDown;
             // 
             // label5
             // 
@@ -189,7 +225,7 @@
             panel1.Controls.Add(label8);
             panel1.Controls.Add(tBoSL);
             panel1.Controls.Add(label7);
-            panel1.Location = new Point(593, 346);
+            panel1.Location = new Point(720, 348);
             panel1.Name = "panel1";
             panel1.Size = new Size(495, 181);
             panel1.TabIndex = 12;
@@ -282,46 +318,11 @@
             label7.Text = "Số lượng";
             label7.Click += label7_Click;
             // 
-            // ThongTinThuocColumn
-            // 
-            ThongTinThuocColumn.HeaderText = "Tên sản phẩm";
-            ThongTinThuocColumn.MinimumWidth = 6;
-            ThongTinThuocColumn.Name = "ThongTinThuocColumn";
-            ThongTinThuocColumn.Width = 200;
-            // 
-            // SoLuongColumn
-            // 
-            SoLuongColumn.HeaderText = "Số lượng";
-            SoLuongColumn.MinimumWidth = 6;
-            SoLuongColumn.Name = "SoLuongColumn";
-            SoLuongColumn.Width = 80;
-            // 
-            // DonViTinhColumn
-            // 
-            DonViTinhColumn.HeaderText = "Đơn vị tính";
-            DonViTinhColumn.MinimumWidth = 6;
-            DonViTinhColumn.Name = "DonViTinhColumn";
-            DonViTinhColumn.Width = 125;
-            // 
-            // expirationdate
-            // 
-            expirationdate.HeaderText = "Ngày hết hạn";
-            expirationdate.MinimumWidth = 6;
-            expirationdate.Name = "expirationdate";
-            expirationdate.Width = 120;
-            // 
-            // ThanhTienColumn
-            // 
-            ThanhTienColumn.HeaderText = "Thành tiền";
-            ThanhTienColumn.MinimumWidth = 6;
-            ThanhTienColumn.Name = "ThanhTienColumn";
-            ThanhTienColumn.Width = 120;
-            // 
             // Hoadon
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1100, 539);
+            ClientSize = new Size(1245, 575);
             Controls.Add(panel1);
             Controls.Add(cboVoucher);
             Controls.Add(label6);

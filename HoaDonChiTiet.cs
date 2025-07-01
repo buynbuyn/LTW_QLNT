@@ -14,46 +14,61 @@ namespace QLNT
         private PrintDocument printDocument;
         private int _orderId;
 
-        public HoaDonChiTiet(string orderId, string customerName, string phone, string email, DateTime orderDate,
-            int totalQuantity, decimal totalAmount, decimal discount, decimal tax, decimal finalAmount)
+        public HoaDonChiTiet(
+    string orderId,
+    int? customerId,
+    DateTime orderDate,
+    int totalQuantity,
+    decimal totalAmount,
+    decimal discount,
+    decimal tax,
+    decimal finalAmount)
         {
             InitializeComponent();
             _context = new EFDbContext();
-            _orderId = int.Parse(orderId); // Chuyển đổi orderId thành int
+            _orderId = int.Parse(orderId);
 
-            // Gán dữ liệu với kiểm tra null
-            textBox1.Text = string.IsNullOrEmpty(orderId) ? "N/A" : orderId; // Mã hóa đơn
-            textBox2.Text = string.IsNullOrEmpty(customerName) ? "N/A" : customerName; // Họ tên khách hàng
-            textBox3.Text = string.IsNullOrEmpty(email) ? "N/A" : email; // Email khách hàng
-            textBox4.Text = string.IsNullOrEmpty(phone) ? "N/A" : phone; // SĐT khách hàng
-            textBox10.Text = orderDate != DateTime.MinValue ? orderDate.ToString("dd/MM/yyyy") : "N/A"; // Ngày
+            string customerName = "N/A";
+            string phone = "N/A";
+            string email = "N/A";
 
-            // Cập nhật tổng hợp
-            textBox5.Text = totalQuantity > 0 ? totalQuantity.ToString() : "0"; // Tổng số lượng
-            textBox6.Text = totalAmount >= 0 ? totalAmount.ToString("C0") : "0,00 đ"; // Tổng tiền
-            textBox7.Text = discount >= 0 ? discount.ToString("C0") : "0,00 đ"; // Giảm giá
-            textBox8.Text = tax >= 0 ? tax.ToString("C0") : "0,00 đ"; // Thuế
-            textBox9.Text = finalAmount >= 0 ? finalAmount.ToString("C0") : "0,00 đ"; // Thành tiền
+            if (customerId.HasValue) // Khách cũ: lấy từ DB
+            {
+                var customer = _context.Customers.FirstOrDefault(c => c.CustomerID == customerId.Value);
+                if (customer != null)
+                {
+                    customerName = customer.CustomerName ?? "N/A";
+                    phone = customer.PhoneNumber ?? "N/A";
+                    email = customer.Email ?? "N/A";
+                }
+            }
 
-            // Ngăn nhập liệu cho tất cả TextBox
-            textBox1.ReadOnly = true;
-            textBox2.ReadOnly = true;
-            textBox3.ReadOnly = true;
-            textBox4.ReadOnly = true;
-            textBox5.ReadOnly = true;
-            textBox6.ReadOnly = true;
-            textBox7.ReadOnly = true;
-            textBox8.ReadOnly = true;
-            textBox9.ReadOnly = true;
-            textBox10.ReadOnly = true;
+            // Gán dữ liệu vào textbox
+            textBox1.Text = orderId;
+            textBox2.Text = customerName;
+            textBox3.Text = email;
+            textBox4.Text = phone;
+            textBox10.Text = orderDate.ToString("dd/MM/yyyy");
 
-            // Cấu hình và gắn dữ liệu từ OrderDetails vào DataGridView
+            textBox5.Text = totalQuantity.ToString();
+            textBox6.Text = totalAmount.ToString("C0");
+            textBox7.Text = discount.ToString("C0");
+            textBox8.Text = tax.ToString("C0");
+            textBox9.Text = finalAmount.ToString("C0");
+
+            // Đặt tất cả TextBox ở chế độ chỉ đọc
+            foreach (var tb in new[] { textBox1, textBox2, textBox3, textBox4, textBox5, textBox6, textBox7, textBox8, textBox9, textBox10 })
+            {
+                tb.ReadOnly = true;
+            }
+
             LoadOrderDetails();
 
-            // Khởi tạo PrintDocument
             printDocument = new PrintDocument();
             printDocument.PrintPage += PrintDocument_PrintPage;
         }
+
+
 
         private void LoadOrderDetails()
         {

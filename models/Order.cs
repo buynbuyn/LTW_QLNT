@@ -15,9 +15,9 @@ namespace QLNT.models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderID { get; set; } // Khóa chính
 
-        [Required]
+        
         [ForeignKey("Customer")]
-        public int CustomerID { get; set; } // Khóa ngoại từ bảng Customer
+        public int? CustomerID { get; set; } // Khóa ngoại từ bảng Customer
 
         [Required]
         [ForeignKey("User")]

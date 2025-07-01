@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using QLNT.Data;
+using QLNT.models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using QLNT.Data;
-using QLNT.models;
-using Microsoft.EntityFrameworkCore;
 
 namespace QLNT
 {
@@ -23,101 +24,87 @@ namespace QLNT
             _context = new EFDbContext();
             _currentCart = null;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+
         }
 
         private void HoadonForm_Load(object sender, EventArgs e)
         {
             try
             {
-                // Kiểm tra và cập nhật _userId khi form load
-                int? previousUserId = _userId;
+                // Kiểm tra UserID
                 _userId = Utility.UserID;
-
                 if (!_userId.HasValue)
                 {
-                    MessageBox.Show("UserID không hợp lệ hoặc chưa đăng nhập! Vui lòng đăng nhập lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    cboThongTinThuoc.Enabled = false;
-                    dataGridView1.Enabled = false;
-                    btn_remove.Enabled = false;
-                    btn_xuathoadon.Enabled = false;
+                    MessageBox.Show("Vui lòng đăng nhập!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DisableControls();
                     return;
                 }
 
-                // Kiểm tra nếu đổi tài khoản, reset giỏ hàng
-                if (previousUserId != _userId)
+                // Sử dụng DbContext toàn cục
+                _currentCart = _context.Carts
+                    .Include(c => c.Customer)
+                    .Include(c => c.CartDetails)
+                    .ThenInclude(cd => cd.Product)
+                    .FirstOrDefault(c => c.UserID == _userId.Value);
+
+                if (_currentCart == null)
                 {
-                    _currentCart = null;
-                    _cartId = _userId.Value;
+                    // Tạo giỏ hàng mới nếu chưa tồn tại
+                    _currentCart = new Cart
+                    {
+                        UserID = _userId.Value,
+                        CustomerID = _customerId ?? 1, // Khách hàng mặc định
+                        TotalCartPrice = 0m
+                    };
+                    _context.Carts.Add(_currentCart);
+                    _context.SaveChanges();
+                    _cartId = _currentCart.CartID; // Lấy CartID từ CSDL (giả sử CartID là auto-increment)
+                    MessageBox.Show($"Tạo giỏ hàng mới cho UserID {_userId.Value}!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    _cartId = _userId.Value;
+                    _cartId = _currentCart.CartID; // Sử dụng CartID hiện có
                 }
 
-                var cartCount = _context.Carts.Count();
-                var cartDetailCount = _context.CartDetails.Count();
-                var matchingCarts = _context.Carts.Where(c => c.CartID == _cartId && c.UserID == _userId).Count();
-                MessageBox.Show($"Carts: {cartCount}, CartDetails: {cartDetailCount}\nMatching Carts: {matchingCarts}\nCartID: {_cartId}\nUserID: {_userId}\nConnection: {_context.Database.GetConnectionString()}", "Debug DB");
-
-                using (var context = new EFDbContext())
+                // Kiểm tra giỏ hàng rỗng
+                if (!_currentCart.CartDetails.Any())
                 {
-                    _currentCart = context.Carts
-                        .Include(c => c.Customer)
-                        .Include(c => c.CartDetails)
-                        .ThenInclude(cd => cd.Product)
-                        .AsNoTracking()
-                        .FirstOrDefault(c => c.CartID == _cartId && c.UserID == _userId.Value);
-
-                    if (_currentCart == null)
-                    {
-                        _currentCart = new Cart
-                        {
-                            CartID = _cartId,
-                            UserID = _userId.Value,
-                            CustomerID = _customerId ?? 1,
-                            TotalCartPrice = 0m
-                        };
-                        context.Carts.Add(_currentCart);
-                        context.SaveChanges();
-                        MessageBox.Show($"Tạo mới giỏ hàng với CartID {_cartId} cho UserID {_userId.Value}!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        _currentCart = context.Carts
-                            .Include(c => c.Customer)
-                            .Include(c => c.CartDetails)
-                            .ThenInclude(cd => cd.Product)
-                            .FirstOrDefault(c => c.CartID == _cartId && c.UserID == _userId.Value);
-                    }
-
-                    if (!_currentCart.CartDetails.Any())
-                    {
-                        MessageBox.Show($"Giỏ hàng {_cartId} không có sản phẩm cho UserID {_userId.Value}!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        cboThongTinThuoc.Enabled = false;
-                        dataGridView1.Enabled = false;
-                        btn_remove.Enabled = false;
-                        btn_xuathoadon.Enabled = false;
-                        return;
-                    }
+                    MessageBox.Show("Giỏ hàng hiện tại trống! Vui lòng thêm sản phẩm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    DisableControls();
+                    return;
                 }
 
-                // Load dữ liệu vào memory trước khi dùng null check
-                var cartDetails = _currentCart.CartDetails.ToList();
-                tbSDTKH.Text = _currentCart.Customer != null ? _currentCart.Customer.PhoneNumber : "N/A";
-                cboPhuongthuc.Items.AddRange(new string[] { "Cash", "Chuyển khoản", "Thẻ tín dụng" });
-                cboPhuongthuc.SelectedIndex = 0;
-                cboVoucher.Items.AddRange(new string[] { "Không có", "GIAM10", "GIAM20" });
-                cboVoucher.SelectedIndex = 0;
-
-                // Sử dụng dữ liệu đã load
-                cboThongTinThuoc.Items.AddRange(cartDetails.Select(cd => cd.Product != null ? cd.Product.ProductName : "N/A").ToArray());
-                UpdateDataGridView();
-                UpdateSummary();
+                // Cập nhật giao diện
+                UpdateUI();
+            }
+            catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlEx && sqlEx.Number == 2627)
+            {
+                MessageBox.Show($"Giỏ hàng cho UserID {_userId.Value} đã tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi tải giỏ hàng: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void DisableControls()
+        {
+            cboThongTinThuoc.Enabled = false;
+            dataGridView1.Enabled = false;
+            btn_remove.Enabled = false;
+            btn_xuathoadon.Enabled = false;
+        }
+
+        private void UpdateUI()
+        {
+            tbSDTKH.Text = _currentCart.Customer?.PhoneNumber ?? "N/A";
+            cboPhuongthuc.Items.AddRange(new string[] { "Cash", "Chuyển khoản", "Thẻ tín dụng" });
+            cboPhuongthuc.SelectedIndex = 0;
+            cboVoucher.Items.AddRange(new string[] { "Không có", "GIAM10", " XAI20" });
+            cboVoucher.SelectedIndex = 0;
+            cboThongTinThuoc.Items.AddRange(_currentCart.CartDetails.Select(cd => cd.Product?.ProductName ?? "N/A").ToArray());
+            UpdateDataGridView();
+            UpdateSummary();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -311,17 +298,17 @@ namespace QLNT
                         decimal tax = (totalAmount - discount) * 0.05m;
                         decimal finalAmount = (totalAmount - discount) + tax;
 
-                        // Tạo và lưu Order trước
+                        // Tạo và lưu Order
                         var order = new Order
                         {
-                            CustomerID = _currentCart.CustomerID ?? _customerId ?? 1,
+                            CustomerID = _customerId,
                             UserID = _userId.Value,
                             OrderDate = DateTime.Now,
                             Amount = finalAmount,
                             Status = "Đã xử lý"
                         };
                         _context.Orders.Add(order);
-                        _context.SaveChanges(); // Lưu để lấy OrderID
+                        _context.SaveChanges();
 
                         // Tạo và thêm OrderDetails
                         var orderDetails = _currentCart.CartDetails.Select(cd => new OrderDetail
@@ -334,36 +321,43 @@ namespace QLNT
                         _context.OrderDetails.AddRange(orderDetails);
                         _context.SaveChanges();
 
-                        // === Trừ số lượng tồn kho theo ProductID ===
-                        foreach (var cd in _currentCart.CartDetails)
-                        {
-                            var productDetail = _context.ProductDetails.FirstOrDefault(p => p.ProductID == cd.ProductID);
-                            var productInfo = _context.Products.FirstOrDefault(p => p.ProductID == cd.ProductID); // để lấy tên
+                        // Trừ số lượng tồn kho
+                        var groupedCartDetails = _currentCart.CartDetails
+                            .GroupBy(cd => cd.ProductID)
+                            .ToDictionary(g => g.Key, g => g.Sum(cd => cd.Quantity));
 
-                            if (productDetail != null)
+                        foreach (var kvp in groupedCartDetails)
+                        {
+                            int productId = kvp.Key;
+                            int totalQuantity = kvp.Value;
+
+                            var productDetail = _context.ProductDetails.FirstOrDefault(p => p.ProductID == productId);
+                            var productInfo = _context.Products.FirstOrDefault(p => p.ProductID == productId);
+
+                            Console.WriteLine($"DEBUG - ProductID: {productId}, Initial Stock: {refreshedDetail?.StockQuantity ?? -1}, Total Quantity to deduct: {totalQuantity}");
+
+                            if (productDetail != null && refreshedDetail != null && refreshedDetail.StockQuantity >= totalQuantity)
                             {
-                                if (productDetail.StockQuantity >= cd.Quantity)
-                                {
-                                    productDetail.StockQuantity -= cd.Quantity;
-                                }
-                                else
-                                {
-                                    transaction.Rollback();
-                                    MessageBox.Show(
-                                        $"Sản phẩm {(productInfo?.ProductName ?? "Không xác định")} không đủ hàng trong kho!\n" +
-                                        $"Tồn kho: {productDetail.StockQuantity}, Yêu cầu: {cd.Quantity}",
-                                        "Lỗi kho hàng",
-                                        MessageBoxButtons.OK,
-                                        MessageBoxIcon.Error
-                                    );
-                                    return;
-                                }
+                                int previousStock = productDetail.StockQuantity;
+                                productDetail.StockQuantity -= totalQuantity;
+                                Console.WriteLine($"DEBUG - Previous Stock: {previousStock}, After deduct: {productDetail.StockQuantity}");
+                            }
+                            else if (productDetail != null && refreshedDetail != null)
+                            {
+                                transaction.Rollback();
+                                MessageBox.Show(
+                                    $"Sản phẩm {(productInfo?.ProductName ?? "Không xác định")} không đủ hàng trong kho!\n" +
+                                    $"Tồn kho: {refreshedDetail.StockQuantity}, Yêu cầu: {totalQuantity}",
+                                    "Lỗi kho hàng",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Error
+                                );
+                                return;
                             }
                         }
                         _context.SaveChanges();
 
-
-                        // Load dữ liệu vào memory để xử lý null
+                        // Load dữ liệu
                         var orderDetailData = _context.OrderDetails
                             .Where(od => od.OrderID == order.OrderID)
                             .Include(od => od.Product)
@@ -377,7 +371,6 @@ namespace QLNT
                                 Total = od.QuantityOrder * od.UnitPrice
                             }).ToList();
 
-                        // Debug: Kiểm tra dữ liệu
                         if (!orderDetailData.Any())
                         {
                             MessageBox.Show("Dữ liệu orderDetailData trống!", "Debug", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -388,9 +381,7 @@ namespace QLNT
                         }
 
                         // Xóa giỏ hàng
-                        var dbCart = _context.Carts
-                            .Include(c => c.CartDetails)
-                            .FirstOrDefault(c => c.CartID == _cartId);
+                        var dbCart = _context.Carts.Include(c => c.CartDetails).FirstOrDefault(c => c.CartID == _cartId);
                         if (dbCart != null)
                         {
                             _context.CartDetails.RemoveRange(dbCart.CartDetails);
@@ -403,9 +394,7 @@ namespace QLNT
                         // Mở form HoaDonChiTiet
                         var hoaDonChiTiet = new HoaDonChiTiet(
                             orderId: order.OrderID.ToString(),
-                            customerName: _currentCart.Customer != null ? _currentCart.Customer.CustomerName : "N/A",
-                            phone: tbSDTKH.Text,
-                            email: _currentCart.Customer != null ? _currentCart.Customer.Email : "N/A",
+                            customerId: _currentCart.Customer?.CustomerID,
                             orderDate: order.OrderDate,
                             totalQuantity: int.Parse(tBoSL.Text),
                             totalAmount: totalAmount,
@@ -415,7 +404,7 @@ namespace QLNT
                         );
                         hoaDonChiTiet.ShowDialog();
 
-                        // Reset giao diện và tạo lại giỏ hàng trống
+                        // Reset giao diện
                         _currentCart = null;
                         cboThongTinThuoc.Items.Clear();
                         cboThongTinThuoc.Enabled = false;
@@ -491,6 +480,46 @@ namespace QLNT
                 MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void tbSDTKH_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                string phoneNumber = tbSDTKH.Text.Trim();
+
+                if (string.IsNullOrEmpty(phoneNumber))
+                {
+                    MessageBox.Show("Vui lòng nhập số điện thoại!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                using (var context = new EFDbContext())
+                {
+                    var customer = context.Customers.FirstOrDefault(c => c.PhoneNumber == phoneNumber);
+
+                    if (customer != null)
+                    {
+                        // Khách hàng cũ
+                        _customerId = customer.CustomerID;
+                        _currentCart.CustomerID = customer.CustomerID;
+                        _currentCart.Customer = customer;
+
+                        MessageBox.Show($"Đã tìm thấy khách hàng: {customer.CustomerName}", "Thông tin khách hàng", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        // Khách hàng mới
+                        _customerId = null;
+                        _currentCart.CustomerID = null;
+                        _currentCart.Customer = null;
+
+                        MessageBox.Show("Không tìm thấy khách hàng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                    context.SaveChanges();
+                }
+            }
+        }
+
 
         private void cboThongTinThuoc_SelectedIndexChanged(object sender, EventArgs e)
         {
