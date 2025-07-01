@@ -40,13 +40,16 @@
             label1 = new Label();
             chartRevenue = new System.Windows.Forms.DataVisualization.Charting.Chart();
             btnExportExcel = new Button();
+            label3 = new Label();
+            label2 = new Label();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)chartRevenue).BeginInit();
             SuspendLayout();
             // 
             // cboMonth
             // 
             cboMonth.FormattingEnabled = true;
-            cboMonth.Location = new Point(664, 92);
+            cboMonth.Location = new Point(853, 122);
             cboMonth.Name = "cboMonth";
             cboMonth.Size = new Size(69, 28);
             cboMonth.TabIndex = 0;
@@ -54,16 +57,16 @@
             // cboYear
             // 
             cboYear.FormattingEnabled = true;
-            cboYear.Location = new Point(809, 92);
+            cboYear.Location = new Point(1007, 122);
             cboYear.Name = "cboYear";
             cboYear.Size = new Size(115, 28);
             cboYear.TabIndex = 1;
             // 
             // btnTheoNgay
             // 
-            btnTheoNgay.Location = new Point(664, 223);
+            btnTheoNgay.Location = new Point(794, 313);
             btnTheoNgay.Name = "btnTheoNgay";
-            btnTheoNgay.Size = new Size(208, 58);
+            btnTheoNgay.Size = new Size(328, 58);
             btnTheoNgay.TabIndex = 2;
             btnTheoNgay.Text = "Xem doanh thu theo ngày";
             btnTheoNgay.UseVisualStyleBackColor = true;
@@ -71,9 +74,9 @@
             // 
             // btnTheoThang
             // 
-            btnTheoThang.Location = new Point(664, 293);
+            btnTheoThang.Location = new Point(794, 409);
             btnTheoThang.Name = "btnTheoThang";
-            btnTheoThang.Size = new Size(208, 61);
+            btnTheoThang.Size = new Size(328, 61);
             btnTheoThang.TabIndex = 3;
             btnTheoThang.Text = "Xem doanh thu theo tháng";
             btnTheoThang.UseVisualStyleBackColor = true;
@@ -82,7 +85,7 @@
             // lblTotal
             // 
             lblTotal.AutoSize = true;
-            lblTotal.Location = new Point(676, 659);
+            lblTotal.Location = new Point(730, 651);
             lblTotal.Name = "lblTotal";
             lblTotal.Size = new Size(117, 40);
             lblTotal.TabIndex = 5;
@@ -99,11 +102,11 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Times New Roman", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(493, 33);
+            label1.Font = new Font("Times New Roman", 30F, FontStyle.Bold);
+            label1.Location = new Point(794, 20);
             label1.Name = "label1";
             label1.RightToLeft = RightToLeft.No;
-            label1.Size = new Size(162, 29);
+            label1.Size = new Size(331, 57);
             label1.TabIndex = 7;
             label1.Text = "DOANH THU";
             // 
@@ -119,25 +122,55 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chartRevenue.Series.Add(series1);
-            chartRevenue.Size = new Size(617, 604);
+            chartRevenue.Size = new Size(682, 604);
             chartRevenue.TabIndex = 8;
             chartRevenue.Text = "chart1";
             // 
             // btnExportExcel
             // 
-            btnExportExcel.Location = new Point(1027, 650);
+            btnExportExcel.Location = new Point(1027, 635);
             btnExportExcel.Name = "btnExportExcel";
-            btnExportExcel.Size = new Size(129, 38);
+            btnExportExcel.Size = new Size(189, 53);
             btnExportExcel.TabIndex = 9;
-            btnExportExcel.Text = "Xuất file ";
+            btnExportExcel.Text = "Xuất file excel";
             btnExportExcel.UseVisualStyleBackColor = true;
             btnExportExcel.Click += btnExportExcel_Click;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(957, 130);
+            label3.Name = "label3";
+            label3.Size = new Size(44, 20);
+            label3.TabIndex = 15;
+            label3.Text = "Năm:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(794, 130);
+            label2.Name = "label2";
+            label2.Size = new Size(53, 20);
+            label2.TabIndex = 14;
+            label2.Text = "Tháng:";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(794, 270);
+            label4.Name = "label4";
+            label4.Size = new Size(127, 20);
+            label4.TabIndex = 16;
+            label4.Text = "Chọn chế độ xem:";
             // 
             // DoanhThuForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1259, 708);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(label2);
             Controls.Add(btnExportExcel);
             Controls.Add(chartRevenue);
             Controls.Add(label1);
@@ -165,5 +198,8 @@
         private Label label1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartRevenue;
         private Button btnExportExcel;
+        private Label label3;
+        private Label label2;
+        private Label label4;
     }
 }
