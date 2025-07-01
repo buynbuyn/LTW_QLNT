@@ -39,6 +39,7 @@
             lblTotalBills = new Label();
             label1 = new Label();
             chartRevenue = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            btnExportExcel = new Button();
             ((System.ComponentModel.ISupportInitialize)chartRevenue).BeginInit();
             SuspendLayout();
             // 
@@ -86,7 +87,6 @@
             lblTotal.Size = new Size(117, 40);
             lblTotal.TabIndex = 5;
             lblTotal.Text = "Tổng doanh thu:\n\n";
-            lblTotal.Click += lblTotal_Click;
             // 
             // lblTotalBills
             // 
@@ -123,11 +123,22 @@
             chartRevenue.TabIndex = 8;
             chartRevenue.Text = "chart1";
             // 
+            // btnExportExcel
+            // 
+            btnExportExcel.Location = new Point(594, 296);
+            btnExportExcel.Name = "btnExportExcel";
+            btnExportExcel.Size = new Size(129, 38);
+            btnExportExcel.TabIndex = 9;
+            btnExportExcel.Text = "Xuất file ";
+            btnExportExcel.UseVisualStyleBackColor = true;
+            btnExportExcel.Click += btnExportExcel_Click;
+            // 
             // DoanhThuForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1083, 450);
+            ClientSize = new Size(1161, 511);
+            Controls.Add(btnExportExcel);
             Controls.Add(chartRevenue);
             Controls.Add(label1);
             Controls.Add(lblTotalBills);
@@ -153,5 +164,6 @@
         private Label lblTotalBills;
         private Label label1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartRevenue;
+        private Button btnExportExcel;
     }
 }

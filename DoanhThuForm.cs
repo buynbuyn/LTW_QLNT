@@ -5,11 +5,14 @@ using System.Windows.Forms;
 using QLNT.Data;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Collections.Generic;
+using ClosedXML.Excel;
 
 namespace QLNT
 {
     public partial class DoanhThuForm : Form
     {
+        private List<ChartDataPoint> currentChartData = new List<ChartDataPoint>();
+
         public DoanhThuForm()
         {
             InitializeComponent();
@@ -56,8 +59,7 @@ namespace QLNT
             chartArea.AxisX.MajorGrid.Enabled = false;
             chartArea.AxisX.LabelStyle.IsEndLabelVisible = true;
             chartArea.AxisX.IsLabelAutoFit = true;
-            chartArea.AxisX.LabelStyle.Interval = 0;
-            chartArea.AxisX.IsStartedFromZero = false;
+            chartArea.AxisX.LabelStyle.Angle = 0; // Xoay nhãn về ngang
             chartArea.AxisX.LabelStyle.Font = new System.Drawing.Font("Arial", 8F);
             chartArea.AxisX.IsMarginVisible = true;
 
@@ -70,6 +72,7 @@ namespace QLNT
 
         private void UpdateChart(IEnumerable<ChartDataPoint> data, string chartTitle, string axisXTitle)
         {
+            currentChartData = data.ToList(); // Lưu dữ liệu cho export
             chartRevenue.Series["VNĐ"].Points.Clear();
             chartRevenue.Titles.Clear();
             chartRevenue.Titles.Add(chartTitle);
@@ -198,6 +201,59 @@ namespace QLNT
                 if (result.Count == 0)
                 {
                     MessageBox.Show("Không có dữ liệu cho năm đã chọn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void btnExportExcel_Click(object sender, EventArgs e)
+        {
+            if (currentChartData == null || currentChartData.Count == 0)
+            {
+                MessageBox.Show("Không có dữ liệu để xuất.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            ExportToExcel(currentChartData, chartRevenue.Titles.Count > 0 ? chartRevenue.Titles[0].Text : "Doanh thu");
+        }
+
+        private void ExportToExcel(List<ChartDataPoint> data, string title)
+        {
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Doanh thu");
+
+                worksheet.Cell(1, 1).Value = title;
+                worksheet.Cell(1, 1).Style.Font.Bold = true;
+                worksheet.Cell(1, 1).Style.Font.FontSize = 14;
+                worksheet.Range(1, 1, 1, 2).Merge();
+
+                worksheet.Cell(3, 1).Value = "Thời gian";
+                worksheet.Cell(3, 2).Value = "Doanh thu (VNĐ)";
+                worksheet.Range(3, 1, 3, 2).Style.Font.Bold = true;
+
+                int row = 4;
+                foreach (var item in data)
+                {
+                    worksheet.Cell(row, 1).Value = item.Label;
+                    worksheet.Cell(row, 2).Value = item.Value;
+                    worksheet.Cell(row, 2).Style.NumberFormat.Format = "#,##0";
+                    row++;
+                }
+
+                worksheet.Columns().AdjustToContents();
+
+                using (SaveFileDialog sfd = new SaveFileDialog()
+                {
+                    Filter = "Excel Workbook|*.xlsx",
+                    Title = "Lưu báo cáo doanh thu",
+                    FileName = "DoanhThu.xlsx"
+                })
+                {
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        workbook.SaveAs(sfd.FileName);
+                        MessageBox.Show("Xuất file Excel thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
         }
