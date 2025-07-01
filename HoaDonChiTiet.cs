@@ -35,6 +35,18 @@ namespace QLNT
             textBox8.Text = tax >= 0 ? tax.ToString("C0") : "0,00 đ"; // Thuế
             textBox9.Text = finalAmount >= 0 ? finalAmount.ToString("C0") : "0,00 đ"; // Thành tiền
 
+            // Ngăn nhập liệu cho tất cả TextBox
+            textBox1.ReadOnly = true;
+            textBox2.ReadOnly = true;
+            textBox3.ReadOnly = true;
+            textBox4.ReadOnly = true;
+            textBox5.ReadOnly = true;
+            textBox6.ReadOnly = true;
+            textBox7.ReadOnly = true;
+            textBox8.ReadOnly = true;
+            textBox9.ReadOnly = true;
+            textBox10.ReadOnly = true;
+
             // Cấu hình và gắn dữ liệu từ OrderDetails vào DataGridView
             LoadOrderDetails();
 
@@ -96,6 +108,7 @@ namespace QLNT
                 });
 
                 dataGridView1.DataSource = orderDetails;
+                dataGridView1.ReadOnly = true; // Ngăn chỉnh sửa DataGridView
             }
             catch (Exception ex)
             {
@@ -176,6 +189,16 @@ namespace QLNT
             {
                 e.Graphics.DrawString(printText, font, Brushes.Black, new PointF(100, 100));
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            // Không cần xử lý vì TextBox đã ở chế độ ReadOnly
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            // Không cần xử lý vì TextBox đã ở chế độ ReadOnly
         }
     }
 }

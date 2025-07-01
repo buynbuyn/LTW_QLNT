@@ -144,16 +144,22 @@ namespace QLNT
         {
             var cartDetails = _currentCart.CartDetails.ToList().Select(cd =>
             {
-                string productName = cd.Product != null ? cd.Product.ProductName : "N/A";
-                string unit = cd.Product != null ? cd.Product.Unit : "N/A";
+                string productName = cd.Product?.ProductName ?? "N/A";
+                string unit = cd.Product?.Unit ?? "N/A";
+
+                var productDetail = _context.ProductDetails.FirstOrDefault(pd => pd.ProductID == cd.ProductID);
+                DateTime? expirationDate = productDetail?.ExpirationDate;
+
                 return new CartDetailViewModel
                 {
                     ThongTinThuoc = productName,
                     SoLuong = cd.Quantity,
                     DonViTinh = unit,
+                    NgayHetHan = expirationDate,
                     ThanhTien = cd.Quantity * cd.UnitPrice
                 };
             }).ToList();
+
 
             dataGridView1.Columns.Clear();
             dataGridView1.AutoGenerateColumns = false;
@@ -179,6 +185,15 @@ namespace QLNT
                 Name = "DonViTinhColumn",
                 Width = 100
             });
+            dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Ngày hết hạn",
+                DataPropertyName = "NgayHetHan",
+                Name = "NgayHetHanColumn",
+                Width = 120,
+                DefaultCellStyle = new DataGridViewCellStyle { Format = "dd/MM/yyyy" }
+            });
+
             dataGridView1.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Thành tiền",
@@ -318,6 +333,35 @@ namespace QLNT
                         }).ToList();
                         _context.OrderDetails.AddRange(orderDetails);
                         _context.SaveChanges();
+
+                        // === Trừ số lượng tồn kho theo ProductID ===
+                        foreach (var cd in _currentCart.CartDetails)
+                        {
+                            var productDetail = _context.ProductDetails.FirstOrDefault(p => p.ProductID == cd.ProductID);
+                            var productInfo = _context.Products.FirstOrDefault(p => p.ProductID == cd.ProductID); // để lấy tên
+
+                            if (productDetail != null)
+                            {
+                                if (productDetail.StockQuantity >= cd.Quantity)
+                                {
+                                    productDetail.StockQuantity -= cd.Quantity;
+                                }
+                                else
+                                {
+                                    transaction.Rollback();
+                                    MessageBox.Show(
+                                        $"Sản phẩm {(productInfo?.ProductName ?? "Không xác định")} không đủ hàng trong kho!\n" +
+                                        $"Tồn kho: {productDetail.StockQuantity}, Yêu cầu: {cd.Quantity}",
+                                        "Lỗi kho hàng",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error
+                                    );
+                                    return;
+                                }
+                            }
+                        }
+                        _context.SaveChanges();
+
 
                         // Load dữ liệu vào memory để xử lý null
                         var orderDetailData = _context.OrderDetails
@@ -500,6 +544,7 @@ namespace QLNT
         public string ThongTinThuoc { get; set; }
         public int SoLuong { get; set; }
         public string DonViTinh { get; set; }
+        public DateTime? NgayHetHan { get; set; }
         public decimal ThanhTien { get; set; }
     }
 }
