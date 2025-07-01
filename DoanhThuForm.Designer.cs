@@ -46,22 +46,22 @@
             // cboMonth
             // 
             cboMonth.FormattingEnabled = true;
-            cboMonth.Location = new Point(594, 94);
+            cboMonth.Location = new Point(664, 92);
             cboMonth.Name = "cboMonth";
-            cboMonth.Size = new Size(87, 28);
+            cboMonth.Size = new Size(69, 28);
             cboMonth.TabIndex = 0;
             // 
             // cboYear
             // 
             cboYear.FormattingEnabled = true;
-            cboYear.Location = new Point(687, 94);
+            cboYear.Location = new Point(809, 92);
             cboYear.Name = "cboYear";
             cboYear.Size = new Size(115, 28);
             cboYear.TabIndex = 1;
             // 
             // btnTheoNgay
             // 
-            btnTheoNgay.Location = new Point(594, 165);
+            btnTheoNgay.Location = new Point(664, 223);
             btnTheoNgay.Name = "btnTheoNgay";
             btnTheoNgay.Size = new Size(208, 58);
             btnTheoNgay.TabIndex = 2;
@@ -71,7 +71,7 @@
             // 
             // btnTheoThang
             // 
-            btnTheoThang.Location = new Point(594, 229);
+            btnTheoThang.Location = new Point(664, 293);
             btnTheoThang.Name = "btnTheoThang";
             btnTheoThang.Size = new Size(208, 61);
             btnTheoThang.TabIndex = 3;
@@ -82,7 +82,7 @@
             // lblTotal
             // 
             lblTotal.AutoSize = true;
-            lblTotal.Location = new Point(594, 398);
+            lblTotal.Location = new Point(676, 659);
             lblTotal.Name = "lblTotal";
             lblTotal.Size = new Size(117, 40);
             lblTotal.TabIndex = 5;
@@ -119,13 +119,13 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chartRevenue.Series.Add(series1);
-            chartRevenue.Size = new Size(546, 346);
+            chartRevenue.Size = new Size(617, 604);
             chartRevenue.TabIndex = 8;
             chartRevenue.Text = "chart1";
             // 
             // btnExportExcel
             // 
-            btnExportExcel.Location = new Point(594, 296);
+            btnExportExcel.Location = new Point(1027, 650);
             btnExportExcel.Name = "btnExportExcel";
             btnExportExcel.Size = new Size(129, 38);
             btnExportExcel.TabIndex = 9;
@@ -137,7 +137,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1161, 511);
+            ClientSize = new Size(1259, 708);
             Controls.Add(btnExportExcel);
             Controls.Add(chartRevenue);
             Controls.Add(label1);
