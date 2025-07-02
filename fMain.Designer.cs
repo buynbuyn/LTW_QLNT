@@ -184,6 +184,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BackColor = SystemColors.GradientInactiveCaption;
+            BackgroundImage = Properties.Resources.storeend;
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1367, 621);
             Controls.Add(panelUserInfo);
             Controls.Add(menuStrip1);

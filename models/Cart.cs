@@ -12,7 +12,7 @@ namespace QLNT.models
     [PrimaryKey("CartID")]
     internal class Cart
     {
-        [Key] // Giữ khóa chính nhưng không tự động tăng
+        [Key] // Giữ khóa chính nh2ưng không tự động tăng
         public int CartID { get; set; } // Khóa chính, giờ bạn sẽ tự gán giá trị
 
         [Required]

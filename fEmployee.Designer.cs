@@ -74,7 +74,7 @@ namespace QLNT
             dtgvEmployee.Name = "dtgvEmployee";
             dtgvEmployee.RowHeadersVisible = false;
             dtgvEmployee.RowHeadersWidth = 51;
-            dtgvEmployee.Size = new Size(974, 497);
+            dtgvEmployee.Size = new Size(1065, 497);
             dtgvEmployee.TabIndex = 1;
             dtgvEmployee.CellContentClick += dtgvEmployee_CellContentClick;
             // 
@@ -154,9 +154,9 @@ namespace QLNT
             // 
             panel1.Controls.Add(btnFindEmployee);
             panel1.Controls.Add(btnAddEmployee);
-            panel1.Location = new Point(1093, 81);
+            panel1.Location = new Point(1221, 81);
             panel1.Name = "panel1";
-            panel1.Size = new Size(373, 43);
+            panel1.Size = new Size(333, 43);
             panel1.TabIndex = 2;
             // 
             // btnFindEmployee
@@ -186,7 +186,7 @@ namespace QLNT
             // panelEmployee
             // 
             panelEmployee.BackColor = SystemColors.ActiveBorder;
-            panelEmployee.Location = new Point(1020, 132);
+            panelEmployee.Location = new Point(1130, 132);
             panelEmployee.Name = "panelEmployee";
             panelEmployee.Size = new Size(491, 448);
             panelEmployee.TabIndex = 3;
@@ -203,7 +203,7 @@ namespace QLNT
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1520, 845);
+            ClientSize = new Size(1760, 845);
             Controls.Add(panelEmployeeCard);
             Controls.Add(panelEmployee);
             Controls.Add(panel1);

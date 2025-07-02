@@ -49,7 +49,7 @@
             // cboMonth
             // 
             cboMonth.FormattingEnabled = true;
-            cboMonth.Location = new Point(853, 122);
+            cboMonth.Location = new Point(1220, 127);
             cboMonth.Name = "cboMonth";
             cboMonth.Size = new Size(69, 28);
             cboMonth.TabIndex = 0;
@@ -57,14 +57,14 @@
             // cboYear
             // 
             cboYear.FormattingEnabled = true;
-            cboYear.Location = new Point(1007, 122);
+            cboYear.Location = new Point(1374, 127);
             cboYear.Name = "cboYear";
             cboYear.Size = new Size(115, 28);
             cboYear.TabIndex = 1;
             // 
             // btnTheoNgay
             // 
-            btnTheoNgay.Location = new Point(794, 313);
+            btnTheoNgay.Location = new Point(1161, 318);
             btnTheoNgay.Name = "btnTheoNgay";
             btnTheoNgay.Size = new Size(328, 58);
             btnTheoNgay.TabIndex = 2;
@@ -74,7 +74,7 @@
             // 
             // btnTheoThang
             // 
-            btnTheoThang.Location = new Point(794, 409);
+            btnTheoThang.Location = new Point(1161, 414);
             btnTheoThang.Name = "btnTheoThang";
             btnTheoThang.Size = new Size(328, 61);
             btnTheoThang.TabIndex = 3;
@@ -85,7 +85,7 @@
             // lblTotal
             // 
             lblTotal.AutoSize = true;
-            lblTotal.Location = new Point(730, 651);
+            lblTotal.Location = new Point(1097, 656);
             lblTotal.Name = "lblTotal";
             lblTotal.Size = new Size(117, 40);
             lblTotal.TabIndex = 5;
@@ -103,7 +103,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Times New Roman", 30F, FontStyle.Bold);
-            label1.Location = new Point(794, 20);
+            label1.Location = new Point(1161, 25);
             label1.Name = "label1";
             label1.RightToLeft = RightToLeft.No;
             label1.Size = new Size(331, 57);
@@ -116,19 +116,19 @@
             chartRevenue.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             chartRevenue.Legends.Add(legend1);
-            chartRevenue.Location = new Point(12, 92);
+            chartRevenue.Location = new Point(12, 90);
             chartRevenue.Name = "chartRevenue";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chartRevenue.Series.Add(series1);
-            chartRevenue.Size = new Size(682, 604);
+            chartRevenue.Size = new Size(1039, 606);
             chartRevenue.TabIndex = 8;
             chartRevenue.Text = "chart1";
             // 
             // btnExportExcel
             // 
-            btnExportExcel.Location = new Point(1027, 635);
+            btnExportExcel.Location = new Point(1394, 640);
             btnExportExcel.Name = "btnExportExcel";
             btnExportExcel.Size = new Size(189, 53);
             btnExportExcel.TabIndex = 9;
@@ -139,7 +139,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(957, 130);
+            label3.Location = new Point(1324, 135);
             label3.Name = "label3";
             label3.Size = new Size(44, 20);
             label3.TabIndex = 15;
@@ -148,7 +148,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(794, 130);
+            label2.Location = new Point(1161, 135);
             label2.Name = "label2";
             label2.Size = new Size(53, 20);
             label2.TabIndex = 14;
@@ -157,7 +157,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(794, 270);
+            label4.Location = new Point(1161, 275);
             label4.Name = "label4";
             label4.Size = new Size(127, 20);
             label4.TabIndex = 16;
@@ -167,7 +167,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1259, 708);
+            ClientSize = new Size(1670, 846);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(label2);

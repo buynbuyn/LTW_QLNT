@@ -62,7 +62,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(856, 425);
+            dataGridView1.Size = new Size(1010, 425);
             dataGridView1.TabIndex = 2;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -118,7 +118,7 @@
             // 
             btnAddAccount.BackColor = SystemColors.ActiveBorder;
             btnAddAccount.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnAddAccount.Location = new Point(1071, 63);
+            btnAddAccount.Location = new Point(1253, 63);
             btnAddAccount.Name = "btnAddAccount";
             btnAddAccount.Size = new Size(146, 40);
             btnAddAccount.TabIndex = 3;
@@ -129,7 +129,7 @@
             // panelAccount
             // 
             panelAccount.BackColor = SystemColors.ActiveBorder;
-            panelAccount.Location = new Point(919, 126);
+            panelAccount.Location = new Point(1101, 126);
             panelAccount.Name = "panelAccount";
             panelAccount.Size = new Size(422, 362);
             panelAccount.TabIndex = 4;
@@ -138,7 +138,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1393, 612);
+            ClientSize = new Size(1549, 612);
             Controls.Add(panelAccount);
             Controls.Add(btnAddAccount);
             Controls.Add(dataGridView1);
