@@ -15,7 +15,7 @@ namespace QLNT
         static void Main()
         {
             // Bật cửa sổ Console
-            AllocConsole();
+           
 
             ApplicationConfiguration.Initialize();
 
