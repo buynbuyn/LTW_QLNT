@@ -215,5 +215,10 @@ namespace QLNT
         {
             // Không cần xử lý vì TextBox đã ở chế độ ReadOnly
         }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

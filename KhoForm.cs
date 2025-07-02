@@ -16,6 +16,7 @@ namespace QLNT
             InitializeComponent();
             this.Load += KhoForm_Load;
             dtgvKho.CellContentClick += DtgvKho_CellContentClick;
+            dtgvKho.CellClick += DtgvKho_CellClick; // Add CellClick event for image display
             btnthemsp.Click += Btnthemsp_Click;
             btnSearch.Click += BtnSearch_Click;
         }
@@ -34,20 +35,20 @@ namespace QLNT
                 dtgvKho.AutoGenerateColumns = true;
 
                 var list = db.Products
-                             .Select(pd => new
-                             {
-                                 pd.ProductID,
-                                 pd.ProductName,
-                                 pd.Dosage,
-                                 pd.Unit,
-                                 pd.Price,
-                                 pd.ProductImage // Đường dẫn ảnh
-                             })
-                             .ToList();
+                               .Select(pd => new
+                               {
+                                   pd.ProductID,
+                                   pd.ProductName,
+                                   pd.Dosage,
+                                   pd.Unit,
+                                   pd.Price,
+                                   pd.ProductImage // Lưu tên file ảnh, ví dụ: "amoxicillin.jpg"
+                               })
+                               .ToList();
 
                 dtgvKho.DataSource = list;
-                AddImageColumn();
                 AddActionButtons();
+                // No longer need AddViewImageButton as image is shown on row click
             }
         }
 
@@ -58,50 +59,22 @@ namespace QLNT
             using (var db = new EFDbContext())
             {
                 var list = db.Products
-                             .Where(p => p.ProductName.ToLower().Contains(keyword))
-                             .Select(p => new
-                             {
-                                 p.ProductID,
-                                 p.ProductName,
-                                 p.Dosage,
-                                 p.Unit,
-                                 p.Price,
-                                 p.ProductImage
-                             })
-                             .ToList();
+                               .Where(p => p.ProductName.ToLower().Contains(keyword))
+                               .Select(p => new
+                               {
+                                   p.ProductID,
+                                   p.ProductName,
+                                   p.Dosage,
+                                   p.Unit,
+                                   p.Price,
+                                   p.ProductImage
+                               })
+                               .ToList();
 
                 dtgvKho.DataSource = null;
                 dtgvKho.Columns.Clear();
                 dtgvKho.DataSource = list;
-                AddImageColumn();
                 AddActionButtons();
-            }
-        }
-
-        private void AddImageColumn()
-        {
-            if (!dtgvKho.Columns.Contains("ImageColumn"))
-            {
-                var imgCol = new DataGridViewImageColumn
-                {
-                    Name = "ImageColumn",
-                    HeaderText = "Hình ảnh",
-                    ImageLayout = DataGridViewImageCellLayout.Zoom
-                };
-                dtgvKho.Columns.Insert(1, imgCol); // sau cột ProductID
-            }
-
-            foreach (DataGridViewRow row in dtgvKho.Rows)
-            {
-                var data = row.DataBoundItem;
-                if (data == null) continue;
-
-                string imagePath = data.GetType().GetProperty("ProductImage")?.GetValue(data) as string;
-                if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
-                {
-                    row.Cells["ImageColumn"].Value = Image.FromFile(imagePath);
-                }
-             
             }
         }
 
@@ -114,7 +87,8 @@ namespace QLNT
                     Name = "Edit",
                     HeaderText = "Sửa",
                     Text = "Sửa",
-                    UseColumnTextForButtonValue = true
+                    UseColumnTextForButtonValue = true,
+                    Width = 70 // Adjust width
                 };
                 dtgvKho.Columns.Add(btnEdit);
             }
@@ -126,11 +100,23 @@ namespace QLNT
                     Name = "Delete",
                     HeaderText = "Xóa",
                     Text = "Xóa",
-                    UseColumnTextForButtonValue = true
+                    UseColumnTextForButtonValue = true,
+                    Width = 70 // Adjust width
                 };
                 dtgvKho.Columns.Add(btnDel);
             }
         }
+
+        // Changed from CellContentClick to CellClick for general row selection
+        private void DtgvKho_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex >= dtgvKho.Rows.Count) return;
+
+            // Display image when a row is clicked
+            string fileName = dtgvKho.Rows[e.RowIndex].Cells["ProductImage"].Value?.ToString();
+            DisplayProductImage(fileName);
+        }
+
 
         private void DtgvKho_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -138,6 +124,7 @@ namespace QLNT
 
             var colName = dtgvKho.Columns[e.ColumnIndex].Name;
             var idCell = dtgvKho.Rows[e.RowIndex].Cells["ProductID"].Value;
+
             if (idCell == null || !int.TryParse(idCell.ToString(), out int ProductID))
             {
                 MessageBox.Show("Không thể lấy ID sản phẩm!");
@@ -155,6 +142,48 @@ namespace QLNT
             }
         }
 
+        private void DisplayProductImage(string fileName)
+        {
+            pbProductImage.Image = null; // Clear previous image
+            pbProductImage.Visible = false; // Hide by default
+
+            if (!string.IsNullOrWhiteSpace(fileName))
+            {
+                string imageDirectory = Path.Combine(Application.StartupPath, "images"); // Consider 'images' folder
+                if (!Directory.Exists(imageDirectory))
+                {
+                    Directory.CreateDirectory(imageDirectory);
+                }
+
+                string fullPath = Path.Combine(imageDirectory, fileName);
+
+                if (File.Exists(fullPath))
+                {
+                    try
+                    {
+                        // Use Image.FromFile for loading. Use a new Bitmap to avoid locking the file.
+                        pbProductImage.Image = Image.FromFile(fullPath);
+                        pbProductImage.Visible = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Không thể tải ảnh: " + ex.Message, "Lỗi tải ảnh", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        pbProductImage.Visible = false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"Không tìm thấy ảnh '{fileName}' trong thư mục '{imageDirectory}'.", "Ảnh không tìm thấy", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    pbProductImage.Visible = false;
+                }
+            }
+            else
+            {
+                //MessageBox.Show("Tên file ảnh rỗng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                pbProductImage.Visible = false;
+            }
+        }
+
         private void ShowEditForm(int ProductID)
         {
             panelDetails.Controls.Clear();
@@ -165,7 +194,11 @@ namespace QLNT
             panelDetails.Controls.Add(frm);
             panelDetails.Visible = true;
             frm.Show();
-            frm.FormClosed += (s, e) => { LoadKhoData(); };
+            frm.FormClosed += (s, e) => {
+                LoadKhoData();
+                panelDetails.Visible = false; // Hide panel after form is closed
+                DisplayProductImage(null); // Clear image
+            };
         }
 
         private void DeleteRecord(int ProductID)
@@ -174,19 +207,42 @@ namespace QLNT
             {
                 using (var db = new EFDbContext())
                 {
-                    var pd = db.ProductDetails.Find(ProductID);
+                    // Corrected: Use db.Products instead of db.ProductDetails
+                    var pd = db.Products.Find(ProductID);
                     if (pd != null)
                     {
-                        db.ProductDetails.Remove(pd);
+                        // Delete associated image file if it exists
+                        if (!string.IsNullOrWhiteSpace(pd.ProductImage))
+                        {
+                            string imagePath = Path.Combine(Application.StartupPath, "images", pd.ProductImage);
+                            if (File.Exists(imagePath))
+                            {
+                                try
+                                {
+                                    File.Delete(imagePath);
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show($"Không thể xóa file ảnh: {ex.Message}", "Lỗi xóa ảnh", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                            }
+                        }
+
+                        db.Products.Remove(pd);
                         db.SaveChanges();
+                        MessageBox.Show("Xóa sản phẩm thành công!");
                         LoadKhoData();
+                        DisplayProductImage(null); // Clear image after deletion
                     }
-                    else MessageBox.Show("Không tìm thấy bản ghi để xóa!");
+                    else
+                    {
+                        MessageBox.Show("Không tìm thấy bản ghi để xóa!");
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi xóa: {ex.Message}");
+                MessageBox.Show($"Lỗi khi xóa: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -200,11 +256,16 @@ namespace QLNT
             panelDetails.Controls.Add(frmAdd);
             panelDetails.Visible = true;
             frmAdd.Show();
-            frmAdd.FormClosed += (s, ev) => { LoadKhoData(); };
+            frmAdd.FormClosed += (s, ev) => {
+                LoadKhoData();
+                panelDetails.Visible = false; // Hide panel after form is closed
+                DisplayProductImage(null); // Clear image
+            };
         }
 
         private void panelDetails_Paint(object sender, PaintEventArgs e)
         {
+            // You can add custom painting here if needed for panelDetails
         }
     }
 }

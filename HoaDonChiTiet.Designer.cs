@@ -215,6 +215,7 @@
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(275, 38);
             textBox3.TabIndex = 3;
+            textBox3.TextChanged += textBox3_TextChanged;
             // 
             // textBox2
             // 

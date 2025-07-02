@@ -306,6 +306,7 @@
             tBoSL.Name = "tBoSL";
             tBoSL.Size = new Size(185, 27);
             tBoSL.TabIndex = 13;
+            tBoSL.TextChanged += tBoSL_TextChanged;
             // 
             // label7
             // 

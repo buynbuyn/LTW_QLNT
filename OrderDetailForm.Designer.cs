@@ -28,47 +28,47 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgvDetails = new System.Windows.Forms.DataGridView(); // Đổi tên từ dataGridView1
-            this.lblOrderInfo = new System.Windows.Forms.Label(); // Đổi tên từ label1
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDetails)).BeginInit();
-            this.SuspendLayout();
-            //
+            dgvDetails = new DataGridView();
+            lblOrderInfo = new Label();
+            ((System.ComponentModel.ISupportInitialize)dgvDetails).BeginInit();
+            SuspendLayout();
+            // 
             // dgvDetails
-            //
-            this.dgvDetails.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDetails.Location = new System.Drawing.Point(20, 100); // Điều chỉnh vị trí dưới thông tin chung
-            this.dgvDetails.Name = "dgvDetails"; // Đổi tên thành dgvDetails
-            this.dgvDetails.Size = new System.Drawing.Size(660, 180); // Điều chỉnh kích thước
-            this.dgvDetails.TabIndex = 0;
-            this.dgvDetails.ReadOnly = true; // Chỉ đọc
-            this.dgvDetails.AllowUserToAddRows = false; // Không cho phép thêm dòng
-            this.dgvDetails.AllowUserToDeleteRows = false; // Không cho phép xóa dòng
-            this.dgvDetails.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill; // Tự động điền đầy cột
-            this.dgvDetails.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect; // Chọn toàn bộ dòng
-            //
+            // 
+            dgvDetails.AllowUserToAddRows = false;
+            dgvDetails.AllowUserToDeleteRows = false;
+            dgvDetails.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvDetails.Location = new Point(12, 212);
+            dgvDetails.Name = "dgvDetails";
+            dgvDetails.ReadOnly = true;
+            dgvDetails.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvDetails.Size = new Size(703, 197);
+            dgvDetails.TabIndex = 0;
+            // 
             // lblOrderInfo
-            //
-            this.lblOrderInfo.AutoSize = true;
-            this.lblOrderInfo.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOrderInfo.Location = new System.Drawing.Point(20, 20); // Vị trí tiêu đề
-            this.lblOrderInfo.Name = "lblOrderInfo"; // Đổi tên thành lblOrderInfo
-            this.lblOrderInfo.Size = new System.Drawing.Size(167, 25);
-            this.lblOrderInfo.TabIndex = 1;
-            this.lblOrderInfo.Text = "Chi Tiết Hóa Đơn"; // Text ban đầu, sẽ được cập nhật bằng code
-            //
+            // 
+            lblOrderInfo.AutoSize = true;
+            lblOrderInfo.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblOrderInfo.Location = new Point(20, 20);
+            lblOrderInfo.Name = "lblOrderInfo";
+            lblOrderInfo.Size = new Size(163, 25);
+            lblOrderInfo.TabIndex = 1;
+            lblOrderInfo.Text = "Chi Tiết Hóa Đơn";
+            // 
             // OrderDetailForm
-            //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 300); // Kích thước form
-            this.Controls.Add(this.lblOrderInfo);
-            this.Controls.Add(this.dgvDetails); // Đảm bảo dgvDetails được thêm vào
-            this.Name = "OrderDetailForm";
-            this.Text = "Chi Tiết Hóa Đơn"; // Text mặc định của form
-            this.Load += new System.EventHandler(this.OrderDetailForm_Load); // Gán sự kiện Load
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDetails)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(877, 430);
+            Controls.Add(lblOrderInfo);
+            Controls.Add(dgvDetails);
+            Name = "OrderDetailForm";
+            Text = "Chi Tiết Hóa Đơn";
+            Load += OrderDetailForm_Load;
+            ((System.ComponentModel.ISupportInitialize)dgvDetails).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
