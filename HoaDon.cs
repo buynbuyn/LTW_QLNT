@@ -323,26 +323,45 @@ namespace QLNT
 
                         // Trừ số lượng tồn kho
                         var groupedCartDetails = _currentCart.CartDetails
-                            .GroupBy(cd => cd.ProductID)
-                            .ToDictionary(g => g.Key, g => g.Sum(cd => cd.Quantity));
+    .GroupBy(cd => cd.ProductID)
+    .ToDictionary(g => g.Key, g => g.Sum(cd => cd.Quantity));
+
+                        // Load trước tất cả ProductDetails và Products cần thiết (tránh FirstOrDefault lặp lại nhiều lần)
+                        var productIds = groupedCartDetails.Keys.ToList();
+                        var productDetails = _context.ProductDetails
+                            .Where(p => productIds.Contains(p.ProductID))
+                            .ToDictionary(p => p.ProductID);
+
+                        var productInfoDict = _context.Products
+                            .Where(p => productIds.Contains(p.ProductID))
+                            .ToDictionary(p => p.ProductID);
+
+                        // Optional: Lấy dữ liệu không tracking để kiểm tra tồn kho "snapshot"
+                        var refreshedDetails = _context.ProductDetails
+                            .AsNoTracking()
+                            .Where(p => productIds.Contains(p.ProductID))
+                            .ToDictionary(p => p.ProductID);
 
                         foreach (var kvp in groupedCartDetails)
                         {
                             int productId = kvp.Key;
                             int totalQuantity = kvp.Value;
 
-                            var productDetail = _context.ProductDetails.FirstOrDefault(p => p.ProductID == productId);
-                            var productInfo = _context.Products.FirstOrDefault(p => p.ProductID == productId);
+                            if (!productDetails.TryGetValue(productId, out var productDetail) ||
+                                !refreshedDetails.TryGetValue(productId, out var refreshedDetail))
+                                continue;
 
-                            Console.WriteLine($"DEBUG - ProductID: {productId}, Initial Stock: {refreshedDetail?.StockQuantity ?? -1}, Total Quantity to deduct: {totalQuantity}");
+                            var productInfo = productInfoDict.GetValueOrDefault(productId);
 
-                            if (productDetail != null && refreshedDetail != null && refreshedDetail.StockQuantity >= totalQuantity)
+                            Console.WriteLine($"DEBUG - ProductID: {productId}, Initial Stock: {refreshedDetail.StockQuantity}, Total Quantity to deduct: {totalQuantity}");
+
+                            if (refreshedDetail.StockQuantity >= totalQuantity)
                             {
                                 int previousStock = productDetail.StockQuantity;
                                 productDetail.StockQuantity -= totalQuantity;
                                 Console.WriteLine($"DEBUG - Previous Stock: {previousStock}, After deduct: {productDetail.StockQuantity}");
                             }
-                            else if (productDetail != null && refreshedDetail != null)
+                            else
                             {
                                 transaction.Rollback();
                                 MessageBox.Show(
@@ -355,7 +374,9 @@ namespace QLNT
                                 return;
                             }
                         }
+
                         _context.SaveChanges();
+
 
                         // Load dữ liệu
                         var orderDetailData = _context.OrderDetails
