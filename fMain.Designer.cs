@@ -89,7 +89,7 @@
             // khoToolStripMenuItem1
             // 
             khoToolStripMenuItem1.Name = "khoToolStripMenuItem1";
-            khoToolStripMenuItem1.Size = new Size(224, 28);
+            khoToolStripMenuItem1.Size = new Size(123, 28);
             khoToolStripMenuItem1.Text = "kho";
             // 
             // lịchSửHóaĐơnToolStripMenuItem
@@ -187,7 +187,7 @@
             ClientSize = new Size(1367, 621);
             Controls.Add(panelUserInfo);
             Controls.Add(menuStrip1);
-            Font = new Font("Segoe UI", 9F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             IsMdiContainer = true;
             MainMenuStrip = menuStrip1;
             Name = "fMain";

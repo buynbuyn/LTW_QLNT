@@ -45,6 +45,7 @@ namespace QLNT
             btnFindEmployee = new Button();
             btnAddEmployee = new Button();
             panelEmployee = new Panel();
+            panelEmployeeCard = new Panel();
             ((System.ComponentModel.ISupportInitialize)dtgvEmployee).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -191,11 +192,19 @@ namespace QLNT
             panelEmployee.TabIndex = 3;
             panelEmployee.Visible = false;
             // 
+            // panelEmployeeCard
+            // 
+            panelEmployeeCard.Location = new Point(12, 586);
+            panelEmployeeCard.Name = "panelEmployeeCard";
+            panelEmployeeCard.Size = new Size(397, 247);
+            panelEmployeeCard.TabIndex = 4;
+            // 
             // fEmployee
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1520, 592);
+            ClientSize = new Size(1520, 845);
+            Controls.Add(panelEmployeeCard);
             Controls.Add(panelEmployee);
             Controls.Add(panel1);
             Controls.Add(dtgvEmployee);
@@ -227,5 +236,6 @@ namespace QLNT
         private DataGridViewTextBoxColumn PhoneNumber;
         private DataGridViewTextBoxColumn EmailEmployee;
         private DataGridViewCheckBoxColumn Status;
+        private Panel panelEmployeeCard;
     }
 }

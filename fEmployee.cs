@@ -77,8 +77,19 @@ namespace QLNT
                 btnEdit.UseColumnTextForButtonValue = true;
                 dtgvEmployee.Columns.Add(btnEdit);
             }
+            if (!dtgvEmployee.Columns.Contains("PrintCard"))
+            {
+                var btnPrint = new DataGridViewButtonColumn
+                {
+                    Name = "PrintCard",
+                    HeaderText = "In thẻ",
+                    Text = "In thẻ",
+                    UseColumnTextForButtonValue = true
+                };
+                dtgvEmployee.Columns.Add(btnPrint);
+            }
 
-            
+
         }
 
         private void ShowEditEmployeeForm(int EmployeeID)
@@ -145,8 +156,40 @@ namespace QLNT
                         MessageBox.Show($"Lỗi khi mở form sửa nhân viên: {ex.Message}");
                     }
                 }
-                
+                if (columnName == "PrintCard")
+                {
+                    try
+                    {
+                        var row = dtgvEmployee.Rows[e.RowIndex];
+
+                        string name = row.Cells["EmployeeName"].Value?.ToString();
+                        string position = row.Cells["Position"].Value?.ToString();
+                        string phone = row.Cells["PhoneNumber"].Value?.ToString();
+                        DateTime hireDate = Convert.ToDateTime(row.Cells["HireDate"].Value);
+                        string hiredate = hireDate.ToString("dd/MM/yyyy");
+
+
+                        // 👉 Gọi form/thẻ in hoặc xử lý in tại đây
+                        ShowIDCard(name, position, hiredate);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi khi in thẻ: {ex.Message}");
+                    }
+                }
+
+
             }
         }
+        private void ShowIDCard(string name, string position, string id)
+        {
+            panelEmployeeCard.Controls.Clear();
+
+            var cardForm = new fPrintIDCard(name, position, id, null, true);
+            panelEmployeeCard.Controls.Add(cardForm);
+            cardForm.Show();
+        }
+
     }
 }
