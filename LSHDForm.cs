@@ -12,10 +12,8 @@ namespace QLNT
         public LSHDForm()
         {
             InitializeComponent();
+            dgvOrders.CellContentClick += dgvOrders_CellContentClick; // Gắn sự kiện
             this.Load += LSHDForm_Load;
-            dgvOrders.CellContentClick += dgvOrders_CellContentClick;
-            btnSearch.Click += BtnSearch_Click;
-            btnFilter.Click += BtnFilter_Click;
         }
 
         private void LSHDForm_Load(object sender, EventArgs e)
@@ -23,132 +21,106 @@ namespace QLNT
             LoadOrderData();
         }
 
-        private void LoadOrderData(Func<Order, bool> filter = null)
+        private void LoadOrderData()
         {
             using (var db = new EFDbContext())
             {
-                var query = db.Orders.AsEnumerable(); // Dùng AsEnumerable để dùng được hàm filter C#
+                var orderList = db.Orders
+                                  .Select(o => new
+                                  {
+                                      o.OrderID,
+                                      CustomerInfo = o.Customer.CustomerName +
+                                                     (o.Customer.PhoneNumber != null ? " - " + o.Customer.PhoneNumber : ""),
+                                      StaffInfo = o.User.FullName,
+                                      MedicineList = string.Join(", ", o.OrderDetails.Select(od => od.Product.ProductName)),
+                                      o.OrderDate,
+                                      o.Amount,
+                                      o.Status
+                                  })
+                                  .ToList();
 
-                if (filter != null)
-                    query = query.Where(filter);
-
-                var orderList = query
-                    .Select(o => new
-                    {
-                        o.OrderID,
-                        CustomerInfo = o.Customer.CustomerName + (o.Customer.PhoneNumber != null ? " - " + o.Customer.PhoneNumber : ""),
-                        StaffInfo = o.User.FullName,
-                        MedicineList = string.Join(", ", o.OrderDetails.Select(od => od.Product.ProductName)),
-                        o.OrderDate,
-                        o.Amount,
-                        o.Status
-                    })
-                    .ToList();
-
-                dgvOrders.DataSource = null;
-                dgvOrders.Columns.Clear();
                 dgvOrders.DataSource = orderList;
 
-                AddDeleteButton();
+                // Đặt lại header các cột
+                if (dgvOrders.Columns.Contains("OrderID")) dgvOrders.Columns["OrderID"].HeaderText = "Mã Hóa Đơn";
+                if (dgvOrders.Columns.Contains("CustomerInfo")) dgvOrders.Columns["CustomerInfo"].HeaderText = "Thông tin khách hàng";
+                if (dgvOrders.Columns.Contains("StaffInfo")) dgvOrders.Columns["StaffInfo"].HeaderText = "Thông tin nhân viên";
+                if (dgvOrders.Columns.Contains("MedicineList")) dgvOrders.Columns["MedicineList"].HeaderText = "Danh sách thuốc";
+                if (dgvOrders.Columns.Contains("OrderDate")) dgvOrders.Columns["OrderDate"].HeaderText = "Ngày lập";
+                if (dgvOrders.Columns.Contains("Amount"))
+                {
+                    dgvOrders.Columns["Amount"].HeaderText = "Tổng tiền";
+                    dgvOrders.Columns["Amount"].DefaultCellStyle.Format = "C0";
+                }
+                if (dgvOrders.Columns.Contains("Status")) dgvOrders.Columns["Status"].HeaderText = "Trạng thái";
 
-                dgvOrders.Columns["OrderID"].HeaderText = "Mã Hóa Đơn";
-                dgvOrders.Columns["CustomerInfo"].HeaderText = "Khách hàng";
-                dgvOrders.Columns["StaffInfo"].HeaderText = "Nhân viên";
-                dgvOrders.Columns["MedicineList"].HeaderText = "Thuốc";
-                dgvOrders.Columns["OrderDate"].HeaderText = "Ngày lập";
-                dgvOrders.Columns["Amount"].HeaderText = "Tổng tiền";
-                dgvOrders.Columns["Amount"].DefaultCellStyle.Format = "C0";
-                dgvOrders.Columns["Status"].HeaderText = "Trạng thái";
+                // Thêm nút Sửa
+                if (!dgvOrders.Columns.Contains("EditButton"))
+                {
+                    var editBtn = new DataGridViewButtonColumn();
+                    editBtn.Name = "EditButton";
+                    editBtn.HeaderText = "";
+                    editBtn.Text = "xem";
+                    editBtn.UseColumnTextForButtonValue = true;
+                    dgvOrders.Columns.Add(editBtn);
+                }
 
-                dgvOrders.AutoResizeColumns();
-            }
-        }
+                // Thêm nút Xóa
+                if (!dgvOrders.Columns.Contains("DeleteButton"))
+                {
+                    var deleteBtn = new DataGridViewButtonColumn();
+                    deleteBtn.Name = "DeleteButton";
+                    deleteBtn.HeaderText = "";
+                    deleteBtn.Text = "Xóa";
+                    deleteBtn.UseColumnTextForButtonValue = true;
+                    dgvOrders.Columns.Add(deleteBtn);
+                }
 
-        private void AddDeleteButton()
-        {
-            if (!dgvOrders.Columns.Contains("Delete"))
-            {
-                var btnDelete = new DataGridViewButtonColumn();
-                btnDelete.Name = "Delete";
-                btnDelete.HeaderText = "Xóa";
-                btnDelete.Text = "Xóa";
-                btnDelete.UseColumnTextForButtonValue = true;
-                dgvOrders.Columns.Add(btnDelete);
+                dgvOrders.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             }
         }
 
         private void dgvOrders_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return;
-
-            var colName = dgvOrders.Columns[e.ColumnIndex].Name;
-
-            if (colName == "Delete")
+            if (e.RowIndex >= 0)
             {
-                int orderId = Convert.ToInt32(dgvOrders.Rows[e.RowIndex].Cells["OrderID"].Value);
+                var orderIdObj = dgvOrders.Rows[e.RowIndex].Cells["OrderID"].Value;
+                if (orderIdObj == null) return;
 
-                var confirm = MessageBox.Show($"Xóa hóa đơn {orderId}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (confirm == DialogResult.Yes)
-                {
-                    using (var db = new EFDbContext())
-                    {
-                        var order = db.Orders.Find(orderId);
-                        if (order != null)
-                        {
-                            db.OrderDetails.RemoveRange(order.OrderDetails);
-                            db.Orders.Remove(order);
-                            db.SaveChanges();
-                        }
-                    }
+                int orderId = Convert.ToInt32(orderIdObj);
 
-                    LoadOrderData();
-                }
-            }
-            else
-            {
-                // Xử lý xem chi tiết khi double-click
-                if (dgvOrders.Rows[e.RowIndex].Cells["OrderID"].Value != null)
+                if (dgvOrders.Columns[e.ColumnIndex].Name == "EditButton")
                 {
-                    int orderId = Convert.ToInt32(dgvOrders.Rows[e.RowIndex].Cells["OrderID"].Value);
+                    // Mở form chi tiết (sửa)
                     var form = new OrderDetailForm(orderId);
                     form.ShowDialog();
                     LoadOrderData();
                 }
+                else if (dgvOrders.Columns[e.ColumnIndex].Name == "DeleteButton")
+                {
+                    DialogResult confirm = MessageBox.Show($"Bạn có chắc muốn xóa hóa đơn {orderId}?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (confirm == DialogResult.Yes)
+                    {
+                        using (var db = new EFDbContext())
+                        {
+                            var order = db.Orders.Find(orderId);
+                            if (order != null)
+                            {
+                                var orderDetails = db.OrderDetails.Where(od => od.OrderID == orderId).ToList();
+                                db.OrderDetails.RemoveRange(orderDetails);
+                                db.Orders.Remove(order);
+                                db.SaveChanges();
+                                MessageBox.Show("Xóa thành công!");
+                                LoadOrderData();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Không tìm thấy hóa đơn cần xóa.");
+                            }
+                        }
+                    }
+                }
             }
-        }
-
-        private void BtnSearch_Click(object sender, EventArgs e)
-        {
-            string keyword = txtSearch.Text.Trim().ToLower();
-            if (string.IsNullOrEmpty(keyword))
-            {
-                LoadOrderData();
-                return;
-            }
-
-            LoadOrderData(o => o.Customer.CustomerName.ToLower().Contains(keyword));
-        }
-
-        private void BtnFilter_Click(object sender, EventArgs e)
-        {
-            int year = cbYear.SelectedItem != null ? Convert.ToInt32(cbYear.SelectedItem) : 0;
-            int month = cbMonth.SelectedItem != null ? Convert.ToInt32(cbMonth.SelectedItem) : 0;
-            int day = cbDay.SelectedItem != null ? Convert.ToInt32(cbDay.SelectedItem) : 0;
-
-            LoadOrderData(o =>
-            {
-                var d = o.OrderDate;
-                bool match = true;
-                if (year > 0) match &= d.Year == year;
-                if (month > 0) match &= d.Month == month;
-                if (day > 0) match &= d.Day == day;
-                return match;
-            });
-        }
-
-        private void pnlRightActions_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }

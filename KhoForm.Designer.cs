@@ -204,5 +204,14 @@
         }
 
         #endregion
+
+        // Remove the DataGridViewTextBoxColumn declarations here, as AutoGenerateColumns will handle them.
+        // If you need custom columns defined in designer, ensure AutoGenerateColumns is false and define them explicitly.
+        // For simplicity and common use cases, AutoGenerateColumns = true is often used with dynamic data.
+        // private DataGridViewTextBoxColumn ProductID;
+        // private DataGridViewTextBoxColumn ProductName;
+        // private DataGridViewTextBoxColumn Dosage;
+        // private DataGridViewTextBoxColumn Unit;
+        // private DataGridViewTextBoxColumn Price;
     }
 }

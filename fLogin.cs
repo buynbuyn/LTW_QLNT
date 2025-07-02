@@ -43,9 +43,10 @@ namespace QLNT
 
         private void fLogin_Load(object sender, EventArgs e)
         {
-
+            txtPassword.UseSystemPasswordChar = true;
         }
 
-        
     }
+
+
 }

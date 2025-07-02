@@ -18,14 +18,17 @@ namespace QLNT.models
 
         [Required]
         [StringLength(100)]
+        [Column(TypeName = "nvarchar(100)")]
         public required string EmployeeName { get; set; } = null!;
 
         [Required]
         [StringLength(20)]
+        [Column(TypeName = "nvarchar(20)")]
         public required string Gender { get; set; } = null!;
 
         [Required]
         [StringLength(50)]
+        [Column(TypeName = "nvarchar(50)")]
         public required string Position { get; set; } = null!; // Chức vụ
 
         [Required]
@@ -37,10 +40,12 @@ namespace QLNT.models
 
         [Required]
         [StringLength(15)]
+        [Column(TypeName = "nvarchar(50)")]
         public required string PhoneNumber { get; set; } = null!;
 
         [Required]
         [StringLength(100)]
+        [Column(TypeName = "nvarchar(100)")]
         public required string EmailEmployee { get; set; } = null!;
         public bool Status { get; set; } = true;
 

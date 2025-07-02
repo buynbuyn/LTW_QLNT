@@ -33,6 +33,7 @@
             ThongTinThuocColumn = new DataGridViewTextBoxColumn();
             SoLuongColumn = new DataGridViewTextBoxColumn();
             DonViTinhColumn = new DataGridViewTextBoxColumn();
+            expirationdate = new DataGridViewTextBoxColumn();
             ThanhTienColumn = new DataGridViewTextBoxColumn();
             label2 = new Label();
             label3 = new Label();
@@ -73,11 +74,11 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ThongTinThuocColumn, SoLuongColumn, DonViTinhColumn, ThanhTienColumn });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ThongTinThuocColumn, SoLuongColumn, DonViTinhColumn, expirationdate, ThanhTienColumn });
             dataGridView1.Location = new Point(12, 83);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(554, 444);
+            dataGridView1.Size = new Size(702, 446);
             dataGridView1.TabIndex = 1;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -100,7 +101,14 @@
             DonViTinhColumn.HeaderText = "Đơn vị tính";
             DonViTinhColumn.MinimumWidth = 6;
             DonViTinhColumn.Name = "DonViTinhColumn";
-            DonViTinhColumn.Width = 100;
+            DonViTinhColumn.Width = 125;
+            // 
+            // expirationdate
+            // 
+            expirationdate.HeaderText = "Ngày hết hạn";
+            expirationdate.MinimumWidth = 6;
+            expirationdate.Name = "expirationdate";
+            expirationdate.Width = 120;
             // 
             // ThanhTienColumn
             // 
@@ -122,7 +130,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label3.Location = new Point(590, 83);
+            label3.Location = new Point(720, 74);
             label3.Name = "label3";
             label3.Size = new Size(229, 28);
             label3.TabIndex = 3;
@@ -131,7 +139,7 @@
             // cboThongTinThuoc
             // 
             cboThongTinThuoc.FormattingEnabled = true;
-            cboThongTinThuoc.Location = new Point(590, 114);
+            cboThongTinThuoc.Location = new Point(720, 105);
             cboThongTinThuoc.Name = "cboThongTinThuoc";
             cboThongTinThuoc.Size = new Size(151, 28);
             cboThongTinThuoc.TabIndex = 4;
@@ -141,19 +149,19 @@
             btn_remove.BackColor = Color.Red;
             btn_remove.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btn_remove.ForeColor = SystemColors.ControlLightLight;
-            btn_remove.Location = new Point(760, 114);
+            btn_remove.Location = new Point(890, 105);
             btn_remove.Name = "btn_remove";
             btn_remove.Size = new Size(123, 29);
             btn_remove.TabIndex = 5;
             btn_remove.Text = "Xóa sản phẩm";
             btn_remove.UseVisualStyleBackColor = false;
-            btn_remove.Click += btn_remove_Click; // Sửa thành btn_remove_Click
+            btn_remove.Click += btn_remove_Click;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label4.Location = new Point(590, 146);
+            label4.Location = new Point(720, 137);
             label4.Name = "label4";
             label4.Size = new Size(253, 28);
             label4.TabIndex = 6;
@@ -162,16 +170,17 @@
             // 
             // tbSDTKH
             // 
-            tbSDTKH.Location = new Point(590, 177);
+            tbSDTKH.Location = new Point(720, 168);
             tbSDTKH.Name = "tbSDTKH";
             tbSDTKH.Size = new Size(293, 27);
             tbSDTKH.TabIndex = 7;
+            tbSDTKH.KeyDown += tbSDTKH_KeyDown;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label5.Location = new Point(590, 207);
+            label5.Location = new Point(720, 198);
             label5.Name = "label5";
             label5.Size = new Size(246, 28);
             label5.TabIndex = 8;
@@ -181,7 +190,7 @@
             // cboPhuongthuc
             // 
             cboPhuongthuc.FormattingEnabled = true;
-            cboPhuongthuc.Location = new Point(590, 238);
+            cboPhuongthuc.Location = new Point(720, 229);
             cboPhuongthuc.Name = "cboPhuongthuc";
             cboPhuongthuc.Size = new Size(293, 28);
             cboPhuongthuc.TabIndex = 9;
@@ -190,7 +199,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label6.Location = new Point(590, 269);
+            label6.Location = new Point(720, 260);
             label6.Name = "label6";
             label6.Size = new Size(131, 28);
             label6.TabIndex = 10;
@@ -200,7 +209,7 @@
             // cboVoucher
             // 
             cboVoucher.FormattingEnabled = true;
-            cboVoucher.Location = new Point(590, 300);
+            cboVoucher.Location = new Point(720, 291);
             cboVoucher.Name = "cboVoucher";
             cboVoucher.Size = new Size(293, 28);
             cboVoucher.TabIndex = 11;
@@ -216,7 +225,7 @@
             panel1.Controls.Add(label8);
             panel1.Controls.Add(tBoSL);
             panel1.Controls.Add(label7);
-            panel1.Location = new Point(593, 346);
+            panel1.Location = new Point(720, 348);
             panel1.Name = "panel1";
             panel1.Size = new Size(495, 181);
             panel1.TabIndex = 12;
@@ -231,7 +240,7 @@
             btn_huydonhang.TabIndex = 20;
             btn_huydonhang.Text = "Hủy";
             btn_huydonhang.UseVisualStyleBackColor = false;
-            btn_huydonhang.Click += btn_huydonhang_Click; // Sửa thành btn_huydonhang_Click
+            btn_huydonhang.Click += btn_huydonhang_Click;
             // 
             // btn_xuathoadon
             // 
@@ -243,7 +252,7 @@
             btn_xuathoadon.TabIndex = 19;
             btn_xuathoadon.Text = "Xuất hóa đơn";
             btn_xuathoadon.UseVisualStyleBackColor = false;
-            btn_xuathoadon.Click += btn_xuathoadon_Click; // Sửa thành btn_xuathoadon_Click
+            btn_xuathoadon.Click += btn_xuathoadon_Click;
             // 
             // tBoThanhtien
             // 
@@ -313,7 +322,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1100, 539);
+            ClientSize = new Size(1245, 575);
             Controls.Add(panel1);
             Controls.Add(cboVoucher);
             Controls.Add(label6);
@@ -341,10 +350,6 @@
 
         private Label label1;
         private DataGridView dataGridView1;
-        private DataGridViewTextBoxColumn ThongTinThuocColumn;
-        private DataGridViewTextBoxColumn SoLuongColumn;
-        private DataGridViewTextBoxColumn DonViTinhColumn;
-        private DataGridViewTextBoxColumn ThanhTienColumn;
         private Label label2;
         private Label label3;
         private ComboBox cboThongTinThuoc;
@@ -365,5 +370,10 @@
         private Button btn_xuathoadon;
         private TextBox tBoThanhtien;
         private Label label10;
+        private DataGridViewTextBoxColumn ThongTinThuocColumn;
+        private DataGridViewTextBoxColumn SoLuongColumn;
+        private DataGridViewTextBoxColumn DonViTinhColumn;
+        private DataGridViewTextBoxColumn expirationdate;
+        private DataGridViewTextBoxColumn ThanhTienColumn;
     }
 }
