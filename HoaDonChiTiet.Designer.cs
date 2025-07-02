@@ -33,27 +33,27 @@
             textBox1 = new TextBox();
             label3 = new Label();
             panel1 = new Panel();
-            dataGridView1 = new DataGridView();
-            textBox4 = new TextBox();
-            textBox3 = new TextBox();
-            textBox2 = new TextBox();
-            label6 = new Label();
-            label5 = new Label();
-            label4 = new Label();
-            label7 = new Label();
-            label8 = new Label();
-            label9 = new Label();
-            label10 = new Label();
-            label11 = new Label();
-            textBox5 = new TextBox();
-            textBox6 = new TextBox();
-            textBox7 = new TextBox();
-            textBox8 = new TextBox();
             textBox9 = new TextBox();
+            textBox8 = new TextBox();
+            textBox7 = new TextBox();
+            textBox6 = new TextBox();
+            textBox5 = new TextBox();
+            dataGridView1 = new DataGridView();
             Column1 = new DataGridViewTextBoxColumn();
             Column2 = new DataGridViewTextBoxColumn();
             Column3 = new DataGridViewTextBoxColumn();
             Column4 = new DataGridViewTextBoxColumn();
+            textBox4 = new TextBox();
+            textBox3 = new TextBox();
+            textBox2 = new TextBox();
+            label11 = new Label();
+            label10 = new Label();
+            label9 = new Label();
+            label8 = new Label();
+            label7 = new Label();
+            label6 = new Label();
+            label5 = new Label();
+            label4 = new Label();
             label12 = new Label();
             textBox10 = new TextBox();
             panel1.SuspendLayout();
@@ -91,6 +91,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(349, 38);
             textBox1.TabIndex = 1;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // label3
             // 
@@ -127,6 +128,41 @@
             panel1.Size = new Size(1232, 619);
             panel1.TabIndex = 3;
             // 
+            // textBox9
+            // 
+            textBox9.Location = new Point(1025, 581);
+            textBox9.Name = "textBox9";
+            textBox9.Size = new Size(165, 38);
+            textBox9.TabIndex = 6;
+            // 
+            // textBox8
+            // 
+            textBox8.Location = new Point(1025, 537);
+            textBox8.Name = "textBox8";
+            textBox8.Size = new Size(165, 38);
+            textBox8.TabIndex = 6;
+            // 
+            // textBox7
+            // 
+            textBox7.Location = new Point(1025, 493);
+            textBox7.Name = "textBox7";
+            textBox7.Size = new Size(165, 38);
+            textBox7.TabIndex = 6;
+            // 
+            // textBox6
+            // 
+            textBox6.Location = new Point(1025, 450);
+            textBox6.Name = "textBox6";
+            textBox6.Size = new Size(165, 38);
+            textBox6.TabIndex = 6;
+            // 
+            // textBox5
+            // 
+            textBox5.Location = new Point(1025, 406);
+            textBox5.Name = "textBox5";
+            textBox5.Size = new Size(165, 38);
+            textBox5.TabIndex = 5;
+            // 
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -137,6 +173,34 @@
             dataGridView1.Size = new Size(1106, 208);
             dataGridView1.TabIndex = 4;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // Column1
+            // 
+            Column1.HeaderText = "Tên sản phẩm";
+            Column1.MinimumWidth = 6;
+            Column1.Name = "Column1";
+            Column1.Width = 125;
+            // 
+            // Column2
+            // 
+            Column2.HeaderText = "Số lượng";
+            Column2.MinimumWidth = 6;
+            Column2.Name = "Column2";
+            Column2.Width = 125;
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Đơn vị tính";
+            Column3.MinimumWidth = 6;
+            Column3.Name = "Column3";
+            Column3.Width = 125;
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Thành tiền";
+            Column4.MinimumWidth = 6;
+            Column4.Name = "Column4";
+            Column4.Width = 125;
             // 
             // textBox4
             // 
@@ -158,6 +222,57 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(362, 38);
             textBox2.TabIndex = 3;
+            textBox2.TextChanged += textBox2_TextChanged;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(850, 584);
+            label11.Name = "label11";
+            label11.Size = new Size(129, 31);
+            label11.TabIndex = 2;
+            label11.Text = "Thành tiền";
+            label11.Click += label3_Click;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(850, 540);
+            label10.Name = "label10";
+            label10.Size = new Size(112, 31);
+            label10.TabIndex = 2;
+            label10.Text = "Thuế: 5%";
+            label10.Click += label3_Click;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(850, 496);
+            label9.Name = "label9";
+            label9.Size = new Size(109, 31);
+            label9.TabIndex = 2;
+            label9.Text = "Giảm giá";
+            label9.Click += label3_Click;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(850, 453);
+            label8.Name = "label8";
+            label8.Size = new Size(117, 31);
+            label8.TabIndex = 2;
+            label8.Text = "Tổng tiền";
+            label8.Click += label3_Click;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(850, 409);
+            label7.Name = "label7";
+            label7.Size = new Size(169, 31);
+            label7.TabIndex = 2;
+            label7.Text = "Tổng số lượng";
+            label7.Click += label3_Click;
             // 
             // label6
             // 
@@ -188,119 +303,6 @@
             label4.TabIndex = 2;
             label4.Text = "Họ Tên Khách Hàng";
             label4.Click += label3_Click;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(850, 409);
-            label7.Name = "label7";
-            label7.Size = new Size(169, 31);
-            label7.TabIndex = 2;
-            label7.Text = "Tổng số lượng";
-            label7.Click += label3_Click;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(850, 453);
-            label8.Name = "label8";
-            label8.Size = new Size(117, 31);
-            label8.TabIndex = 2;
-            label8.Text = "Tổng tiền";
-            label8.Click += label3_Click;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(850, 496);
-            label9.Name = "label9";
-            label9.Size = new Size(109, 31);
-            label9.TabIndex = 2;
-            label9.Text = "Giảm giá";
-            label9.Click += label3_Click;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new Point(850, 540);
-            label10.Name = "label10";
-            label10.Size = new Size(112, 31);
-            label10.TabIndex = 2;
-            label10.Text = "Thuế: 5%";
-            label10.Click += label3_Click;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Location = new Point(850, 584);
-            label11.Name = "label11";
-            label11.Size = new Size(129, 31);
-            label11.TabIndex = 2;
-            label11.Text = "Thành tiền";
-            label11.Click += label3_Click;
-            // 
-            // textBox5
-            // 
-            textBox5.Location = new Point(1025, 406);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(165, 38);
-            textBox5.TabIndex = 5;
-            // 
-            // textBox6
-            // 
-            textBox6.Location = new Point(1025, 450);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(165, 38);
-            textBox6.TabIndex = 6;
-            // 
-            // textBox7
-            // 
-            textBox7.Location = new Point(1025, 493);
-            textBox7.Name = "textBox7";
-            textBox7.Size = new Size(165, 38);
-            textBox7.TabIndex = 6;
-            // 
-            // textBox8
-            // 
-            textBox8.Location = new Point(1025, 537);
-            textBox8.Name = "textBox8";
-            textBox8.Size = new Size(165, 38);
-            textBox8.TabIndex = 6;
-            // 
-            // textBox9
-            // 
-            textBox9.Location = new Point(1025, 581);
-            textBox9.Name = "textBox9";
-            textBox9.Size = new Size(165, 38);
-            textBox9.TabIndex = 6;
-            // 
-            // Column1
-            // 
-            Column1.HeaderText = "Tên sản phẩm";
-            Column1.MinimumWidth = 6;
-            Column1.Name = "Column1";
-            Column1.Width = 125;
-            // 
-            // Column2
-            // 
-            Column2.HeaderText = "Số lượng";
-            Column2.MinimumWidth = 6;
-            Column2.Name = "Column2";
-            Column2.Width = 125;
-            // 
-            // Column3
-            // 
-            Column3.HeaderText = "Đơn vị tính";
-            Column3.MinimumWidth = 6;
-            Column3.Name = "Column3";
-            Column3.Width = 125;
-            // 
-            // Column4
-            // 
-            Column4.HeaderText = "Thành tiền";
-            Column4.MinimumWidth = 6;
-            Column4.Name = "Column4";
-            Column4.Width = 125;
             // 
             // label12
             // 
