@@ -10,6 +10,7 @@ namespace QLNT
         public fEmployee()
         {
             InitializeComponent();
+            btnExportCard.Visible = false;
         }
 
         private void fEmployee_Load(object sender, EventArgs e)
@@ -23,7 +24,7 @@ namespace QLNT
             using (var db = new EFDbContext()) // Kết nối database
             {
                 dtgvEmployee.DataSource = null;
-              
+
                 dtgvEmployee.AutoGenerateColumns = true;
 
                 dtgvEmployee.DataSource = db.Employees.Select(e => new
@@ -104,7 +105,7 @@ namespace QLNT
             editEmployee.Show();
         }
 
-        
+
 
         private void btnAddEmployee_Click(object sender, EventArgs e)
         {
@@ -144,7 +145,7 @@ namespace QLNT
                         if (EmployeeIdCell != null && int.TryParse(EmployeeIdCell.ToString(), out int EmployeeID))
                         {
                             ShowEditEmployeeForm(EmployeeID);
-                            LoadEmployeeData(); // Cập nhật danh sách sau khi mở form sửa   
+                             // Cập nhật danh sách sau khi mở form sửa   
                         }
                         else
                         {
@@ -189,7 +190,29 @@ namespace QLNT
             var cardForm = new fPrintIDCard(name, position, id, null, true);
             panelEmployeeCard.Controls.Add(cardForm);
             cardForm.Show();
+            btnExportCard.Visible = true;
+        }
+        private void ExportPanelToImage(Panel panel, string filePath)
+        {
+            Bitmap bmp = new Bitmap(panel.Width, panel.Height);
+            panel.DrawToBitmap(bmp, new Rectangle(0, 0, panel.Width, panel.Height));
+            bmp.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
         }
 
+        private void btnExportCard_Click(object sender, EventArgs e)
+        {
+            // 📁 Chọn đường dẫn lưu
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "PNG Image|*.png";
+            sfd.Title = "Lưu ảnh thẻ nhân viên";
+            sfd.FileName = "IDCard_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                ExportPanelToImage(panelEmployeeCard, sfd.FileName);
+                MessageBox.Show("Xuất ảnh thành công!", "Thông báo");
+            }
+
+        }
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace QLNT
 {
+
     public partial class fAddEmployee : Form
     {
         public fAddEmployee()

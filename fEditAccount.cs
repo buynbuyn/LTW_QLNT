@@ -15,39 +15,18 @@ namespace QLNT
 {
     public partial class fEditAccount : Form
     {
+        private fAccount parentForm; // Tham chiếu đến form cha
         private int UserID;
-        public fEditAccount(int UserID)
+        public fEditAccount(int UserID, fAccount parent)
         {
             InitializeComponent();
             this.UserID = UserID;
+            this.parentForm = parent;
 
         }
 
         private void fEditAccount_Load(object sender, EventArgs e)
         {
-            LoadAccountData();
-        }
-        private void LoadAccountData()
-        {
-            cbEditRole.Items.Add("1");
-            cbEditRole.Items.Add("2");
-
-            using (var db = new EFDbContext())
-            {
-                var user = db.Users.FirstOrDefault(u => u.UserID == UserID);
-                if (user != null)
-                {
-                    txtEditFullName.Text = user.FullName;
-                    txtEditEmail.Text = user.Email;
-                    cbEditRole.SelectedItem = user.Role;
-                    ckEditStatus.Checked = user.Status;
-
-                }
-                else
-                {
-                    MessageBox.Show("Không tìm thấy nhân viên với ID này!");
-                }
-            }
         }
 
         private void btnSaveEditAccount_Click(object sender, EventArgs e)
@@ -66,8 +45,8 @@ namespace QLNT
 
                     db.SaveChanges();
                     MessageBox.Show("Cập nhật nhân viên thành công!");
-                    LoadAccountData();
-                    this.Close(); // Đóng form sau khi lưu
+                    parentForm.LoadAccountData();
+                    this.Close();
                 }
                 else
                 {

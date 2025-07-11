@@ -21,7 +21,7 @@ namespace QLNT
         private void btnAddAccount_Click(object sender, EventArgs e)
         {
             panelAccount.Controls.Clear(); // Xóa nội dung cũ
-            fAddAccount formAdd_ac = new fAddAccount();
+            fAddAccount formAdd_ac = new fAddAccount(this);
             formAdd_ac.TopLevel = false;
             formAdd_ac.FormBorderStyle = FormBorderStyle.None;
             formAdd_ac.Dock = DockStyle.Fill;
@@ -30,13 +30,14 @@ namespace QLNT
             formAdd_ac.Show();
 
         }
-        private void LoadAccountData()
+        public void LoadAccountData()
         {
             using (var db = new EFDbContext()) // Kết nối database
             {
                 dataGridView1.DataSource = null;
 
-                dataGridView1.AutoGenerateColumns = true;
+                dataGridView1.AutoGenerateColumns = false;
+
 
                 dataGridView1.DataSource = db.Users.Select(u => new
                 {
@@ -81,13 +82,21 @@ namespace QLNT
         private void ShowEditAccountForm(int UserID)
         {
             panelAccount.Controls.Clear();
-            fEditAccount editAccount = new fEditAccount(UserID); // Đúng
+            fEditAccount editAccount = new fEditAccount(UserID, this); // truyền form cha
             editAccount.TopLevel = false;
             editAccount.FormBorderStyle = FormBorderStyle.None;
             editAccount.Dock = DockStyle.Fill;
             panelAccount.Controls.Add(editAccount);
             panelAccount.Visible = true;
+            editAccount.FormClosed += (s, e) =>
+            {
+                panelAccount.Controls.Clear();     // Gỡ form sửa khỏi panel
+                LoadAccountData();                 // Cập nhật lại DataGridView
+                dataGridView1.Refresh();           // Ép vẽ lại (chắc cú)
+            };
+
             editAccount.Show();
+
         }
         private void DeleteAccount(int rowIndex)
         {
@@ -135,7 +144,7 @@ namespace QLNT
                         if (UserIdCell != null && int.TryParse(UserIdCell.ToString(), out int UserID))
                         {
                             ShowEditAccountForm(UserID);
-                            LoadAccountData(); // Cập nhật danh sách sau khi mở form sửa   
+                            
                         }
                         else
                         {
@@ -156,5 +165,6 @@ namespace QLNT
                 }
             }
         }
+       
     }
 }

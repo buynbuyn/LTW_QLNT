@@ -46,6 +46,7 @@ namespace QLNT
             btnAddEmployee = new Button();
             panelEmployee = new Panel();
             panelEmployeeCard = new Panel();
+            btnExportCard = new Button();
             ((System.ComponentModel.ISupportInitialize)dtgvEmployee).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -196,14 +197,28 @@ namespace QLNT
             // 
             panelEmployeeCard.Location = new Point(12, 586);
             panelEmployeeCard.Name = "panelEmployeeCard";
-            panelEmployeeCard.Size = new Size(397, 247);
+            panelEmployeeCard.Size = new Size(421, 250);
             panelEmployeeCard.TabIndex = 4;
+            // 
+            // btnExportCard
+            // 
+            btnExportCard.BackColor = Color.Brown;
+            btnExportCard.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnExportCard.ForeColor = Color.White;
+            btnExportCard.Location = new Point(456, 693);
+            btnExportCard.Name = "btnExportCard";
+            btnExportCard.Size = new Size(131, 40);
+            btnExportCard.TabIndex = 5;
+            btnExportCard.Text = "XUẤT THẺ";
+            btnExportCard.UseVisualStyleBackColor = false;
+            btnExportCard.Click += btnExportCard_Click;
             // 
             // fEmployee
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1760, 845);
+            Controls.Add(btnExportCard);
             Controls.Add(panelEmployeeCard);
             Controls.Add(panelEmployee);
             Controls.Add(panel1);
@@ -237,5 +252,6 @@ namespace QLNT
         private DataGridViewTextBoxColumn EmailEmployee;
         private DataGridViewCheckBoxColumn Status;
         private Panel panelEmployeeCard;
+        private Button btnExportCard;
     }
 }
