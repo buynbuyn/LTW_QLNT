@@ -33,5 +33,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+	
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="xcopy &quot;C:\Users\Windows\source\repos\LTW_QLNT\images\*.*&quot; &quot;C:\Users\Windows\source\repos\LTW_QLNT\bin\Debug\netB.0-windows\images\&quot; /Y /I /E" />
+  </Target>
 
 </Project>
