@@ -35,7 +35,7 @@
   </ItemGroup>
 	
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="xcopy &quot;C:\Users\Windows\source\repos\LTW_QLNT\images\*.*&quot; &quot;C:\Users\Windows\source\repos\LTW_QLNT\bin\Debug\netB.0-windows\images\&quot; /Y /I /E" />
+    <Exec Command="xcopy &quot;C:\Users\Windows\source\repos\LTW_QLNT\image\*.*&quot; &quot;C:\Users\Windows\source\repos\LTW_QLNT\bin\Debug\net8.0-windows\images\&quot; /Y /I /E" />
   </Target>
 
 </Project>
