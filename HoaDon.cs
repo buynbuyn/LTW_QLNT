@@ -138,8 +138,11 @@ namespace QLNT
                 string productName = cd.Product?.ProductName ?? "N/A";
                 string unit = cd.Product?.Unit ?? "N/A";
 
-                var productDetail = _context.ProductDetails.FirstOrDefault(pd => pd.ProductID == cd.ProductID);
-                DateTime? expirationDate = productDetail?.ExpirationDate;
+                var productDetail = _context.ProductDetails
+                .Where(pd => pd.ProductID == cd.ProductID && pd.StockQuantity > 0)
+                .OrderBy(pd => pd.ExpirationDate)
+                .FirstOrDefault();
+                            DateTime? expirationDate = productDetail?.ExpirationDate;
 
                 return new CartDetailViewModel
                 {

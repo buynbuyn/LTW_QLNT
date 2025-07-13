@@ -79,7 +79,6 @@ namespace QLNT
                     db.Users.Add(User);
                     db.SaveChanges();
 
-
                     MessageBox.Show("Thêm tài khoản thành công!", "Thông báo");
                     parentForm.LoadAccountData();
                     this.Close();

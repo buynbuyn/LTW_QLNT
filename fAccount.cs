@@ -88,13 +88,6 @@ namespace QLNT
             editAccount.Dock = DockStyle.Fill;
             panelAccount.Controls.Add(editAccount);
             panelAccount.Visible = true;
-            editAccount.FormClosed += (s, e) =>
-            {
-                panelAccount.Controls.Clear();     // Gỡ form sửa khỏi panel
-                LoadAccountData();                 // Cập nhật lại DataGridView
-                dataGridView1.Refresh();           // Ép vẽ lại (chắc cú)
-            };
-
             editAccount.Show();
 
         }

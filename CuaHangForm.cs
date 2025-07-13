@@ -47,24 +47,36 @@ namespace QLNT
             {
                 string searchText = findProduct.Text.Trim();
 
-                
+
 
                 dataGridView1.DataSource = null;
                 dataGridView1.AutoGenerateColumns = false;
 
-                var products = (from p in db.Products
-                                join pd in db.ProductDetails on p.ProductID equals pd.ProductID
-                                where p.ProductName.ToLower().Contains(searchText.ToLower())
-                                select new
-                                {
-                                    mathuoc = p.ProductID,
-                                    tenthuoc = p.ProductName,
-                                    hamluong = p.Dosage,
-                                    donvitinh = p.Unit,
-                                    dongia = p.Price,
-                                    stock = pd.StockQuantity,
-                                    expiration = pd.ExpirationDate
-                                }).ToList();
+                var products = db.Products
+                    .Where(p => p.ProductName.ToLower().Contains(searchText.ToLower()))
+                    .Select(p => new
+                    {
+                        mathuoc = p.ProductID,
+                        tenthuoc = p.ProductName,
+                        hamluong = p.Dosage,
+                        donvitinh = p.Unit,
+                        dongia = p.Price,
+
+                        // 🌟 lấy tồn kho tương ứng của lô sắp hết hạn nhất
+                        stock = p.ProductDetails
+                            .Where(pd => pd.StockQuantity > 0)
+                            .OrderBy(pd => pd.ExpirationDate)
+                            .Select(pd => pd.StockQuantity)
+                            .FirstOrDefault(),
+
+                        // 🌟 lấy ngày hết hạn gần nhất
+                        expiration = p.ProductDetails
+                            .Where(pd => pd.StockQuantity > 0)
+                            .OrderBy(pd => pd.ExpirationDate)
+                            .Select(pd => pd.ExpirationDate)
+                            .FirstOrDefault()
+                    })
+                    .ToList();
 
                 if (products == null || !products.Any())
                 {
@@ -117,7 +129,7 @@ namespace QLNT
         {
             try
             {
-              
+
                 if (e.RowIndex < 0 || e.RowIndex >= dataGridView1.Rows.Count)
                 {
                     MessageBox.Show("Vui lòng chọn một hàng hợp lệ!");
@@ -169,7 +181,7 @@ namespace QLNT
                         txtSoLuongMua.Focus();
                         return;
                     }
-                    
+
 
                     var product = db.Products.FirstOrDefault(p => p.ProductName.ToLower() == nameProduct.ToLower());
                     if (product == null)
@@ -178,7 +190,10 @@ namespace QLNT
                         return;
                     }
 
-                    var productDetail = db.ProductDetails.FirstOrDefault(pd => pd.ProductID == product.ProductID);
+                    var productDetail = db.ProductDetails
+                    .Where(pd => pd.ProductID == product.ProductID && pd.StockQuantity > 0)
+                    .OrderBy(pd => pd.ExpirationDate)
+                    .FirstOrDefault();
                     if (productDetail == null || productDetail.StockQuantity < soLuong)
                     {
                         label6.Text = "Số lượng tồn kho không đủ!";
@@ -187,7 +202,7 @@ namespace QLNT
 
                     using (var transaction = db.Database.BeginTransaction())
                     {
-                        
+
                         int? customerId = 1;
 
                         int? userId = Utility.UserID;
@@ -243,6 +258,91 @@ namespace QLNT
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi không xác định: {ex.Message}\nChi tiết: {ex.InnerException?.Message}");
+            }
+        }
+
+        private void CuaHangForm_Load(object sender, EventArgs e)
+        {
+            LoadProductList();
+        }
+
+        private void LoadProductList(string searchText = "")
+        {
+            using (var db = new EFDbContext())
+            {
+                var query = db.Products.AsQueryable();
+
+                if (!string.IsNullOrWhiteSpace(searchText))
+                {
+                    query = query.Where(p => p.ProductName.ToLower().Contains(searchText.ToLower()));
+                }
+
+                var products = query
+                    .Select(p => new
+                    {
+                        mathuoc = p.ProductID,
+                        tenthuoc = p.ProductName,
+                        hamluong = p.Dosage,
+                        donvitinh = p.Unit,
+                        dongia = p.Price,
+                        stock = p.ProductDetails
+                            .Where(pd => pd.StockQuantity > 0)
+                            .OrderBy(pd => pd.ExpirationDate)
+                            .Select(pd => pd.StockQuantity)
+                            .FirstOrDefault(),
+                        expiration = p.ProductDetails
+                            .Where(pd => pd.StockQuantity > 0)
+                            .OrderBy(pd => pd.ExpirationDate)
+                            .Select(pd => pd.ExpirationDate)
+                            .FirstOrDefault()
+                    })
+                    .ToList();
+
+                if (!products.Any())
+                {
+                    MessageBox.Show("Không tìm thấy sản phẩm nào!");
+                    dataGridView1.DataSource = null;
+                    cboTenSanPham.DataSource = null;
+                    cboMaSanPham.DataSource = null;
+                    return;
+                }
+
+                cboTenSanPham.DataSource = products;
+                cboTenSanPham.DisplayMember = "tenthuoc";
+                cboTenSanPham.ValueMember = "tenthuoc";
+
+                cboMaSanPham.DataSource = products;
+                cboMaSanPham.DisplayMember = "mathuoc";
+                cboMaSanPham.ValueMember = "mathuoc";
+
+                dataGridView1.AutoGenerateColumns = false;
+                dataGridView1.DataSource = products;
+
+                dataGridView1.Columns["mathuoc"].DataPropertyName = "mathuoc";
+                dataGridView1.Columns["tenthuoc"].DataPropertyName = "tenthuoc";
+                dataGridView1.Columns["hamluong"].DataPropertyName = "hamluong";
+                dataGridView1.Columns["donvitinh"].DataPropertyName = "donvitinh";
+                dataGridView1.Columns["dongia"].DataPropertyName = "dongia";
+
+                if (dataGridView1.Columns["stock"] == null)
+                {
+                    var stockColumn = new DataGridViewTextBoxColumn();
+                    stockColumn.HeaderText = "Số lượng tồn";
+                    stockColumn.Name = "stock";
+                    stockColumn.Width = 200;
+                    dataGridView1.Columns.Add(stockColumn);
+                }
+                dataGridView1.Columns["stock"].DataPropertyName = "stock";
+
+                if (dataGridView1.Columns["expiration"] == null)
+                {
+                    var expirationColumn = new DataGridViewTextBoxColumn();
+                    expirationColumn.HeaderText = "Hạn sử dụng";
+                    expirationColumn.Name = "expiration";
+                    expirationColumn.Width = 200;
+                    dataGridView1.Columns.Add(expirationColumn);
+                }
+                dataGridView1.Columns["expiration"].DataPropertyName = "expiration";
             }
         }
     }
