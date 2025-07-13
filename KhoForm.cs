@@ -52,7 +52,6 @@ namespace QLNT
 
                 dtgvKho.DataSource = list;
                 AddActionButtons();
-                // No longer need AddViewImageButton as image is shown on row click
             }
         }
 
@@ -88,6 +87,21 @@ namespace QLNT
 
         private void AddActionButtons()
         {
+            // Thêm nút "Xem Chi Tiết"
+            if (!dtgvKho.Columns.Contains("ViewDetails"))
+            {
+                var btnViewDetails = new DataGridViewButtonColumn()
+                {
+                    Name = "ViewDetails",
+                    HeaderText = "Xem Chi Tiết",
+                    Text = "Xem Chi Tiết",
+                    UseColumnTextForButtonValue = true,
+                    Width = 100,
+                    FlatStyle = FlatStyle.Flat
+                };
+                dtgvKho.Columns.Add(btnViewDetails);
+            }
+
             // Thêm nút "Thêm vào kho" 
             if (!dtgvKho.Columns.Contains("AddToStock"))
             {
@@ -132,7 +146,12 @@ namespace QLNT
             // Styling cho các nút
             dtgvKho.CellFormatting += (sender, e) =>
             {
-                if (e.ColumnIndex == dtgvKho.Columns["AddToStock"].Index)
+                if (e.ColumnIndex == dtgvKho.Columns["ViewDetails"].Index)
+                {
+                    e.CellStyle.BackColor = Color.LightSkyBlue;
+                    e.CellStyle.ForeColor = Color.DarkBlue;
+                }
+                else if (e.ColumnIndex == dtgvKho.Columns["AddToStock"].Index)
                 {
                     e.CellStyle.BackColor = Color.LightGreen;
                     e.CellStyle.ForeColor = Color.DarkGreen;
@@ -173,7 +192,11 @@ namespace QLNT
                 return;
             }
 
-            if (colName == "AddToStock")
+            if (colName == "ViewDetails")
+            {
+                ShowProductDetailsForm(ProductID);
+            }
+            else if (colName == "AddToStock")
             {
                 ShowAddToStockForm(ProductID);
             }
@@ -186,6 +209,21 @@ namespace QLNT
                 if (MessageBox.Show("Bạn có chắc muốn xóa mục này?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     DeleteRecord(ProductID);
             }
+        }
+
+        private void ShowProductDetailsForm(int ProductID)
+        {
+            panelDetails.Controls.Clear();
+            var frm = new fViewProductDetails(ProductID);
+            frm.TopLevel = false;
+            frm.FormBorderStyle = FormBorderStyle.None;
+            frm.Dock = DockStyle.Fill;
+            panelDetails.Controls.Add(frm);
+            panelDetails.Visible = true;
+            frm.Show();
+            frm.FormClosed += (s, e) => {
+                panelDetails.Visible = false; // Hide panel after form is closed
+            };
         }
 
         private void ShowAddToStockForm(int ProductID)
