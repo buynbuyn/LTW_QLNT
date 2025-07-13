@@ -42,7 +42,11 @@ namespace QLNT
                                    pd.Dosage,
                                    pd.Unit,
                                    pd.Price,
-                                   pd.ProductImage // Lưu tên file ảnh, ví dụ: "amoxicillin.jpg"
+                                   pd.ProductImage, // Lưu tên file ảnh, ví dụ: "amoxicillin.jpg"
+                                   // Thêm tổng số lượng trong kho
+                                   TotalStock = db.ProductDetails
+                                       .Where(detail => detail.ProductID == pd.ProductID)
+                                       .Sum(detail => (int?)detail.StockQuantity) ?? 0
                                })
                                .ToList();
 
@@ -67,7 +71,11 @@ namespace QLNT
                                    p.Dosage,
                                    p.Unit,
                                    p.Price,
-                                   p.ProductImage
+                                   p.ProductImage,
+                                   // Thêm tổng số lượng trong kho
+                                   TotalStock = db.ProductDetails
+                                       .Where(detail => detail.ProductID == p.ProductID)
+                                       .Sum(detail => (int?)detail.StockQuantity) ?? 0
                                })
                                .ToList();
 
@@ -80,6 +88,21 @@ namespace QLNT
 
         private void AddActionButtons()
         {
+            // Thêm nút "Thêm vào kho" 
+            if (!dtgvKho.Columns.Contains("AddToStock"))
+            {
+                var btnAddToStock = new DataGridViewButtonColumn()
+                {
+                    Name = "AddToStock",
+                    HeaderText = "Thêm vào kho",
+                    Text = "Thêm vào kho",
+                    UseColumnTextForButtonValue = true,
+                    Width = 100,
+                    FlatStyle = FlatStyle.Flat
+                };
+                dtgvKho.Columns.Add(btnAddToStock);
+            }
+
             if (!dtgvKho.Columns.Contains("Edit"))
             {
                 var btnEdit = new DataGridViewButtonColumn()
@@ -105,6 +128,26 @@ namespace QLNT
                 };
                 dtgvKho.Columns.Add(btnDel);
             }
+
+            // Styling cho các nút
+            dtgvKho.CellFormatting += (sender, e) =>
+            {
+                if (e.ColumnIndex == dtgvKho.Columns["AddToStock"].Index)
+                {
+                    e.CellStyle.BackColor = Color.LightGreen;
+                    e.CellStyle.ForeColor = Color.DarkGreen;
+                }
+                else if (e.ColumnIndex == dtgvKho.Columns["Edit"].Index)
+                {
+                    e.CellStyle.BackColor = Color.LightBlue;
+                    e.CellStyle.ForeColor = Color.DarkBlue;
+                }
+                else if (e.ColumnIndex == dtgvKho.Columns["Delete"].Index)
+                {
+                    e.CellStyle.BackColor = Color.LightCoral;
+                    e.CellStyle.ForeColor = Color.DarkRed;
+                }
+            };
         }
 
         // Changed from CellContentClick to CellClick for general row selection
@@ -116,7 +159,6 @@ namespace QLNT
             string fileName = dtgvKho.Rows[e.RowIndex].Cells["ProductImage"].Value?.ToString();
             DisplayProductImage(fileName);
         }
-
 
         private void DtgvKho_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -131,7 +173,11 @@ namespace QLNT
                 return;
             }
 
-            if (colName == "Edit")
+            if (colName == "AddToStock")
+            {
+                ShowAddToStockForm(ProductID);
+            }
+            else if (colName == "Edit")
             {
                 ShowEditForm(ProductID);
             }
@@ -140,6 +186,22 @@ namespace QLNT
                 if (MessageBox.Show("Bạn có chắc muốn xóa mục này?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     DeleteRecord(ProductID);
             }
+        }
+
+        private void ShowAddToStockForm(int ProductID)
+        {
+            panelDetails.Controls.Clear();
+            var frm = new fAddProductDetail(ProductID);
+            frm.TopLevel = false;
+            frm.FormBorderStyle = FormBorderStyle.None;
+            frm.Dock = DockStyle.Fill;
+            panelDetails.Controls.Add(frm);
+            panelDetails.Visible = true;
+            frm.Show();
+            frm.FormClosed += (s, e) => {
+                LoadKhoData(); // Refresh data to show updated stock
+                panelDetails.Visible = false; // Hide panel after form is closed
+            };
         }
 
         private void DisplayProductImage(string fileName)
@@ -207,14 +269,32 @@ namespace QLNT
             {
                 using (var db = new EFDbContext())
                 {
+                    // Kiểm tra xem có ProductDetails nào liên quan không
+                    var hasProductDetails = db.ProductDetails.Any(pd => pd.ProductID == ProductID);
+
+                    if (hasProductDetails)
+                    {
+                        if (MessageBox.Show("Sản phẩm này có dữ liệu trong kho. Bạn có muốn xóa tất cả dữ liệu liên quan không?",
+                            "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                        {
+                            // Xóa tất cả ProductDetails liên quan
+                            var productDetails = db.ProductDetails.Where(pd => pd.ProductID == ProductID);
+                            db.ProductDetails.RemoveRange(productDetails);
+                        }
+                        else
+                        {
+                            return; // Không xóa
+                        }
+                    }
+
                     // Corrected: Use db.Products instead of db.ProductDetails
-                    var pd = db.Products.Find(ProductID);
-                    if (pd != null)
+                    var product = db.Products.Find(ProductID);
+                    if (product != null)
                     {
                         // Delete associated image file if it exists
-                        if (!string.IsNullOrWhiteSpace(pd.ProductImage))
+                        if (!string.IsNullOrWhiteSpace(product.ProductImage))
                         {
-                            string imagePath = Path.Combine(Application.StartupPath, "images", pd.ProductImage);
+                            string imagePath = Path.Combine(Application.StartupPath, "images", product.ProductImage);
                             if (File.Exists(imagePath))
                             {
                                 try
@@ -228,7 +308,7 @@ namespace QLNT
                             }
                         }
 
-                        db.Products.Remove(pd);
+                        db.Products.Remove(product);
                         db.SaveChanges();
                         MessageBox.Show("Xóa sản phẩm thành công!");
                         LoadKhoData();
